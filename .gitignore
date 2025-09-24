@@ -1,0 +1,4 @@
+ghidra/*.gpr
+ghidra/*.lock*
+ghidra/*.rep/
+build
