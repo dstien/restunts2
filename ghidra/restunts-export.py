@@ -14,7 +14,7 @@
 PROJECT_DIR_OVERRIDE = ""
 
 # When enabled, every code and data unit will have an end-of-line comment with
-# the address and original data bytes which makes convenient to look up the
+# the address and original data bytes which makes it convenient to look up the
 # instruction's origin in Ghidra or compare original and produced bytes side
 # by side in a disassembly output.
 DEBUG = False
@@ -432,7 +432,7 @@ def write_asm():
                 # Add implicit "offset" prefix.
                 if mnem != "LEA" and OperandType.isAddress(op_type) and OperandType.isScalar(op_type):
                     operand = "offset " + operand
-            #    # If size is not specified, it must be implicit from a register operand.
+                # If size is not specified, it must be implicit from a register operand.
                 elif 1 == 2 and OperandType.isAddress(op_type) and (operand[0] == "[" or operand[2:4] == ":["):
                     size = 0
                     other_idx = 1 if op_idx == 0 else 0
@@ -576,11 +576,6 @@ def write_asm():
         type = data.getDataType()
 
         if isinstance(type, Array):
-            #inner_type = type.getDataType()
-            #if isinstance(inner_type, Array):
-            #    return pub_type_name(inner_type)
-            #else:
-            #    return pub_type_name(inner_type)
             return pub_type_name(data.getComponent(0))
         elif isinstance(type, Pointer):
             return mem_size_name(type.getLength())
