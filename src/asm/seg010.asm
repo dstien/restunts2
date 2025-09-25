@@ -145,12 +145,32 @@ LAB_2cc5_001c:
     mov     di, seg dseg
 ; </REPLACE>
 ;    mov     di, 0x3b77
-    mov     si, word ptr [word_3B772]          ; pspseg:2 = Memory size in paragraphs
-                                               ;            top of memory in segment (paragraph) form
+; CRT startup hack: Use endseg to mark the end of the program.
+; <REPLACE>
+    mov     si, seg endseg + 1 ; +1 in case endseg is not aligned at 0
+    nop
+; </REPLACE>
+;    mov     si, word ptr [word_3B772]          ; pspseg:2 = Memory size in paragraphs
+;                                               ;            top of memory in segment (paragraph) form
     sub     si, di
-    cmp     si, 0x1000
-    jc      LAB_2cc5_002e
-    mov     si, 0x1000                         ; si = 1000h or memory size if less than 1000h
+; <NOP>
+    nop
+    nop
+    nop
+    nop
+; </NOP>
+;    cmp     si, 0x1000
+; <NOP>
+    nop
+    nop
+; </NOP>
+;    jc      LAB_2cc5_002e
+; <NOP>
+    nop
+    nop
+    nop
+; </NOP>
+;    mov     si, 0x1000                         ; si = 1000h or memory size if less than 1000h
 LAB_2cc5_002e:
     cli
     mov     ss, di                             ; ss = dseg
@@ -199,7 +219,16 @@ _no_stack_overflow:
     call    far ptr SUB_2cc5_00d8
     push    ss
     pop     ds
-    call    far ptr __setenvp
+; CRT startup hack: setenvp() breaks our custom code.
+; It is not used by Stunts, so we simply ignore it.
+; <NOP>
+    nop
+    nop
+    nop
+    nop
+    nop
+; </NOP>
+;    call    far ptr __setenvp
     call    far ptr __setargv
     xor     bp, bp
     push    word ptr [word_3EE0C]
