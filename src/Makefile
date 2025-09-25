@@ -1,12 +1,12 @@
-.PHONY: all asm dos clean
-all: asm dos
+.PHONY: all asm dos16 clean
+all: asm dos16
 
 asm:
 	@$(MAKE) -C asm
 
-dos: asm
-	$(MAKE) -C dos
+dos16: asm
+	$(MAKE) -C dos16
 
 clean:
-	$(MAKE) -C dos clean
+	$(MAKE) -C dos16 clean
 	$(MAKE) -C asm clean
