@@ -3,9 +3,9 @@ OPTION PACKCODE = 0,   # Don't combine code segments.
        PACKDATA = 0,   # Don't combine data segments.
        NOFARCALLS,     # Don't optimise far calls that could be near.
        NOCASEEXACT,    # Ignore symbol case.
-       MAP = ../../build/dos/restunto.map,
+       MAP = ../../build/dos16/restunto.map,
        QUIET
-NAME   ../../build/dos/restunto.exe
+NAME   ../../build/dos16/restunto.exe
 PATH   ../../build/asm
 FILE   seg000.obj, seg001.obj, seg002.obj, seg003.obj, seg004.obj, seg005.obj, seg006.obj,
        seg007.obj, seg008.obj, seg009.obj, seg010.obj, seg011.obj, seg012.obj, seg013.obj,

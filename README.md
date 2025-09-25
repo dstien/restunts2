@@ -20,7 +20,7 @@ A recreation of the original Stunts 1.1 executable can be built using GNU Make a
 ```
 $ make
 ```
-This produces the 16-bit real-mode DOS executable `build/dos/restunto.exe`.
+This produces the 16-bit real-mode DOS executable `build/dos16/restunto.exe`.
 
 Builds are debug-enabled by default. Release builds can be made with `make DEBUG=0` or running `wstrip` on the executable.
 
@@ -36,7 +36,7 @@ Inside the debugger you may want to set the source file paths, adjust settings o
 ```
 C:\STUNTS> wd -co=80 -li=50 -invoke=restunto.dbg restunto.exe /smt
 ```
-Watcom also supports remote debugging. `LDFLAGS` can be set for the `dos` make target to produce debug data in DWARF or CodeView format for use with other debuggers. See the [Open Watcom Linker User's Guide](https://open-watcom.github.io/open-watcom-v2-wikidocs/lguide.pdf) for details.
+Watcom also supports remote debugging. `LDFLAGS` can be set for the `dos16` make target to produce debug data in DWARF or CodeView format for use with other debuggers. See the [Open Watcom Linker User's Guide](https://open-watcom.github.io/open-watcom-v2-wikidocs/lguide.pdf) for details.
 
 Since code and data alignments are preserved, restunts can be debugged side by side with the original game for comparison.
 

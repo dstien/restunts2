@@ -8,7 +8,7 @@ ifeq ($(DEBUG),1)
 	LDFLAGS += debug watcom all
 endif
 
-OUT_DIR := ../../build/dos
+OUT_DIR := ../../build/dos16
 RESTUNTS_ORIG := $(OUT_DIR)/restunto.exe
 RESTUNTS_ORIG_LNK := restunts-orig.lnk
 
