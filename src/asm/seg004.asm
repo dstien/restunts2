@@ -2,71 +2,13 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg004.inc
 
 seg004 segment byte public use16 'STUNTSC'
     assume cs:seg004, es:nothing, ss:nothing, ds:dseg
 
-    public build_track_object
-    public bto_branches
-    public loc_1F87E
-    public bto_auxiliary1
-    public shape3d_load_all
-    public shape3d_free_all
-    public shape3d_load_car_shapes
-    public shape3d_null_opp_car_thunk
-    public shape3d_null_opp_car
-    public shape3d_free_car_shapes
-    public sub_204AE
-    public track_setup
-    public off_1F896
-    public load_opponent_data
-    public subst_hillroad_track
-
 ; void __cdecl16far build_track_object(VECTOR * a, VECTOR * b)
-build_track_object proc far
+build_track_object_asm_ proc far
     var_curr_wallptr = dword ptr -64
     var_misc3C = word ptr  -60
     var_trkObjList = word ptr  -58
@@ -2746,10 +2688,10 @@ LAB_1e1a_193e:
     mov     sp, bp
     pop     bp
     retf
-build_track_object endp
+build_track_object_asm_ endp
 
 ; int __cdecl16far bto_auxiliary1(int param_1, int param_2, VECTOR * vecs)
-bto_auxiliary1 proc far
+bto_auxiliary1_asm_ proc far
     var_14     = word ptr  -20
     var_10     = byte ptr  -16
     var_C      = word ptr  -12
@@ -3164,10 +3106,10 @@ LAB_1e1a_1cec:
     mov     sp, bp
     pop     bp
     retf
-bto_auxiliary1 endp
+bto_auxiliary1_asm_ endp
 
 ; int __cdecl16far shape3d_load_all(void)
-shape3d_load_all proc far
+shape3d_load_all_asm_ proc far
     push    bp
     mov     bp, sp
     sub     sp, 0x2
@@ -3250,10 +3192,10 @@ LAB_1e1a_1d98:
     mov     sp, bp
     pop     bp
     retf
-shape3d_load_all endp
+shape3d_load_all_asm_ endp
 
 ; void __cdecl16far shape3d_free_all(void)
-shape3d_free_all proc far
+shape3d_free_all_asm_ proc far
     mov     ax, word ptr [game1ptr]
     or      ax, word ptr [game1ptr+2]
     jz      LAB_1e1a_1dd7
@@ -3271,11 +3213,11 @@ LAB_1e1a_1dd7:
     add     sp, 0x4
 LAB_1e1a_1df0:
     retf
-shape3d_free_all endp
+shape3d_free_all_asm_ endp
     db 0x90
 
 ; void __stdcall16near shape3d_load_car_shapes(char * carid_player, char * carid_opp)
-shape3d_load_car_shapes proc near
+shape3d_load_car_shapes_asm_ proc near
     var_10     = byte ptr  -16
     var_E      = dword ptr -14
     var_A      = dword ptr -10
@@ -3485,12 +3427,12 @@ LAB_1e1a_1f36:
     mov     byte ptr [bp+var_10], al
     cmp     al, 0xff
     jnz     LAB_1e1a_1fff
-shape3d_load_car_shapes endp
+shape3d_load_car_shapes_asm_ endp
 
 ; void __cdecl16far shape3d_null_opp_car_thunk(void)
-shape3d_null_opp_car_thunk proc far
+shape3d_null_opp_car_thunk_asm_ proc far
     jmp     near ptr shape3d_null_opp_car
-shape3d_null_opp_car_thunk endp
+shape3d_null_opp_car_thunk_asm_ endp
 LAB_1e1a_1fff:
     mov     bx, word ptr [bp+0x6]
     cmp     byte ptr [bx], al
@@ -3749,7 +3691,7 @@ LAB_1e1a_21c9:
     db 0x90
 
 ; void __cdecl16far shape3d_null_opp_car(void)
-shape3d_null_opp_car proc far
+shape3d_null_opp_car_asm_ proc far
     sub     ax, ax
     mov     word ptr [car2resptr+2], ax
     mov     word ptr [car2resptr], ax
@@ -3758,10 +3700,10 @@ shape3d_null_opp_car proc far
     mov     sp, bp
     pop     bp
     retf
-shape3d_null_opp_car endp
+shape3d_null_opp_car_asm_ endp
 
 ; void __cdecl16far shape3d_free_car_shapes(void)
-shape3d_free_car_shapes proc far
+shape3d_free_car_shapes_asm_ proc far
     mov     ax, word ptr [car2resptr]
     or      ax, word ptr [car2resptr+2]
     jz      LAB_1e1a_22d7
@@ -3811,10 +3753,10 @@ LAB_1e1a_22d7:
     call    far ptr mmgr_free
     add     sp, 0x4
     retf
-shape3d_free_car_shapes endp
+shape3d_free_car_shapes_asm_ endp
 
 ; void __cdecl16far sub_204AE(VECTOR * verts, int steering_angle, int param_3, int param_4, VECTOR * carshapevecs_, VECTOR * carshapevec_)
-sub_204AE proc far
+sub_204AE_asm_ proc far
     var_14     = word ptr  -20
     var_12     = word ptr  -18
     var_10     = word ptr  -16
@@ -4056,10 +3998,10 @@ LAB_1e1a_252e:
     mov     sp, bp
     pop     bp
     retf
-sub_204AE endp
+sub_204AE_asm_ endp
 
 ; int __cdecl16far track_setup(void)
-track_setup proc far
+track_setup_asm_ proc far
     var_AF0    = dword ptr -2800
     var_AEC    = word ptr  -2796
     var_AEA    = word ptr  -2794
@@ -5815,11 +5757,11 @@ LAB_1e1a_360e:
     mov     sp, bp
     pop     bp
     retf
-track_setup endp
+track_setup_asm_ endp
     db 0x90
 
 ; void __cdecl16far load_opponent_data(void)
-load_opponent_data proc far
+load_opponent_data_asm_ proc far
     var_F30    = word ptr  -3888
     var_B2E    = word ptr  -2862
     var_B2C    = word ptr  -2860
@@ -6070,10 +6012,10 @@ LAB_1e1a_385e:
 LAB_1e1a_38b4:
     mov     si, word ptr [bp+var_4]
     jmp     near ptr LAB_1e1a_36d8
-load_opponent_data endp
+load_opponent_data_asm_ endp
 
 ; uchar __cdecl16far subst_hillroad_track(uchar terrain, uchar element)
-subst_hillroad_track proc far
+subst_hillroad_track_asm_ proc far
     terrain    = byte ptr    6
     element    = byte ptr    8
 
@@ -6226,7 +6168,7 @@ LAB_1e1a_39d4:
 LAB_1e1a_39d7:
     pop     bp
     retf
-subst_hillroad_track endp
+subst_hillroad_track_asm_ endp
 
 seg004 ends
 end

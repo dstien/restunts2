@@ -2,84 +2,13 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg001.inc
 
 seg001 segment byte public use16 'STUNTSC'
     assume cs:seg001, es:nothing, ss:nothing, ds:dseg
 
-    public opponent_op
-    public mat_mul_vector2
-    public update_player_state
-    public init_carstate_from_simd
-    public init_game_state
-    public restore_gamestate
-    public update_gamestate
-    public player_op
-    public detect_penalty
-    public update_car_speed
-    public update_grip
-    public car_car_speed_adjust_maybe
-    public carState_rc_op
-    public upd_statef20_from_steer_input
-    public audio_carstate
-    public audio_unk3
-    public sub_18D06
-    public sub_18D60
-    public car_car_coll_detect_maybe
-    public init_plantrak
-    public do_opponent_op
-    public update_crash_state
-    public plane_rotate_op
-    public plane_origin_op
-    public vec_normalInnerProduct
-    public state_op_unk
-    public sub_19BA0
-    public setup_aero_trackdata
-
 ; void __cdecl16far opponent_op(void)
-opponent_op proc far
+opponent_op_asm_ proc far
     var_40     = word ptr  -64
     var_3E     = word ptr  -62
     var_3C     = word ptr  -60
@@ -793,10 +722,10 @@ LAB_1471_0656:
     mov     sp, bp
     pop     bp
     retf
-opponent_op endp
+opponent_op_asm_ endp
 
 ; void __cdecl16far mat_mul_vector2(VECTOR * invec, MATRIX * mat_off, VECTOR * outvec)
-mat_mul_vector2 proc far
+mat_mul_vector2_asm_ proc far
     var_mat    = byte ptr  -18
     invec      = word ptr    6
     mat_off    = dword ptr  10
@@ -829,10 +758,10 @@ mat_mul_vector2 proc far
     mov     sp, bp
     pop     bp
     retf
-mat_mul_vector2 endp
+mat_mul_vector2_asm_ endp
 
 ; void __cdecl16far update_player_state(CARSTATE * player_state, SIMD * player_simd, CARSTATE * opp_state, SIMD * opp_simd, int is_opponent)
-update_player_state proc far
+update_player_state_asm_ proc far
     vec_1E4    = byte ptr  -484
     vec_1DE    = byte ptr  -478
     vec_1C6    = byte ptr  -454
@@ -3604,10 +3533,10 @@ LAB_1471_2182:
     mov     sp, bp
     pop     bp
     retf
-update_player_state endp
+update_player_state_asm_ endp
 
 ; void __cdecl16far init_carstate_from_simd(CARSTATE * carstate_, SIMD * simd_, char transmission, word pos_x_ax, word pos_x_dx, word pos_y_ax, word pos_y_dx, word pos_z_ax, word pos_z_dx, short track_angle_)
-init_carstate_from_simd proc far
+init_carstate_from_simd_asm_ proc far
     var_E      = word ptr  -14
     var_C      = word ptr  -12
     var_initX  = word ptr  -10
@@ -3856,11 +3785,11 @@ LAB_1471_2327:
     mov     sp, bp
     pop     bp
     retf
-init_carstate_from_simd endp
+init_carstate_from_simd_asm_ endp
     db 0x90
 
 ; void __cdecl16far init_game_state(int param_1)
-init_game_state proc far
+init_game_state_asm_ proc far
     var_A      = word ptr  -10
     var_8      = word ptr   -8
     var_2      = word ptr   -2
@@ -4319,10 +4248,10 @@ LAB_1471_2824:
     mov     sp, bp
     pop     bp
     retf
-init_game_state endp
+init_game_state_asm_ endp
 
 ; void __cdecl16far restore_gamestate(uint frame)
-restore_gamestate proc far
+restore_gamestate_asm_ proc far
     frame      = word ptr    6
 
     push    bp
@@ -4426,10 +4355,10 @@ LAB_1471_28f2:
     mov     sp, bp
     pop     bp
     retf
-restore_gamestate endp
+restore_gamestate_asm_ endp
 
 ; void __cdecl16far update_gamestate(void)
-update_gamestate proc far
+update_gamestate_asm_ proc far
     var_carInputByte = byte ptr   -4
 
     push    bp
@@ -4635,11 +4564,11 @@ LAB_1471_2ad1:
     mov     sp, bp
     pop     bp
     retf
-update_gamestate endp
+update_gamestate_asm_ endp
     db 0x90
 
 ; void __cdecl16far player_op(byte car_input)
-player_op proc far
+player_op_asm_ proc far
     var_52     = byte ptr  -82
     var_3A     = byte ptr  -58
     var_38     = byte ptr  -56
@@ -5317,10 +5246,10 @@ LAB_1471_3100:
     mov     sp, bp
     pop     bp
     retf
-player_op endp
+player_op_asm_ endp
 
 ; int __cdecl16far detect_penalty(char * unk, int * penalty_counter)
-detect_penalty proc far
+detect_penalty_asm_ proc far
     var_5A4    = word ptr  -1444
     var_5A2    = byte ptr  -1442
     var_21A    = word ptr  -538
@@ -5590,11 +5519,11 @@ LAB_1471_335e:
 LAB_1471_3361:
     mov     si, word ptr [bp+var_2]
     jmp     near ptr LAB_1471_31a9
-detect_penalty endp
+detect_penalty_asm_ endp
     db 0x90
 
 ; void __cdecl16far update_car_speed(char car_input, int is_opponent, CARSTATE * carstate_, SIMD * simd_)
-update_car_speed proc far
+update_car_speed_asm_ proc far
     var_currTorque = byte ptr  -10
     var_deltaSpeed = word ptr   -8
     var_updatedSpeed = word ptr   -6
@@ -6211,14 +6140,14 @@ LAB_1471_38c0:
     mov     sp, bp
     pop     bp
     retf
-update_car_speed endp
+update_car_speed_asm_ endp
 ;  
 ; update_grip: 
 ;  
 ; former update_player_carstate  
 
 ; void __cdecl16far update_grip(CARSTATE * carstate_, SIMD * simd_, int is_player)
-update_grip proc far
+update_grip_asm_ proc far
     var_addf20f36Initial = word ptr  -16
     var_E      = byte ptr  -14
     var_C      = word ptr  -12
@@ -6731,10 +6660,10 @@ LAB_1471_3d48:
     mov     sp, bp
     pop     bp
     retf
-update_grip endp
+update_grip_asm_ endp
 
 ; int __cdecl16far car_car_speed_adjust_maybe(CARSTATE * player_state, CARSTATE * opp_state)
-car_car_speed_adjust_maybe proc far
+car_car_speed_adjust_maybe_asm_ proc far
     var_18     = word ptr  -24
     var_16     = word ptr  -22
     var_14     = word ptr  -20
@@ -6899,11 +6828,11 @@ LAB_1471_3ede:
     mov     sp, bp
     pop     bp
     retf
-car_car_speed_adjust_maybe endp
+car_car_speed_adjust_maybe_asm_ endp
     db 0x90
 
 ; int __cdecl16far carState_rc_op(CARSTATE * car, int unk, int wheel_idx)
-carState_rc_op proc far
+carState_rc_op_asm_ proc far
     var_6      = word ptr   -6
     var_4      = word ptr   -4
     var_2      = word ptr   -2
@@ -7090,11 +7019,11 @@ LAB_1471_4095:
     mov     sp, bp
     pop     bp
     retf
-carState_rc_op endp
+carState_rc_op_asm_ endp
     db 0x90
 
 ; void __cdecl16far upd_statef20_from_steer_input(char steering)
-upd_statef20_from_steer_input proc far
+upd_statef20_from_steer_input_asm_ proc far
     var_speed2shr0AandFC = byte ptr   -4
     steering   = byte ptr    6
 
@@ -7225,11 +7154,11 @@ LAB_1471_4189:
     mov     sp, bp
     pop     bp
     retf
-upd_statef20_from_steer_input endp
+upd_statef20_from_steer_input_asm_ endp
     db 0x90
 
 ; void __cdecl16far audio_carstate(void)
-audio_carstate proc far
+audio_carstate_asm_ proc far
     var_34     = dword ptr -52
     var_30     = word ptr  -48
     var_2E     = word ptr  -46
@@ -7698,10 +7627,10 @@ LAB_1471_45bc:
     mov     sp, bp
     pop     bp
     retf
-audio_carstate endp
+audio_carstate_asm_ endp
 
 ; void __cdecl16far audio_unk3(byte flags, int unk)
-audio_unk3 proc far
+audio_unk3_asm_ proc far
     flags      = byte ptr    6
     unk        = word ptr    8
 
@@ -7723,10 +7652,10 @@ LAB_1471_45e3:
 LAB_1471_45f4:
     pop     bp
     retf
-audio_unk3 endp
+audio_unk3_asm_ endp
 
 ; undefined __cdecl16far sub_18D06(int param_1, uint param_2)
-sub_18D06 proc far
+sub_18D06_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
 
@@ -7761,10 +7690,10 @@ sub_18D06 proc far
 LAB_1471_464e:
     pop     bp
     retf
-sub_18D06 endp
+sub_18D06_asm_ endp
 
 ; undefined2 __cdecl16far sub_18D60(int param_1, uint * param_2, char param_3, byte * param_4)
-sub_18D60 proc far
+sub_18D60_asm_ proc far
     var_30     = word ptr  -48
     var_2E     = word ptr  -46
     var_2C     = word ptr  -44
@@ -8135,10 +8064,10 @@ LAB_1471_495c:
     mov     sp, bp
     pop     bp
     retf
-sub_18D60 endp
+sub_18D60_asm_ endp
 
 ; int __cdecl16far car_car_coll_detect_maybe(POINT2D * points1, VECTOR * vec1, POINT2D * points2, VECTOR * vec2)
-car_car_coll_detect_maybe proc far
+car_car_coll_detect_maybe_asm_ proc far
     var_2A     = word ptr  -42
     var_28     = word ptr  -40
     var_26     = word ptr  -38
@@ -8535,11 +8464,11 @@ LAB_1471_4c56:
     jmp     near ptr LAB_1471_4b60
 LAB_1471_4ccc:
     jmp     near ptr LAB_1471_4c4a
-car_car_coll_detect_maybe endp
+car_car_coll_detect_maybe_asm_ endp
     db 0x90
 
 ; void __cdecl16far init_plantrak(void)
-init_plantrak proc far
+init_plantrak_asm_ proc far
     push    bp
     mov     bp, sp
     sub     sp, 0x2
@@ -8692,14 +8621,14 @@ LAB_1471_4e7c:
     mov     sp, bp
     pop     bp
     retf
-init_plantrak endp
+init_plantrak_asm_ endp
 
 ; void __cdecl16far do_opponent_op(void)
-do_opponent_op proc far
+do_opponent_op_asm_ proc far
     push    cs
     call    near ptr opponent_op
     retf
-do_opponent_op endp
+do_opponent_op_asm_ endp
     db 0x90
 ; former audio_engine_unk / set_AV_event_triggers 
 ; Sets a player as crashed. 
@@ -8708,7 +8637,7 @@ do_opponent_op endp
 ; crashes.  
 
 ; void __cdecl16far update_crash_state(int unk, int is_opponent)
-update_crash_state proc far
+update_crash_state_asm_ proc far
     var_cState = word ptr   -4
     var_2      = byte ptr   -2
     unk        = word ptr    6
@@ -8896,7 +8825,7 @@ LAB_1471_507d:
     mov     sp, bp
     pop     bp
     retf
-update_crash_state endp
+update_crash_state_asm_ endp
     db 0x90
 ;  
 ; This function appears to be used to rotate the 
@@ -8904,7 +8833,7 @@ update_crash_state endp
 ; to both car direction and plane inclination.  
 
 ; void __cdecl16far plane_rotate_op(void)
-plane_rotate_op proc far
+plane_rotate_op_asm_ proc far
     var_planptr = dword ptr -54
     var_32     = byte ptr  -50
     var_2C     = byte ptr  -44
@@ -9085,7 +9014,7 @@ LAB_1471_5207:
     mov     sp, bp
     pop     bp
     retf
-plane_rotate_op endp
+plane_rotate_op_asm_ endp
 ;  
 ; plane_origin_op: 
 ; Given a global coordinates vector and a 
@@ -9097,7 +9026,7 @@ plane_rotate_op endp
 ;   
 
 ; int __cdecl16far plane_origin_op(int index, int x_, int y_, int z_)
-plane_origin_op proc far
+plane_origin_op_asm_ proc far
     var_10     = byte ptr  -16
     var_A      = byte ptr  -10
     var_4      = dword ptr  -4
@@ -9162,10 +9091,10 @@ LAB_1471_529e:
     mov     sp, bp
     pop     bp
     retf
-plane_origin_op endp
+plane_origin_op_asm_ endp
 
 ; int __cdecl16far vec_normalInnerProduct(int x_, int y_, int z_, VECTOR * normal)
-vec_normalInnerProduct proc far
+vec_normalInnerProduct_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     x_         = word ptr    6
@@ -9234,11 +9163,11 @@ vec_normalInnerProduct proc far
     mov     sp, bp
     pop     bp
     retf
-vec_normalInnerProduct endp
+vec_normalInnerProduct_asm_ endp
     db 0x90
 
 ; void __cdecl16far state_op_unk(int is_opponent, int car_rot_x, int unk_speed)
-state_op_unk proc far
+state_op_unk_asm_ proc far
     var_18     = word ptr  -24
     var_16     = word ptr  -22
     var_14     = word ptr  -20
@@ -9399,11 +9328,11 @@ LAB_1471_5489:
     mov     sp, bp
     pop     bp
     retf
-state_op_unk endp
+state_op_unk_asm_ endp
     db 0x90
 
 ; void __cdecl16far sub_19BA0(void)
-sub_19BA0 proc far
+sub_19BA0_asm_ proc far
     var_14     = word ptr  -20
     var_12     = word ptr  -18
     var_E      = word ptr  -14
@@ -9516,10 +9445,10 @@ LAB_1471_5586:
     mov     sp, bp
     pop     bp
     retf
-sub_19BA0 endp
+sub_19BA0_asm_ endp
 
 ; void __cdecl16far setup_aero_trackdata(void * car_res_ptr, int is_opponent)
-setup_aero_trackdata proc far
+setup_aero_trackdata_asm_ proc far
     car_res_ptr = dword ptr   6
     is_opponent = word ptr   10
 
@@ -9672,7 +9601,7 @@ LAB_1471_56a6:
     mov     sp, bp
     pop     bp
     retf
-setup_aero_trackdata endp
+setup_aero_trackdata_asm_ endp
 
 seg001 ends
 end

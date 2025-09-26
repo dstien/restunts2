@@ -2,76 +2,15 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg005.inc
 
 seg005 segment byte public use16 'STUNTSC'
     assume cs:seg005, es:nothing, ss:nothing, ds:dseg
 
-    public run_game
-    public handle_ingame_kb_shortcuts
-    public init_unknown
-    public set_frame_callback
-    public remove_frame_callback
-    public frame_callback
-    public replay_unk2
-    public sub_2298C
-    public file_load_replay
-    public file_write_replay
-    public setup_car_shapes
-    public setup_player_cars
-    public free_player_cars
-    public mouse_minmax_position
-    public replay_unk
-    public loop_game
-    public off_2481A
-    public off_24D20
-
     db 0x90
 
 ; void __cdecl16far run_game(void)
-run_game proc far
+run_game_asm_ proc far
     var_16     = dword ptr -22
     var_12     = word ptr  -18
     var_E      = word ptr  -14
@@ -869,11 +808,11 @@ LAB_21b7_0884:
     mov     sp, bp
     pop     bp
     retf
-run_game endp
+run_game_asm_ endp
     db 0x90
 
 ; int __cdecl16far handle_ingame_kb_shortcuts(uint key)
-handle_ingame_kb_shortcuts proc far
+handle_ingame_kb_shortcuts_asm_ proc far
     key        = word ptr    6
 
     push    bp
@@ -1019,10 +958,10 @@ LAB_21b7_09b8:
     jmp     near ptr LAB_21b7_08de
 LAB_21b7_09c0:
     jmp     LAB_21b7_0950
-handle_ingame_kb_shortcuts endp
+handle_ingame_kb_shortcuts_asm_ endp
 
 ; void __cdecl16far init_unknown(void)
-init_unknown proc far
+init_unknown_asm_ proc far
     push    bp
     mov     bp, sp
     sub     sp, 0x2
@@ -1039,10 +978,10 @@ init_unknown proc far
     mov     sp, bp
     pop     bp
     retf
-init_unknown endp
+init_unknown_asm_ endp
 
 ; void __cdecl16far set_frame_callback(void)
-set_frame_callback proc far
+set_frame_callback_asm_ proc far
     mov     word ptr [word_46468], 0x0
     mov     ax, offset frame_callback
 ; <REPLACE>
@@ -1055,10 +994,10 @@ set_frame_callback proc far
     add     sp, 0x4
     mov     byte ptr [byte_442E4], 0x0
     retf
-set_frame_callback endp
+set_frame_callback_asm_ endp
 
 ; void __cdecl16far remove_frame_callback(void)
-remove_frame_callback proc far
+remove_frame_callback_asm_ proc far
     mov     ax, 0xa
     cwd
     push    dx
@@ -1075,11 +1014,11 @@ remove_frame_callback proc far
     call    far ptr timer_remove_callback
     add     sp, 0x4
     retf
-remove_frame_callback endp
+remove_frame_callback_asm_ endp
     db 0x90
 
 ; void __cdecl16far frame_callback(void)
-frame_callback proc far
+frame_callback_asm_ proc far
     call    far ptr compare_ds_ss
     or      ax, ax
     jnz     LAB_21b7_0a32
@@ -1179,11 +1118,11 @@ LAB_21b7_0b22:
     dec     byte ptr [byte_442E4]
 LAB_21b7_0b26:
     retf
-frame_callback endp
+frame_callback_asm_ endp
     db 0x90
 
 ; void __cdecl16far replay_unk2(int param_1)
-replay_unk2 proc far
+replay_unk2_asm_ proc far
     var_A      = word ptr  -10
     var_8      = word ptr   -8
     var_6      = word ptr   -6
@@ -1511,11 +1450,11 @@ LAB_21b7_0e15:
     mov     sp, bp
     pop     bp
     retf
-replay_unk2 endp
+replay_unk2_asm_ endp
     db 0x90
 
 ; void __cdecl16far sub_2298C(void)
-sub_2298C proc far
+sub_2298C_asm_ proc far
     var_34     = dword ptr -52
     var_30     = word ptr  -48
     var_2E     = word ptr  -46
@@ -1881,10 +1820,10 @@ LAB_21b7_111c:
     mov     sp, bp
     pop     bp
     retf
-sub_2298C endp
+sub_2298C_asm_ endp
 
 ; int __cdecl16far file_load_replay(char * dir, char * filename)
-file_load_replay proc far
+file_load_replay_asm_ proc far
     dir        = word ptr    6
     filename   = word ptr    8
 
@@ -1924,10 +1863,10 @@ file_load_replay proc far
     pop     di
     pop     bp
     retf
-file_load_replay endp
+file_load_replay_asm_ endp
 
 ; int __cdecl16far file_write_replay(char * filename)
-file_write_replay proc far
+file_write_replay_asm_ proc far
     var_6      = word ptr   -6
     var_4      = word ptr   -4
     filename   = word ptr    6
@@ -1964,11 +1903,11 @@ file_write_replay proc far
     mov     sp, bp
     pop     bp
     retf
-file_write_replay endp
+file_write_replay_asm_ endp
     db 0x90
 
 ; void __cdecl16far setup_car_shapes(int param_1)
-setup_car_shapes proc far
+setup_car_shapes_asm_ proc far
     var_20     = word ptr  -32
     var_1E     = word ptr  -30
     var_1C     = byte ptr  -28
@@ -2907,10 +2846,10 @@ LAB_21b7_1b3c:
     mov     sp, bp
     pop     bp
     retf
-setup_car_shapes endp
+setup_car_shapes_asm_ endp
 
 ; int __cdecl16far setup_player_cars(void)
-setup_player_cars proc far
+setup_player_cars_asm_ proc far
     var_8      = word ptr   -8
     var_6      = word ptr   -6
     var_4      = word ptr   -4
@@ -3158,11 +3097,11 @@ LAB_21b7_1e33:
     mov     sp, bp
     pop     bp
     retf
-setup_player_cars endp
+setup_player_cars_asm_ endp
     db 0x90
 
 ; void __cdecl16far free_player_cars(void)
-free_player_cars proc far
+free_player_cars_asm_ proc far
     cmp     byte ptr [video_flag5_is0], 0x0
     jnz     LAB_21b7_1e64
     mov     ax, word ptr [wndsprite]
@@ -3207,10 +3146,10 @@ LAB_21b7_1ea5:
     add     sp, 0x4
     call    far ptr shape3d_free_car_shapes
     retf
-free_player_cars endp
+free_player_cars_asm_ endp
 
 ; void __cdecl16far mouse_minmax_position(int is_driving)
-mouse_minmax_position proc far
+mouse_minmax_position_asm_ proc far
     is_driving = word ptr    6
 
     push    bp
@@ -3247,10 +3186,10 @@ LAB_21b7_1f12:
     add     sp, 0x8
     pop     bp
     retf
-mouse_minmax_position endp
+mouse_minmax_position_asm_ endp
 
 ; void __cdecl16far replay_unk(void)
-replay_unk proc far
+replay_unk_asm_ proc far
     var_A      = byte ptr  -10
     var_8      = byte ptr   -8
     var_6      = byte ptr   -6
@@ -3331,11 +3270,11 @@ LAB_21b7_1fd5:
     mov     sp, bp
     pop     bp
     retf
-replay_unk endp
+replay_unk_asm_ endp
     db 0x90
 
 ; word * __cdecl16far loop_game(word * param_1, uint param_2, int param_3, byte * param_4, int param_5)
-loop_game proc far
+loop_game_asm_ proc far
     var_44     = word ptr  -68
     var_42     = word ptr  -66
     var_40     = byte ptr  -64
@@ -5270,7 +5209,7 @@ LAB_21b7_31ee:
     mov     sp, bp
     pop     bp
     retf
-loop_game endp
+loop_game_asm_ endp
 
 seg005 ends
 end

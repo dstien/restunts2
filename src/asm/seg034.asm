@@ -2,62 +2,15 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg034.inc
 
 seg034 segment byte public use16 'STUNTSC'
     assume cs:seg034, es:nothing, ss:nothing, ds:dseg
 
-    public file_load_shape2d_fatal
-    public file_load_shape2d_nofatal
-    public file_load_shape2d
-    public file_load_shape2d_palmap_init
-
     db 0x90
 
 ; void * __cdecl16far file_load_shape2d_fatal(char * filename)
-file_load_shape2d_fatal proc far
+file_load_shape2d_fatal_asm_ proc far
     filename   = word ptr    6
 
     push    bp
@@ -70,11 +23,11 @@ file_load_shape2d_fatal proc far
     add     sp, 0x4
     pop     bp
     retf
-file_load_shape2d_fatal endp
+file_load_shape2d_fatal_asm_ endp
     db 0x90
 
 ; void * __cdecl16far file_load_shape2d_nofatal(char * filename)
-file_load_shape2d_nofatal proc far
+file_load_shape2d_nofatal_asm_ proc far
     filename   = word ptr    6
 
     push    bp
@@ -87,10 +40,10 @@ file_load_shape2d_nofatal proc far
     add     sp, 0x4
     pop     bp
     retf
-file_load_shape2d_nofatal endp
+file_load_shape2d_nofatal_asm_ endp
 
 ; void * __cdecl16far file_load_shape2d(char * filename, int is_fatal)
-file_load_shape2d proc far
+file_load_shape2d_asm_ proc far
     local_82   = byte ptr  -128
     local_80   = word ptr  -126
     local_7e   = byte ptr  -124
@@ -378,10 +331,10 @@ LAB_3a9d_0290:
     call    far ptr file_load_shape2d_palmap_apply
     add     sp, 0x6
     jmp     near ptr _end_load_2dshape
-file_load_shape2d endp
+file_load_shape2d_asm_ endp
 
 ; void __cdecl16far file_load_shape2d_palmap_init(char * pal)
-file_load_shape2d_palmap_init proc far
+file_load_shape2d_palmap_init_asm_ proc far
     var_2      = word ptr   -2
     pal        = dword ptr   6
 
@@ -402,7 +355,7 @@ LAB_3a9d_02ec:
     mov     sp, bp
     pop     bp
     retf
-file_load_shape2d_palmap_init endp
+file_load_shape2d_palmap_init_asm_ endp
 
 seg034 ends
 end

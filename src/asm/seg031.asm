@@ -2,68 +2,13 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg031.inc
 
 seg031 segment byte public use16 'STUNTSC'
     assume cs:seg031, es:nothing, ss:nothing, ds:dseg
 
-    public file_load_shape2d_nofatal2
-    public file_combine_and_find
-    public file_find_next_alt
-    public nullsub_1
-    public nullsub_2
-    public init_main
-    public random_wait
-    public load_palandcursor
-    public get_0
-    public mmgr_alloc_resbytes
-    public mmgr_get_res_ofs_diff_scaled
-    public mmgr_get_chunk_size_bytes
-
 ; void * __cdecl16far file_load_shape2d_nofatal2(char * filename)
-file_load_shape2d_nofatal2 proc far
+file_load_shape2d_nofatal2_asm_ proc far
     filename   = word ptr    6
 
     push    bp
@@ -73,10 +18,10 @@ file_load_shape2d_nofatal2 proc far
     add     sp, 0x2
     pop     bp
     retf
-file_load_shape2d_nofatal2 endp
+file_load_shape2d_nofatal2_asm_ endp
 
 ; undefined __cdecl16far file_combine_and_find(char * dir, char * name_, char * ext)
-file_combine_and_find proc far
+file_combine_and_find_asm_ proc far
     var_50     = byte ptr  -80
     dir        = word ptr    6
     name_      = word ptr    8
@@ -98,28 +43,28 @@ file_combine_and_find proc far
     mov     sp, bp
     pop     bp
     retf
-file_combine_and_find endp
+file_combine_and_find_asm_ endp
 
 ; char * __cdecl16far file_find_next_alt(void)
-file_find_next_alt proc far
+file_find_next_alt_asm_ proc far
     call    far ptr file_find_next
     retf
-file_find_next_alt endp
+file_find_next_alt_asm_ endp
 
 ; void __cdecl16far nullsub_1(void)
-nullsub_1 proc far
+nullsub_1_asm_ proc far
     retf
-nullsub_1 endp
+nullsub_1_asm_ endp
     db 0x90
 
 ; void __cdecl16far nullsub_2(void)
-nullsub_2 proc far
+nullsub_2_asm_ proc far
     retf
-nullsub_2 endp
+nullsub_2_asm_ endp
     db 0x90
 
 ; void __cdecl16far init_main(int argc_, char * * argv_)
-init_main proc far
+init_main_asm_ proc far
     var_argcmd = word ptr  -30
     var_timerdelta3 = word ptr  -28
     var_1A     = word ptr  -26
@@ -579,10 +524,10 @@ LAB_39e1_041b:
     mov     sp, bp
     pop     bp
     retf
-init_main endp
+init_main_asm_ endp
 
 ; int __cdecl16far random_wait(void)
-random_wait proc far
+random_wait_asm_ proc far
     push    bp
     mov     bp, sp
     sub     sp, 0x4
@@ -633,11 +578,11 @@ LAB_39e1_04a2:
     mov     sp, bp
     pop     bp
     retf
-random_wait endp
+random_wait_asm_ endp
     db 0x90
 
 ; void __cdecl16far load_palandcursor(void)
-load_palandcursor proc far
+load_palandcursor_asm_ proc far
     var_312    = word ptr  -786
     var_310    = dword ptr -784
     var_30C    = word ptr  -780
@@ -777,17 +722,17 @@ LAB_39e1_04f0:
     mov     sp, bp
     pop     bp
     retf
-load_palandcursor endp
+load_palandcursor_asm_ endp
 
 ; int __cdecl16far get_0(void)
-get_0 proc far
+get_0_asm_ proc far
     sub     ax, ax
     retf
-get_0 endp
+get_0_asm_ endp
     db 0x90
 
 ; void * __cdecl16far mmgr_alloc_resbytes(char * name_, long size_)
-mmgr_alloc_resbytes proc far
+mmgr_alloc_resbytes_asm_ proc far
     name_      = word ptr    6
     size_      = dword ptr   8
 
@@ -807,11 +752,11 @@ mmgr_alloc_resbytes proc far
     add     sp, 0x4
     pop     bp
     retf
-mmgr_alloc_resbytes endp
+mmgr_alloc_resbytes_asm_ endp
     db 0x90
 
 ; ulong __cdecl16far mmgr_get_res_ofs_diff_scaled(void)
-mmgr_get_res_ofs_diff_scaled proc far
+mmgr_get_res_ofs_diff_scaled_asm_ proc far
     call    far ptr mmgr_get_ofs_diff
     sub     dx, dx
     mov     cl, 0x4
@@ -821,10 +766,10 @@ LAB_39e1_067d:
     dec     cl
     jnz     LAB_39e1_067d
     retf
-mmgr_get_res_ofs_diff_scaled endp
+mmgr_get_res_ofs_diff_scaled_asm_ endp
 
 ; ulong __cdecl16far mmgr_get_chunk_size_bytes(void * data)
-mmgr_get_chunk_size_bytes proc far
+mmgr_get_chunk_size_bytes_asm_ proc far
     data       = dword ptr   6
 
     push    bp
@@ -842,7 +787,7 @@ LAB_39e1_069b:
     jnz     LAB_39e1_069b
     pop     bp
     retf
-mmgr_get_chunk_size_bytes endp
+mmgr_get_chunk_size_bytes_asm_ endp
 
 seg031 ends
 end

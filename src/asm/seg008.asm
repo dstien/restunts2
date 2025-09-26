@@ -2,119 +2,13 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg008.inc
 
 seg008 segment byte public use16 'STUNTSC'
     assume cs:seg008, es:nothing, ss:nothing, ds:dseg
 
-    public sub_27400
-    public sub_275C6
-    public show_dialog
-    public do_fileselect_dialog
-    public file_build_path
-    public do_savefile_dialog
-    public parse_filepath_separators
-    public input_checking
-    public input_do_checking
-    public file_load_resfile
-    public unload_resource
-    public locate_shape_alt
-    public locate_text_res
-    public copy_string
-    public mouse_track_op
-    public mouse_draw_transparent_check
-    public mouse_draw_opaque_check
-    public mouse_draw_opaque
-    public mouse_draw_transparent
-    public mouse_multi_hittest
-    public check_input
-    public nopsub_28F26
-    public sprite_copy_2_to_1_2
-    public sprite_copy_2_to_1_clear
-    public sprite_copy_wnd_to_1
-    public sprite_copy_wnd_to_1_clear
-    public intro_draw_text
-    public hiscore_draw_text
-    public call_read_line
-    public input_repeat_check
-    public draw_border
-    public draw_button
-    public shape3d_init_shape
-    public font_op2_alt
-    public sprite_blit_to_video
-    public show_waiting
-    public string_fmt_int
-    public sub_29772
-    public mouse_timer_sprite_unk
-    public file_load_audiores
-    public audio_unload
-    public font_set_fontdef2
-    public font_set_fontdef
-    public format_frame_as_string
-    public get_super_random
-    public file_load_resource
-    public off_29A4E
-    public highscore_write_a_op
-    public input_push_status
-    public input_pop_status
-    public do_joy_restext
-    public do_key_restext
-    public do_mou_restext
-    public do_pau_restext
-    public do_mof_restext
-    public do_sonsof_restext
-    public do_dos_restext
-    public show_graphic_levels_menu
-    public do_dea_textres
-    public ensure_file_exists
-    public do_mer_restext
-    public timer_get_delta_alt
-    public file_load_3dres
-
 ; int __cdecl16far sub_27400(word param_1, int param_2, word param_3, int param_4)
-sub_27400 proc far
+sub_27400_asm_ proc far
     var_40     = byte ptr  -64
     var_22     = byte ptr  -34
     var_4      = word ptr   -4
@@ -239,11 +133,11 @@ LAB_274b_0056:
     mov     sp, bp
     pop     bp
     retf
-sub_27400 endp
+sub_27400_asm_ endp
     db 0x90
 
 ; void __cdecl16far sub_275C6(void)
-sub_275C6 proc far
+sub_275C6_asm_ proc far
     var_3C     = byte ptr  -60
     var_1E     = byte ptr  -30
 
@@ -330,10 +224,10 @@ LAB_274b_01d0:
     mov     sp, bp
     pop     bp
     retf
-sub_275C6 endp
+sub_275C6_asm_ endp
 
 ; uint __cdecl16far show_dialog(int unk1, int unk2, void * textres, uint x_, uint y_, uint colour, void * unk5, int unk6)
-show_dialog proc far
+show_dialog_asm_ proc far
     var_1D8    = byte ptr  -472
     var_1D6    = word ptr  -470
     var_1D4    = byte ptr  -468
@@ -1174,11 +1068,11 @@ LAB_274b_0a16:
     cmp     ax, 0x5000
     jz      LAB_274b_09ba
     jmp     near ptr LAB_274b_07bd
-show_dialog endp
+show_dialog_asm_ endp
     db 0x90
 
 ; int __cdecl16far do_fileselect_dialog(size_t * param_1, char * param_2, char * param_3, undefined2 param_4, undefined2 param_5)
-do_fileselect_dialog proc far
+do_fileselect_dialog_asm_ proc far
     var_71C    = word ptr  -1820
     var_71A    = word ptr  -1818
     var_718    = byte ptr  -1816
@@ -1942,11 +1836,11 @@ LAB_274b_10fc:
     mov     sp, bp
     pop     bp
     retf
-do_fileselect_dialog endp
+do_fileselect_dialog_asm_ endp
     db 0x90
 
 ; void __cdecl16far file_build_path(char * dir, char * name_, char * ext, char * dst)
-file_build_path proc far
+file_build_path_asm_ proc far
     var_2      = byte ptr   -2
     dir        = word ptr    6
     name_      = word ptr    8
@@ -2001,11 +1895,11 @@ LAB_274b_1168:
     mov     sp, bp
     pop     bp
     retf
-file_build_path endp
+file_build_path_asm_ endp
     db 0x90
 
 ; int __cdecl16far do_savefile_dialog(size_t * param_1, size_t * param_2, undefined2 param_3, undefined2 param_4)
-do_savefile_dialog proc far
+do_savefile_dialog_asm_ proc far
     var_12     = word ptr  -18
     var_10     = word ptr  -16
     var_E      = word ptr  -14
@@ -2150,10 +2044,10 @@ LAB_274b_12a4:
     mov     sp, bp
     pop     bp
     retf
-do_savefile_dialog endp
+do_savefile_dialog_asm_ endp
 
 ; void __cdecl16far parse_filepath_separators(char * outpath, char * inpath)
-parse_filepath_separators proc far
+parse_filepath_separators_asm_ proc far
     var_6      = word ptr   -6
     var_4      = word ptr   -4
     var_2      = byte ptr   -2
@@ -2202,10 +2096,10 @@ LAB_274b_12e5:
     mov     sp, bp
     pop     bp
     retf
-parse_filepath_separators endp
+parse_filepath_separators_asm_ endp
 
 ; int __cdecl16far input_checking(int unk)
-input_checking proc far
+input_checking_asm_ proc far
     unk        = word ptr    6
 
     push    bp
@@ -2405,11 +2299,11 @@ LAB_274b_1529:
     mov     sp, bp
     pop     bp
     retf
-input_checking endp
+input_checking_asm_ endp
     db 0x90
 
 ; int __cdecl16far input_do_checking(int unk)
-input_do_checking proc far
+input_do_checking_asm_ proc far
     unk        = word ptr    6
 
     push    bp
@@ -2420,11 +2314,11 @@ input_do_checking proc far
     add     sp, 0x2
     pop     bp
     retf
-input_do_checking endp
+input_do_checking_asm_ endp
     db 0x90
 
 ; void * __cdecl16far file_load_resfile(char * filename)
-file_load_resfile proc far
+file_load_resfile_asm_ proc far
     var_54     = byte ptr  -84
     var_4      = word ptr   -4
     var_2      = word ptr   -2
@@ -2487,10 +2381,10 @@ LAB_274b_15be:
     mov     sp, bp
     pop     bp
     retf
-file_load_resfile endp
+file_load_resfile_asm_ endp
 
 ; void __cdecl16far unload_resource(void * res)
-unload_resource proc far
+unload_resource_asm_ proc far
     res        = dword ptr   6
 
     push    bp
@@ -2501,11 +2395,11 @@ unload_resource proc far
     add     sp, 0x4
     pop     bp
     retf
-unload_resource endp
+unload_resource_asm_ endp
     db 0x90
 
 ; void * __cdecl16far locate_shape_alt(void * data, char * name_)
-locate_shape_alt proc far
+locate_shape_alt_asm_ proc far
     data       = dword ptr   6
     name_      = word ptr   10
 
@@ -2518,10 +2412,10 @@ locate_shape_alt proc far
     add     sp, 0x6
     pop     bp
     retf
-locate_shape_alt endp
+locate_shape_alt_asm_ endp
 
 ; void * __cdecl16far locate_text_res(char * data, char * name_)
-locate_text_res proc far
+locate_text_res_asm_ proc far
     var_4      = byte ptr   -4
     var_3      = byte ptr   -3
     var_2      = byte ptr   -2
@@ -2549,11 +2443,11 @@ locate_text_res proc far
     mov     sp, bp
     pop     bp
     retf
-locate_text_res endp
+locate_text_res_asm_ endp
     db 0x90
 
 ; void __cdecl16far copy_string(char * dst, char * src)
-copy_string proc far
+copy_string_asm_ proc far
     var_4      = dword ptr  -4
     dst        = word ptr    6
     src        = dword ptr  10
@@ -2582,10 +2476,10 @@ LAB_274b_1639:
     mov     sp, bp
     pop     bp
     retf
-copy_string endp
+copy_string_asm_ endp
 
 ; int __cdecl16far mouse_track_op(int param_1, int param_2, uint param_3, int param_4, uint param_5, int param_6, int param_7, int param_8)
-mouse_track_op proc far
+mouse_track_op_asm_ proc far
     var_16     = word ptr  -22
     var_14     = word ptr  -20
     var_12     = word ptr  -18
@@ -2886,10 +2780,10 @@ LAB_274b_18df:
     push    cs
     call    near ptr mouse_draw_transparent_check
     jmp     near ptr LAB_274b_1715
-mouse_track_op endp
+mouse_track_op_asm_ endp
 
 ; void __cdecl16far mouse_draw_transparent_check(void)
-mouse_draw_transparent_check proc far
+mouse_draw_transparent_check_asm_ proc far
     mov     byte ptr [byte_3B8F7], 0x1
     cmp     byte ptr [kbormouse], 0x0
     jz      LAB_274b_1905
@@ -2899,10 +2793,10 @@ mouse_draw_transparent_check proc far
     call    near ptr mouse_draw_transparent
 LAB_274b_1905:
     retf
-mouse_draw_transparent_check endp
+mouse_draw_transparent_check_asm_ endp
 
 ; void __cdecl16far mouse_draw_opaque_check(void)
-mouse_draw_opaque_check proc far
+mouse_draw_opaque_check_asm_ proc far
     mov     byte ptr [byte_3B8F7], 0x0
     cmp     byte ptr [mouse_isdirty], 0x0
     jz      LAB_274b_1916
@@ -2910,11 +2804,11 @@ mouse_draw_opaque_check proc far
     call    near ptr mouse_draw_opaque
 LAB_274b_1916:
     retf
-mouse_draw_opaque_check endp
+mouse_draw_opaque_check_asm_ endp
     db 0x90
 
 ; void __cdecl16far mouse_draw_opaque(void)
-mouse_draw_opaque proc far
+mouse_draw_opaque_asm_ proc far
     var_3C     = byte ptr  -60
 
     push    bp
@@ -2937,10 +2831,10 @@ mouse_draw_opaque proc far
     mov     sp, bp
     pop     bp
     retf
-mouse_draw_opaque endp
+mouse_draw_opaque_asm_ endp
 
 ; void __cdecl16far mouse_draw_transparent(void)
-mouse_draw_transparent proc far
+mouse_draw_transparent_asm_ proc far
     var_3C     = byte ptr  -60
 
     push    bp
@@ -2988,11 +2882,11 @@ mouse_draw_transparent proc far
     mov     sp, bp
     pop     bp
     retf
-mouse_draw_transparent endp
+mouse_draw_transparent_asm_ endp
     db 0x90
 
 ; int __cdecl16far mouse_multi_hittest(int count, int arr_x1, int arr_x2, int arr_y1, int arr_y2)
-mouse_multi_hittest proc far
+mouse_multi_hittest_asm_ proc far
     count      = word ptr    6
     arr_x1     = word ptr    8
     arr_x2     = word ptr   10
@@ -3045,11 +2939,11 @@ LAB_274b_1a2a:
     mov     sp, bp
     pop     bp
     retf
-mouse_multi_hittest endp
+mouse_multi_hittest_asm_ endp
     db 0x90
 
 ; void __cdecl16far check_input(void)
-check_input proc far
+check_input_asm_ proc far
     var_2      = byte ptr   -2
 
     push    bp
@@ -3084,10 +2978,10 @@ LAB_274b_1a6c:
     mov     sp, bp
     pop     bp
     retf
-check_input endp
+check_input_asm_ endp
 
 ; void __cdecl16far nopsub_28F26(void)
-nopsub_28F26 proc far
+nopsub_28F26_asm_ proc far
     push    cs
     call    near ptr timer_get_delta_alt
     push    ax
@@ -3099,11 +2993,11 @@ nopsub_28F26 proc far
     push    cs
     call    near ptr check_input
     retf
-nopsub_28F26 endp
+nopsub_28F26_asm_ endp
     db 0x90
 
 ; void __cdecl16far sprite_copy_2_to_1_2(void)
-sprite_copy_2_to_1_2 proc far
+sprite_copy_2_to_1_2_asm_ proc far
     mov     ax, offset sprite2
 ; <REPLACE>
     mov     dx, seg seg012
@@ -3114,11 +3008,11 @@ sprite_copy_2_to_1_2 proc far
     call    far ptr sprite_set_1_from_argptr
     add     sp, 0x4
     retf
-sprite_copy_2_to_1_2 endp
+sprite_copy_2_to_1_2_asm_ endp
     db 0x90
 
 ; void __cdecl16far sprite_copy_2_to_1_clear(void)
-sprite_copy_2_to_1_clear proc far
+sprite_copy_2_to_1_clear_asm_ proc far
     mov     ax, offset sprite2
 ; <REPLACE>
     mov     dx, seg seg012
@@ -3133,20 +3027,20 @@ sprite_copy_2_to_1_clear proc far
     call    far ptr sprite_clear_1_color
     add     sp, 0x2
     retf
-sprite_copy_2_to_1_clear endp
+sprite_copy_2_to_1_clear_asm_ endp
 
 ; void __cdecl16far sprite_copy_wnd_to_1(void)
-sprite_copy_wnd_to_1 proc far
+sprite_copy_wnd_to_1_asm_ proc far
     push    word ptr [wndsprite+2]
     push    word ptr [wndsprite]
     call    far ptr sprite_set_1_from_argptr
     add     sp, 0x4
     retf
-sprite_copy_wnd_to_1 endp
+sprite_copy_wnd_to_1_asm_ endp
     db 0x90
 
 ; void __cdecl16far sprite_copy_wnd_to_1_clear(void)
-sprite_copy_wnd_to_1_clear proc far
+sprite_copy_wnd_to_1_clear_asm_ proc far
     push    word ptr [wndsprite+2]
     push    word ptr [wndsprite]
     call    far ptr sprite_set_1_from_argptr
@@ -3156,10 +3050,10 @@ sprite_copy_wnd_to_1_clear proc far
     call    far ptr sprite_clear_1_color
     add     sp, 0x2
     retf
-sprite_copy_wnd_to_1_clear endp
+sprite_copy_wnd_to_1_clear_asm_ endp
 
 ; RECTANGLE * __cdecl16far intro_draw_text(char * str_, int x_, int y_, uint colour_text, uint colour_shadow)
-intro_draw_text proc far
+intro_draw_text_asm_ proc far
     str_       = word ptr    6
     x_         = word ptr    8
     y_         = word ptr   10
@@ -3208,10 +3102,10 @@ intro_draw_text proc far
     mov     ax, offset word_42248
     pop     bp
     retf
-intro_draw_text endp
+intro_draw_text_asm_ endp
 
 ; RECTANGLE * __cdecl16far hiscore_draw_text(char * str_, int x_, int y_, uint colour_text, uint colour_border)
-hiscore_draw_text proc far
+hiscore_draw_text_asm_ proc far
     str_       = word ptr    6
     x_         = word ptr    8
     y_         = word ptr   10
@@ -3290,10 +3184,10 @@ hiscore_draw_text proc far
     mov     ax, offset rect_42250
     pop     bp
     retf
-hiscore_draw_text endp
+hiscore_draw_text_asm_ endp
 
 ; word __cdecl16far call_read_line(size_t * param_1, int param_2, word param_3, word param_4, uint param_5, int param_6)
-call_read_line proc far
+call_read_line_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -3361,11 +3255,11 @@ LAB_274b_1c6d:
     mov     sp, bp
     pop     bp
     retf
-call_read_line endp
+call_read_line_asm_ endp
     db 0x90
 
 ; int __cdecl16far input_repeat_check(int param_1)
-input_repeat_check proc far
+input_repeat_check_asm_ proc far
     var_4      = word ptr   -4
     param_1    = word ptr    6
 
@@ -3400,10 +3294,10 @@ LAB_274b_1cb8:
     mov     sp, bp
     pop     bp
     retf
-input_repeat_check endp
+input_repeat_check_asm_ endp
 
 ; void __cdecl16far draw_border(int x1_, int y1_, int x2_, int y2_, uint colour1, uint colour2, uint colour3)
-draw_border proc far
+draw_border_asm_ proc far
     var_14     = word ptr  -20
     var_12     = word ptr  -18
     var_10     = word ptr  -16
@@ -3562,10 +3456,10 @@ draw_border proc far
     mov     sp, bp
     pop     bp
     retf
-draw_border endp
+draw_border_asm_ endp
 
 ; void __cdecl16far draw_button(char * text_res, int x1_, int y1_, uint x2_, int y2_, uint colour_border_1, uint colour_border_2, uint colour_bg, uint colour_text)
-draw_button proc far
+draw_button_asm_ proc far
     var_72     = word ptr  -114
     var_70     = word ptr  -112
     var_6E     = word ptr  -110
@@ -3842,10 +3736,10 @@ LAB_274b_20a4:
     mov     sp, bp
     pop     bp
     retf
-draw_button endp
+draw_button_asm_ endp
 
 ; void __cdecl16far shape3d_init_shape(void * in_res, SHAPE3D * out_shape)
-shape3d_init_shape proc far
+shape3d_init_shape_asm_ proc far
     in_res     = dword ptr   6
     out_shape  = word ptr   10
 
@@ -3918,10 +3812,10 @@ shape3d_init_shape proc far
     pop     si
     pop     bp
     retf
-shape3d_init_shape endp
+shape3d_init_shape_asm_ endp
 
 ; int __cdecl16far font_op2_alt(char * str_)
-font_op2_alt proc far
+font_op2_alt_asm_ proc far
     str_       = word ptr    6
 
     push    bp
@@ -3936,10 +3830,10 @@ font_op2_alt proc far
     sar     ax, 0x1
     pop     bp
     retf
-font_op2_alt endp
+font_op2_alt_asm_ endp
 
 ; int __cdecl16far sprite_blit_to_video(SPRITE * sprite_, int unk)
-sprite_blit_to_video proc far
+sprite_blit_to_video_asm_ proc far
     sprite_    = dword ptr   6
     unk        = word ptr   10
 
@@ -4008,11 +3902,11 @@ LAB_274b_21c0:
     mov     sp, bp
     pop     bp
     retf
-sprite_blit_to_video endp
+sprite_blit_to_video_asm_ endp
     db 0x90
 
 ; void __cdecl16far show_waiting(void)
-show_waiting proc far
+show_waiting_asm_ proc far
     sub     ax, ax
     push    ax
     push    ax
@@ -4038,11 +3932,11 @@ show_waiting proc far
     push    cs
     call    near ptr mouse_draw_opaque_check
     retf
-show_waiting endp
+show_waiting_asm_ endp
     db 0x90
 
 ; void __cdecl16far string_fmt_int(char * buf, int value, int width_, int pad_zero)
-string_fmt_int proc far
+string_fmt_int_asm_ proc far
     buf        = word ptr    6
     value      = word ptr    8
     width_     = word ptr   10
@@ -4129,20 +4023,20 @@ LAB_274b_22bb:
     mov     sp, bp
     pop     bp
     retf
-string_fmt_int endp
+string_fmt_int_asm_ endp
     db 0x90
 
 ; undefined __cdecl16far sub_29772(void)
-sub_29772 proc far
+sub_29772_asm_ proc far
     mov     word ptr [word_45D1C], 0x0
     mov     word ptr [word_45D06], 0x0
     mov     word ptr [idle_counter], 0x0
     retf
-sub_29772 endp
+sub_29772_asm_ endp
     db 0x90
 
 ; int __cdecl16far mouse_timer_sprite_unk(int param_1, int param_2, int param_3, int param_4, int param_5, word param_6, word param_7)
-mouse_timer_sprite_unk proc far
+mouse_timer_sprite_unk_asm_ proc far
     var_6      = word ptr   -6
     param_1    = word ptr    6
     param_2    = word ptr    8
@@ -4206,10 +4100,10 @@ LAB_274b_2344:
     mov     sp, bp
     pop     bp
     retf
-mouse_timer_sprite_unk endp
+mouse_timer_sprite_unk_asm_ endp
 
 ; void __cdecl16far file_load_audiores(char * vce_filename, char * sng_filename, char * res_id)
-file_load_audiores proc far
+file_load_audiores_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     vce_filename = word ptr    6
@@ -4251,11 +4145,11 @@ file_load_audiores proc far
     mov     sp, bp
     pop     bp
     retf
-file_load_audiores endp
+file_load_audiores_asm_ endp
     db 0x90
 
 ; void __cdecl16far audio_unload(void)
-audio_unload proc far
+audio_unload_asm_ proc far
     mov     ax, 0x2
     push    ax
     call    far ptr audio_driver_func3F
@@ -4270,10 +4164,10 @@ audio_unload proc far
     add     sp, 0x4
     mov     byte ptr [is_audioloaded], 0x0
     retf
-audio_unload endp
+audio_unload_asm_ endp
 
 ; void __cdecl16far font_set_fontdef2(void * data)
-font_set_fontdef2 proc far
+font_set_fontdef2_asm_ proc far
     data       = dword ptr   6
 
     push    bp
@@ -4287,22 +4181,22 @@ font_set_fontdef2 proc far
     mov     word ptr [fontdef_unk_0E], ax
     pop     bp
     retf
-font_set_fontdef2 endp
+font_set_fontdef2_asm_ endp
     db 0x90
 
 ; void __cdecl16far font_set_fontdef(void)
-font_set_fontdef proc far
+font_set_fontdef_asm_ proc far
     push    word ptr [fontdefptr+2]
     push    word ptr [fontdefptr]
     push    cs
     call    near ptr font_set_fontdef2
     add     sp, 0x4
     retf
-font_set_fontdef endp
+font_set_fontdef_asm_ endp
 ; Formats the given frame's timestamp as M:SS[.cc].
 
 ; void __cdecl16far format_frame_as_string(char * buf, uint frames, int centiseconds)
-format_frame_as_string proc far
+format_frame_as_string_asm_ proc far
     var_16     = word ptr  -22
     var_12     = byte ptr  -18
     buf        = word ptr    6
@@ -4399,10 +4293,10 @@ LAB_274b_24d8:
     mov     sp, bp
     pop     bp
     retf
-format_frame_as_string endp
+format_frame_as_string_asm_ endp
 
 ; int __cdecl16far get_super_random(void)
-get_super_random proc far
+get_super_random_asm_ proc far
     var_4      = word ptr   -4
 
     push    bp
@@ -4435,10 +4329,10 @@ LAB_274b_2512:
     mov     sp, bp
     pop     bp
     retf
-get_super_random endp
+get_super_random_asm_ endp
 
 ; void * __cdecl16far file_load_resource(int type_, char * filename)
-file_load_resource proc far
+file_load_resource_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     type_      = word ptr    6
@@ -4534,11 +4428,11 @@ LAB_274b_25ce:
     mov     sp, bp
     pop     bp
     retf
-file_load_resource endp
+file_load_resource_asm_ endp
     db 0x90
 
 ; word __cdecl16far highscore_write_a_op(int param_1, undefined2 param_2, undefined2 param_3, undefined2 param_4)
-highscore_write_a_op proc far
+highscore_write_a_op_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -4595,10 +4489,10 @@ LAB_274b_262c:
     mov     sp, bp
     pop     bp
     retf
-highscore_write_a_op endp
+highscore_write_a_op_asm_ endp
 
 ; void __cdecl16far input_push_status(void)
-input_push_status proc far
+input_push_status_asm_ proc far
     push    si
     mov     al, byte ptr [byte_3EBD8]
     cbw
@@ -4610,11 +4504,11 @@ input_push_status proc far
     inc     byte ptr [byte_3EBD8]
     pop     si
     retf
-input_push_status endp
+input_push_status_asm_ endp
     db 0x90
 
 ; void __cdecl16far input_pop_status(void)
-input_pop_status proc far
+input_pop_status_asm_ proc far
     push    si
     cmp     byte ptr [byte_3EBD8], 0x0
     jz      LAB_274b_2680
@@ -4633,10 +4527,10 @@ input_pop_status proc far
 LAB_274b_2680:
     pop     si
     retf
-input_pop_status endp
+input_pop_status_asm_ endp
 
 ; void __cdecl16far do_joy_restext(void)
-do_joy_restext proc far
+do_joy_restext_asm_ proc far
     var_56     = word ptr  -86
     var_54     = word ptr  -84
     var_52     = word ptr  -82
@@ -4909,10 +4803,10 @@ LAB_274b_28cb:
     mov     sp, bp
     pop     bp
     retf
-do_joy_restext endp
+do_joy_restext_asm_ endp
 
 ; void __cdecl16far do_key_restext(void)
-do_key_restext proc far
+do_key_restext_asm_ proc far
     push    cs
     call    near ptr input_push_status
     mov     word ptr [word_3F88E], 0x1
@@ -4947,10 +4841,10 @@ do_key_restext proc far
     push    cs
     call    near ptr input_pop_status
     retf
-do_key_restext endp
+do_key_restext_asm_ endp
 
 ; void __cdecl16far do_mou_restext(void)
-do_mou_restext proc far
+do_mou_restext_asm_ proc far
     push    cs
     call    near ptr input_push_status
     mov     word ptr [word_3F88E], 0x1
@@ -4984,11 +4878,11 @@ do_mou_restext proc far
     push    cs
     call    near ptr input_pop_status
     retf
-do_mou_restext endp
+do_mou_restext_asm_ endp
     db 0x90
 
 ; void __cdecl16far do_pau_restext(void)
-do_pau_restext proc far
+do_pau_restext_asm_ proc far
     push    cs
     call    near ptr input_push_status
     mov     word ptr [word_3F88E], 0x1
@@ -5020,11 +4914,11 @@ do_pau_restext proc far
     push    cs
     call    near ptr input_pop_status
     retf
-do_pau_restext endp
+do_pau_restext_asm_ endp
     db 0x90
 
 ; void __cdecl16far do_mof_restext(void)
-do_mof_restext proc far
+do_mof_restext_asm_ proc far
     push    cs
     call    near ptr input_push_status
     mov     word ptr [word_3F88E], 0x1
@@ -5070,10 +4964,10 @@ LAB_274b_2a1e:
     push    cs
     call    near ptr input_pop_status
     retf
-do_mof_restext endp
+do_mof_restext_asm_ endp
 
 ; void __cdecl16far do_sonsof_restext(void)
-do_sonsof_restext proc far
+do_sonsof_restext_asm_ proc far
     push    cs
     call    near ptr input_push_status
     mov     word ptr [word_3F88E], 0x1
@@ -5119,10 +5013,10 @@ LAB_274b_2a80:
     push    cs
     call    near ptr input_pop_status
     retf
-do_sonsof_restext endp
+do_sonsof_restext_asm_ endp
 
 ; void __cdecl16far do_dos_restext(void)
-do_dos_restext proc far
+do_dos_restext_asm_ proc far
     push    cs
     call    near ptr input_push_status
     mov     word ptr [word_3F88E], 0x1
@@ -5159,10 +5053,10 @@ LAB_274b_2af6:
     push    cs
     call    near ptr input_pop_status
     retf
-do_dos_restext endp
+do_dos_restext_asm_ endp
 
 ; void __cdecl16far show_graphic_levels_menu(void)
-show_graphic_levels_menu proc far
+show_graphic_levels_menu_asm_ proc far
     var_212    = word ptr  -530
     var_20C    = byte ptr  -524
     var_205    = byte ptr  -517
@@ -5325,10 +5219,10 @@ LAB_274b_2c53:
     mov     sp, bp
     pop     bp
     retf
-show_graphic_levels_menu endp
+show_graphic_levels_menu_asm_ endp
 
 ; short __cdecl16far do_dea_textres(void)
-do_dea_textres proc far
+do_dea_textres_asm_ proc far
     var_2      = word ptr   -2
 
     push    bp
@@ -5398,10 +5292,10 @@ LAB_274b_2ceb:
     mov     sp, bp
     pop     bp
     retf
-do_dea_textres endp
+do_dea_textres_asm_ endp
 
 ; void __cdecl16far ensure_file_exists(int unk)
-ensure_file_exists proc far
+ensure_file_exists_asm_ proc far
     unk        = word ptr    6
 
     push    bp
@@ -5445,11 +5339,11 @@ LAB_274b_2d38:
     jz      LAB_274b_2cfc
     pop     bp
     retf
-ensure_file_exists endp
+ensure_file_exists_asm_ endp
     db 0x90
 
 ; void __cdecl16far do_mer_restext(void)
-do_mer_restext proc far
+do_mer_restext_asm_ proc far
     sub     ax, ax
     push    ax
     push    ax
@@ -5473,17 +5367,17 @@ do_mer_restext proc far
     call    near ptr show_dialog
     add     sp, 0x12
     retf
-do_mer_restext endp
+do_mer_restext_asm_ endp
     db 0x90
 
 ; ulong __cdecl16far timer_get_delta_alt(void)
-timer_get_delta_alt proc far
+timer_get_delta_alt_asm_ proc far
     call    far ptr timer_get_delta
     retf
-timer_get_delta_alt endp
+timer_get_delta_alt_asm_ endp
 
 ; void * __cdecl16far file_load_3dres(char * filename)
-file_load_3dres proc far
+file_load_3dres_asm_ proc far
     var_54     = byte ptr  -84
     var_4      = word ptr   -4
     var_2      = word ptr   -2
@@ -5546,7 +5440,7 @@ LAB_274b_2e02:
     mov     sp, bp
     pop     bp
     retf
-file_load_3dres endp
+file_load_3dres_asm_ endp
 
 seg008 ends
 end

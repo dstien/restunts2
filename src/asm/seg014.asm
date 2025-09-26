@@ -2,59 +2,15 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg014.inc
 
 seg014 segment byte public use16 'STUNTSC'
     assume cs:seg014, es:nothing, ss:nothing, ds:dseg
 
-    public preRender_wheel_helper3
-
     db 0x90
 
 ; void __cdecl16far preRender_wheel_helper3(int * param_1, POINT2D * vertlines)
-preRender_wheel_helper3 proc far
+preRender_wheel_helper3_asm_ proc far
     var_A      = word ptr  -10
     var_8      = word ptr   -8
     var_6      = word ptr   -6
@@ -238,7 +194,7 @@ LAB_3624_019c:
     mov     sp, bp
     pop     bp
     retf
-preRender_wheel_helper3 endp
+preRender_wheel_helper3_asm_ endp
 
 seg014 ends
 end

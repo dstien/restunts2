@@ -2,57 +2,13 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg015.inc
 
 seg015 segment byte public use16 'STUNTSC'
     assume cs:seg015, es:nothing, ss:nothing, ds:dseg
 
-    public preRender_sphere_helper2
-
 ; void __cdecl16far preRender_sphere_helper2(int * param_1, POINT2D * vertlines_out)
-preRender_sphere_helper2 proc far
+preRender_sphere_helper2_asm_ proc far
     var_1A     = word ptr  -26
     var_18     = word ptr  -24
     var_16     = word ptr  -22
@@ -416,7 +372,7 @@ LAB_3641_036b:
     mov     sp, bp
     pop     bp
     retf
-preRender_sphere_helper2 endp
+preRender_sphere_helper2_asm_ endp
 
 seg015 ends
 end

@@ -2,62 +2,15 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg016.inc
 
 seg016 segment byte public use16 'STUNTSC'
     assume cs:seg016, es:nothing, ss:nothing, ds:dseg
 
-    public locate_many_resources
-    public nopsub_367E4
-    public nopsub_36826
-    public nopsub_36868
-
     db 0x90
 
 ; void __cdecl16far locate_many_resources(void * data, char * names, void * * result)
-locate_many_resources proc far
+locate_many_resources_asm_ proc far
     data       = dword ptr   6
     names      = word ptr   10
     result     = dword ptr  14
@@ -83,11 +36,11 @@ LAB_367b_0029:
     jnz     LAB_367b_0008
     pop     bp
     retf
-locate_many_resources endp
+locate_many_resources_asm_ endp
     db 0x90
 
 ; undefined __cdecl16far nopsub_367E4(int param_1, int param_2, char * param_3, int param_4)
-nopsub_367E4 proc far
+nopsub_367E4_asm_ proc far
     var_2      = word ptr   -2
     param_1    = word ptr    6
     param_2    = word ptr    8
@@ -122,10 +75,10 @@ LAB_367b_0069:
     mov     sp, bp
     pop     bp
     retf
-nopsub_367E4 endp
+nopsub_367E4_asm_ endp
 
 ; undefined __cdecl16far nopsub_36826(int param_1, undefined2 param_2, char * param_3, int param_4)
-nopsub_36826 proc far
+nopsub_36826_asm_ proc far
     var_2      = word ptr   -2
     param_1    = word ptr    6
     param_2    = word ptr    8
@@ -160,10 +113,10 @@ LAB_367b_00ab:
     mov     sp, bp
     pop     bp
     retf
-nopsub_36826 endp
+nopsub_36826_asm_ endp
 
 ; undefined __cdecl16far nopsub_36868(int param_1, int param_2, char * param_3, int param_4)
-nopsub_36868 proc far
+nopsub_36868_asm_ proc far
     var_2      = word ptr   -2
     param_1    = word ptr    6
     param_2    = word ptr    8
@@ -198,7 +151,7 @@ LAB_367b_00ed:
     mov     sp, bp
     pop     bp
     retf
-nopsub_36868 endp
+nopsub_36868_asm_ endp
 
 seg016 ends
 end

@@ -2,63 +2,15 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg035.inc
 
 seg035 segment byte public use16 'STUNTSC'
     assume cs:seg035, es:nothing, ss:nothing, ds:dseg
 
-    public file_load_shape2d_res_fatal
-    public file_load_shape2d_res_nofatal
-    public file_load_shape2d_res
-    public parse_shape2d
-    public parse_shape2d_helper3
-
     db 0x90
 
 ; void * __cdecl16far file_load_shape2d_res_fatal(char * filename)
-file_load_shape2d_res_fatal proc far
+file_load_shape2d_res_fatal_asm_ proc far
     filename   = word ptr    6
 
     push    bp
@@ -71,11 +23,11 @@ file_load_shape2d_res_fatal proc far
     add     sp, 0x4
     pop     bp
     retf
-file_load_shape2d_res_fatal endp
+file_load_shape2d_res_fatal_asm_ endp
     db 0x90
 
 ; void * __cdecl16far file_load_shape2d_res_nofatal(char * filename)
-file_load_shape2d_res_nofatal proc far
+file_load_shape2d_res_nofatal_asm_ proc far
     filename   = word ptr    6
 
     push    bp
@@ -88,10 +40,10 @@ file_load_shape2d_res_nofatal proc far
     add     sp, 0x4
     pop     bp
     retf
-file_load_shape2d_res_nofatal endp
+file_load_shape2d_res_nofatal_asm_ endp
 
 ; void * __cdecl16far file_load_shape2d_res(char * filename, int is_fatal)
-file_load_shape2d_res proc far
+file_load_shape2d_res_asm_ proc far
     local_c    = word ptr  -10
     local_a    = word ptr   -8
     local_8    = word ptr   -6
@@ -162,10 +114,10 @@ LAB_3acd_007a:
     mov     sp, bp
     pop     bp
     retf
-file_load_shape2d_res endp
+file_load_shape2d_res_asm_ endp
 
 ; void __cdecl16far parse_shape2d(void * memchunk_, void * mempages)
-parse_shape2d proc far
+parse_shape2d_asm_ proc far
     local_3a   = dword ptr -56
     local_36   = word ptr  -52
     local_34   = word ptr  -50
@@ -468,11 +420,11 @@ LAB_3acd_03a4:
     mov     sp, bp
     pop     bp
     retf
-parse_shape2d endp
+parse_shape2d_asm_ endp
     db 0x90
 
 ; word __cdecl16far parse_shape2d_helper3(char * param_1)
-parse_shape2d_helper3 proc far
+parse_shape2d_helper3_asm_ proc far
     var_4      = byte ptr   -4
     var_2      = word ptr   -2
     param_1    = dword ptr   6
@@ -497,7 +449,7 @@ LAB_3acd_03d5:
     mov     sp, bp
     pop     bp
     retf
-parse_shape2d_helper3 endp
+parse_shape2d_helper3_asm_ endp
 
 seg035 ends
 end

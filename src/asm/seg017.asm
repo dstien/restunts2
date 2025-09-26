@@ -2,63 +2,13 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg017.inc
 
 seg017 segment byte public use16 'STUNTSC'
     assume cs:seg017, es:nothing, ss:nothing, ds:dseg
 
-    public mouse_set_pixratio
-    public mouse_init
-    public mouse_set_minmax
-    public mouse_set_position
-    public mouse_get_state
-    public nopsub_36A9A
-    public nopsub_36ACA
-
 ; void __cdecl16far mouse_set_pixratio(word horizontal, word vertical)
-mouse_set_pixratio proc far
+mouse_set_pixratio_asm_ proc far
     horizontal = word ptr    6
     vertical   = word ptr    8
 
@@ -78,10 +28,10 @@ mouse_set_pixratio proc far
     add     sp, 0x6
     pop     bp
     retf
-mouse_set_pixratio endp
+mouse_set_pixratio_asm_ endp
 
 ; word __cdecl16far mouse_init(int width_, int height_)
-mouse_init proc far
+mouse_init_asm_ proc far
     var_2      = word ptr   -2
     width_     = word ptr    6
     height_    = word ptr    8
@@ -143,10 +93,10 @@ LAB_368a_00b5:
     mov     sp, bp
     pop     bp
     retf
-mouse_init endp
+mouse_init_asm_ endp
 
 ; void __cdecl16far mouse_set_minmax(int x1_, int y1_, int x2_, int y2_)
-mouse_set_minmax proc far
+mouse_set_minmax_asm_ proc far
     x1_        = word ptr    6
     y1_        = word ptr    8
     x2_        = word ptr   10
@@ -183,7 +133,7 @@ mouse_set_minmax proc far
     add     sp, 0x6
     pop     bp
     retf
-mouse_set_minmax endp
+mouse_set_minmax_asm_ endp
     db 0x90
     mov     word ptr [regs_x86], 0x3
     mov     ax, offset regs_x86
@@ -233,7 +183,7 @@ LAB_368a_018b:
     retf
 
 ; void __cdecl16far mouse_set_position(int x_, int y_)
-mouse_set_position proc far
+mouse_set_position_asm_ proc far
     x_         = word ptr    6
     y_         = word ptr    8
 
@@ -257,10 +207,10 @@ mouse_set_position proc far
     add     sp, 0x6
     pop     bp
     retf
-mouse_set_position endp
+mouse_set_position_asm_ endp
 
 ; void __cdecl16far mouse_get_state(int * buttons, int * pos_x, int * pos_y)
-mouse_get_state proc far
+mouse_get_state_asm_ proc far
     buttons    = word ptr    6
     pos_x      = word ptr    8
     pos_y      = word ptr   10
@@ -288,10 +238,10 @@ mouse_get_state proc far
     mov     word ptr [bx], ax
     pop     bp
     retf
-mouse_get_state endp
+mouse_get_state_asm_ endp
 
 ; undefined __cdecl16far nopsub_36A9A(int param_1, int param_2)
-nopsub_36A9A proc far
+nopsub_36A9A_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
 
@@ -314,10 +264,10 @@ nopsub_36A9A proc far
     add     sp, 0x6
     pop     bp
     retf
-nopsub_36A9A endp
+nopsub_36A9A_asm_ endp
 
 ; undefined __cdecl16far nopsub_36ACA(word param_1, word param_2)
-nopsub_36ACA proc far
+nopsub_36ACA_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
 
@@ -337,7 +287,7 @@ nopsub_36ACA proc far
     add     sp, 0x6
     pop     bp
     retf
-nopsub_36ACA endp
+nopsub_36ACA_asm_ endp
 
 seg017 ends
 end

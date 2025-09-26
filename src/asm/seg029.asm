@@ -2,57 +2,10 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg029.inc
 
 seg029 segment byte public use16 'STUNTSC'
     assume cs:seg029, es:nothing, ss:nothing, ds:dseg
-
-    public audioresource_compare_chunknames
-    public audioresource_get_chunk_index
-    public audioresource_find
-    public audioresource_copy_n_bytes
 
     db 0x90
     db 0
@@ -61,7 +14,7 @@ seg029 segment byte public use16 'STUNTSC'
 ; returns 1 if the chunk names are equal, 0 if not  
 
 ; bool __cdecl16far audioresource_compare_chunknames(int case_sensitive, byte * chunk_name, byte * found_name, int num)
-audioresource_compare_chunknames proc far
+audioresource_compare_chunknames_asm_ proc far
     var_2      = word ptr   -2
     case_sensitive = word ptr    6
     chunk_name = dword ptr   8
@@ -131,12 +84,12 @@ LAB_39ad_0080:
     mov     sp, bp
     pop     bp
     retf
-audioresource_compare_chunknames endp
+audioresource_compare_chunknames_asm_ endp
     db 0x90
 ; returns the index of a specified 4 byte chunk name in an array of 4 bytes chunk names  
 
 ; int __cdecl16far audioresource_get_chunk_index(int num, int numchunks, char * chunkname, byte * chunkptr)
-audioresource_get_chunk_index proc far
+audioresource_get_chunk_index_asm_ proc far
     var_chunkname = word ptr  -14
     var_chunknameseg = word ptr  -12
     var_A      = word ptr  -10
@@ -213,10 +166,10 @@ LAB_39ad_0103:
     mov     sp, bp
     pop     bp
     retf
-audioresource_get_chunk_index endp
+audioresource_get_chunk_index_asm_ endp
 
 ; word __cdecl16far audioresource_find(void * data, char * chunkname)
-audioresource_find proc far
+audioresource_find_asm_ proc far
     var_chunkindex = word ptr  -16
     var_E      = word ptr  -14
     var_C      = word ptr  -12
@@ -298,10 +251,10 @@ LAB_39ad_01aa:
     mov     sp, bp
     pop     bp
     retf
-audioresource_find endp
+audioresource_find_asm_ endp
 
 ; undefined __cdecl16far audioresource_copy_n_bytes(void * srcptr, void * dstptr, int count)
-audioresource_copy_n_bytes proc far
+audioresource_copy_n_bytes_asm_ proc far
     var_6      = word ptr   -6
     var_2      = word ptr   -2
     srcptr     = dword ptr   6
@@ -341,7 +294,7 @@ LAB_39ad_01f4:
     mov     sp, bp
     pop     bp
     retf
-audioresource_copy_n_bytes endp
+audioresource_copy_n_bytes_asm_ endp
 
 seg029 ends
 end

@@ -2,79 +2,13 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg006.inc
 
 seg006 segment byte public use16 'STUNTSC'
     assume cs:seg006, es:nothing, ss:nothing, ds:dseg
 
-    public init_polyinfo
-    public copy_material_list_pointers
-    public polyinfo_reset
-    public select_cliprect_rotate
-    public transformed_shape_op
-    public insert_newest_poly_in_poly_linked_list_40ED6
-    public rect_compare_point
-    public is_facing_camera
-    public get_a_poly_info
-    public mat_rot_zxy
-    public off_rot_zxy
-    public rect_adjust_from_point
-    public vector_op_unk2
-    public calc_sincos80
-    public nopsub_26552
-    public rect_union
-    public rect_intersect
-    public rectlist_add_rect
-    public rect_is_overlapping
-    public rect_is_inside
-    public rect_is_adjacent
-    public rectlist_add_rects
-    public rect_array_sort_by_top
-
 ; void __cdecl16far init_polyinfo(void)
-init_polyinfo proc far
+init_polyinfo_asm_ proc far
     mov     ax, 0x28a0                         ; bytes to reserve
     cwd
     push    dx
@@ -112,11 +46,11 @@ init_polyinfo proc far
     push    cs
     call    near ptr calc_sincos80
     retf
-init_polyinfo endp
+init_polyinfo_asm_ endp
     db 0x90
 
 ; void __cdecl16far copy_material_list_pointers(void * clrlist, void * clrlist2, void * patlist, void * patlist2, uint videoConst)
-copy_material_list_pointers proc far
+copy_material_list_pointers_asm_ proc far
     clrlist    = word ptr    6
     clrlist2   = word ptr    8
     patlist    = word ptr   10
@@ -137,22 +71,22 @@ copy_material_list_pointers proc far
     mov     word ptr [someZeroVideoConst], ax
     pop     bp
     retf
-copy_material_list_pointers endp
+copy_material_list_pointers_asm_ endp
     db 0x90
 
 ; void __cdecl16far polyinfo_reset(void)
-polyinfo_reset proc far
+polyinfo_reset_asm_ proc far
     mov     word ptr [polyinfonumpolys], 0x0
     mov     word ptr [polyinfoptrnext], 0x0
     mov     word ptr [word_40ECE], 0x0
     mov     word ptr [word_411F6], 0xffff
     mov     word ptr [poly_linklist_40ED6_iter2], 0x190
     retf
-polyinfo_reset endp
+polyinfo_reset_asm_ endp
     db 0x90
 
 ; uint __cdecl16far select_cliprect_rotate(int ang_z, int ang_x, int ang_y, RECTANGLE * cliprect, int unk)
-select_cliprect_rotate proc far
+select_cliprect_rotate_asm_ proc far
     var_vec    = byte ptr  -14
     var_matptr = word ptr   -8
     var_vec2   = byte ptr   -6
@@ -229,10 +163,10 @@ select_cliprect_rotate proc far
     mov     sp, bp
     pop     bp
     retf
-select_cliprect_rotate endp
+select_cliprect_rotate_asm_ endp
 
 ; uint __cdecl16far transformed_shape_op(TRANSFORMEDSHAPE * transshape)
-transformed_shape_op proc far
+transformed_shape_op_asm_ proc far
     var_B7C    = word ptr  -2940
     var_polyvertunktabptr = word ptr  -2938
     var_cull1  = dword ptr -2936
@@ -1797,12 +1731,12 @@ _done_ret_0:
     mov     sp, bp
     pop     bp
     retf
-transformed_shape_op endp
+transformed_shape_op_asm_ endp
     db 0x90
 ; Formerly transformed_shape_op_helper3
 
 ; undefined2 __cdecl16far insert_newest_poly_in_poly_linked_list_40ED6(int param_1, int param_2)
-insert_newest_poly_in_poly_linked_list_40ED6 proc far
+insert_newest_poly_in_poly_linked_list_40ED6_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
 
@@ -1887,10 +1821,10 @@ LAB_24d6_117a:
     mov     sp, bp
     pop     bp
     retf
-insert_newest_poly_in_poly_linked_list_40ED6 endp
+insert_newest_poly_in_poly_linked_list_40ED6_asm_ endp
 
 ; byte __cdecl16far rect_compare_point(int * param_1)
-rect_compare_point proc far
+rect_compare_point_asm_ proc far
     var_flags  = byte ptr   -4
     param_1    = word ptr    6
 
@@ -1931,10 +1865,10 @@ LAB_24d6_11c5:
     mov     sp, bp
     pop     bp
     retf
-rect_compare_point endp
+rect_compare_point_asm_ endp
 
 ; char __cdecl16far is_facing_camera(POINT2D * pts)
-is_facing_camera proc far
+is_facing_camera_asm_ proc far
     var_10     = dword ptr -16
     var_C      = dword ptr -12
     var_8      = dword ptr  -8
@@ -2034,10 +1968,10 @@ LAB_24d6_128e:
     mov     sp, bp
     pop     bp
     retf
-is_facing_camera endp
+is_facing_camera_asm_ endp
 
 ; void __cdecl16far get_a_poly_info(void)
-get_a_poly_info proc far
+get_a_poly_info_asm_ proc far
     var_pattype2 = word ptr  -64
     var_polyinfoptrdata = dword ptr -62
     var_polyinfoptr = dword ptr -56
@@ -2269,13 +2203,13 @@ _get_a_poly_info_done:
     mov     sp, bp
     pop     bp
     retf
-get_a_poly_info endp
+get_a_poly_info_asm_ endp
 ;  
 ; Combined rotation matrix for 
 ; angles around all axes.  
 
 ; MATRIX * __cdecl16far mat_rot_zxy(int z_, int x_, int y_, int unk)
-mat_rot_zxy proc far
+mat_rot_zxy_asm_ proc far
     z_         = word ptr    6
     x_         = word ptr    8
     y_         = word ptr   10
@@ -2471,10 +2405,10 @@ LAB_24d6_1612:
     mov     sp, bp
     pop     bp
     retf
-mat_rot_zxy endp
+mat_rot_zxy_asm_ endp
 
 ; void __cdecl16far rect_adjust_from_point(POINT2D * pt, RECTANGLE * rc)
-rect_adjust_from_point proc far
+rect_adjust_from_point_asm_ proc far
     var_6      = word ptr   -6
     pt         = word ptr    6
     rc         = word ptr    8
@@ -2516,10 +2450,10 @@ LAB_24d6_1660:
     mov     sp, bp
     pop     bp
     retf
-rect_adjust_from_point endp
+rect_adjust_from_point_asm_ endp
 
 ; int __cdecl16far vector_op_unk2(VECTOR * vec)
-vector_op_unk2 proc far
+vector_op_unk2_asm_ proc far
     var_y      = dword ptr -14
     var_A      = byte ptr  -10
     var_8      = word ptr   -8
@@ -2664,10 +2598,10 @@ LAB_24d6_178b:
     mov     sp, bp
     pop     bp
     retf
-vector_op_unk2 endp
+vector_op_unk2_asm_ endp
 
 ; void __cdecl16far calc_sincos80(void)
-calc_sincos80 proc far
+calc_sincos80_asm_ proc far
     mov     ax, 0x80
     push    ax
     call    far ptr sin_fast
@@ -2697,11 +2631,11 @@ calc_sincos80 proc far
     mov     word ptr [cos80_2], ax
     mov     word ptr [cos80_2+2], dx
     retf
-calc_sincos80 endp
+calc_sincos80_asm_ endp
     db 0x90
 
 ; int __cdecl16far nopsub_26552(int param_1, int param_2)
-nopsub_26552 proc far
+nopsub_26552_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
 
@@ -2721,10 +2655,10 @@ LAB_24d6_180a:
     mov     dx, word ptr [bp+param_2]
     pop     bp
     retf
-nopsub_26552 endp
+nopsub_26552_asm_ endp
 
 ; void __cdecl16far rect_union(RECTANGLE * r1, RECTANGLE * r2, RECTANGLE * outrc)
-rect_union proc far
+rect_union_asm_ proc far
     r1         = word ptr    6
     r2         = word ptr    8
     outrc      = word ptr   10
@@ -2781,10 +2715,10 @@ LAB_24d6_1889:
     pop     si
     pop     bp
     retf
-rect_union endp
+rect_union_asm_ endp
 
 ; int __cdecl16far rect_intersect(RECTANGLE * r1, RECTANGLE * r2)
-rect_intersect proc far
+rect_intersect_asm_ proc far
     r1         = word ptr    6
     r2         = word ptr    8
 
@@ -2850,10 +2784,10 @@ LAB_24d6_190b:
     pop     si
     pop     bp
     retf
-rect_intersect endp
+rect_intersect_asm_ endp
 
 ; void __cdecl16far rectlist_add_rect(char * rect_arr_len, RECTANGLE * rect_arr, RECTANGLE * rect)
-rectlist_add_rect proc far
+rectlist_add_rect_asm_ proc far
     var_22     = byte ptr  -34
     var_rect2  = byte ptr  -32
     var_18     = byte ptr  -24
@@ -3246,11 +3180,11 @@ LAB_24d6_1bf7:
     mov     sp, bp
     pop     bp
     retf
-rectlist_add_rect endp
+rectlist_add_rect_asm_ endp
     db 0x90
 
 ; int __cdecl16far rect_is_overlapping(RECTANGLE * r1, RECTANGLE * r2)
-rect_is_overlapping proc far
+rect_is_overlapping_asm_ proc far
     r1         = word ptr    6
     r2         = word ptr    8
 
@@ -3285,10 +3219,10 @@ LAB_24d6_1c14:
     pop     si
     pop     bp
     retf
-rect_is_overlapping endp
+rect_is_overlapping_asm_ endp
 
 ; int __cdecl16far rect_is_inside(RECTANGLE * r1, RECTANGLE * r2)
-rect_is_inside proc far
+rect_is_inside_asm_ proc far
     r1         = word ptr    6
     r2         = word ptr    8
 
@@ -3318,11 +3252,11 @@ LAB_24d6_1c6a:
     pop     si
     pop     bp
     retf
-rect_is_inside endp
+rect_is_inside_asm_ endp
     db 0x90
 
 ; int __cdecl16far rect_is_adjacent(RECTANGLE * r1, RECTANGLE * r2)
-rect_is_adjacent proc far
+rect_is_adjacent_asm_ proc far
     r1         = word ptr    6
     r2         = word ptr    8
 
@@ -3391,10 +3325,10 @@ LAB_24d6_1cde:
     mov     bx, si
     mov     si, word ptr [bp+r2]
     jmp     LAB_24d6_1ccd
-rect_is_adjacent endp
+rect_is_adjacent_asm_ endp
 
 ; void __cdecl16far rectlist_add_rects(byte rect_count, char * rect_arr_indices, RECTANGLE * rect_arr1, RECTANGLE * rect_arr2, RECTANGLE * param_5, char * rect_arr_len, RECTANGLE * rect_arr)
-rectlist_add_rects proc far
+rectlist_add_rects_asm_ proc far
     var_rectptr3 = word ptr  -28
     var_rectptr = word ptr  -26
     var_rectcounter = byte ptr  -24
@@ -3531,10 +3465,10 @@ LAB_24d6_1de4:
     mov     sp, bp
     pop     bp
     retf
-rectlist_add_rects endp
+rectlist_add_rects_asm_ endp
 
 ; void __cdecl16far rect_array_sort_by_top(char arr_length, RECTANGLE * arr, int * indices)
-rect_array_sort_by_top proc far
+rect_array_sort_by_top_asm_ proc far
     var_intbuffer = word ptr  -514
     arr_length = byte ptr    6
     arr        = word ptr    8
@@ -3591,7 +3525,7 @@ LAB_24d6_1e40:
     mov     sp, bp
     pop     bp
     retf
-rect_array_sort_by_top endp
+rect_array_sort_by_top_asm_ endp
 
 seg006 ends
 end

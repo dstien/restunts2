@@ -3,12 +3,14 @@
 An attempt to refurbish the [Stunts reverse engineering project](https://github.com/4d-stunts/restunts) with free, contemporary tooling and measures to improve correctness of the ported code.
 
 ## Progress
+
 - [X] Convert IDA database to Ghidra.
 - [X] Set up Ghidra Server for collaborative analysis.
 - [X] Ghidra script to generate Watcom Assembler code.
 - [X] Recreate working, debuggable game executable with Watcom Linker.
-- [ ] Link-time overriding functions ported to C.
+- [X] Build-time override functions ported to C.
 - [ ] Import C functions from the original [restunts](https://github.com/4d-stunts/restunts) project, switch to [fixed-width integers](https://en.wikipedia.org/wiki/C_data_types#Fixed-width_integer_types) and add [unit tests](https://en.wikipedia.org/wiki/Unit_testing).
+- [ ] Enforce consistent coding style with *clang-format*.
 - [ ] Continous integration for all targets.
 - [ ] Find a clean solution for improving the game while preserving original behaviour with minimal code duplication.
 - [ ] Find a lossless, text-based format for backing up the Ghidra analysis database in git.
@@ -20,7 +22,9 @@ A recreation of the original Stunts 1.1 executable can be built using GNU Make a
 ```
 $ make
 ```
-This produces the 16-bit real-mode DOS executable `build/dos16/restunto.exe`.
+This produces two 16-bit real-mode DOS executables in `build/dos16`:
+* `restunts.exe`, which combines our ported C functions with the original code.
+* `restunto.exe`, which uses solely the original code. It is functionally identical to the retail version, but not binary identical.
 
 Builds are debug-enabled by default. Release builds can be made with `make DEBUG=0` or running `wstrip` on the executable.
 
@@ -28,21 +32,21 @@ Builds are debug-enabled by default. Release builds can be made with `make DEBUG
 
 The Watcom Debugger `wd` can be used to interactively debug the game in a DOS environment.
 
-Copy or symlink the executable to a directory with the game data files and start the debugger:
+Copy or symlink the executables to a directory with the game data files and start the debugger:
 ```
-C:\STUNTS> wd restunto.exe
+C:\STUNTS> wd restunts.exe
 ```
-Inside the debugger you may want to set the source file paths, adjust settings or UI layout, and save the configuration to a file that can be loaded on startup. This example starts the debugger in VESA 80x50 mode, loads a stored configuration, and debugs `restunto.exe` with the Roland MT-32 sound driver:
+Inside the debugger you may want to set the source file paths, adjust settings or UI layout, and save the configuration to a file that can be loaded on startup. This example starts the debugger in VESA 80x50 mode, loads a stored configuration, and debugs `restunts.exe` with the Roland MT-32 sound driver:
 ```
-C:\STUNTS> wd -co=80 -li=50 -invoke=restunto.dbg restunto.exe /smt
+C:\STUNTS> wd -co=80 -li=50 -invoke=restunts.dbg restunts.exe /smt
 ```
 Watcom also supports remote debugging. `LDFLAGS` can be set for the `dos16` make target to produce debug data in DWARF or CodeView format for use with other debuggers. See the [Open Watcom Linker User's Guide](https://open-watcom.github.io/open-watcom-v2-wikidocs/lguide.pdf) for details.
 
-Since code and data alignments are preserved, restunts can be debugged side by side with the original game for comparison.
+Since code and data alignments are preserved, `restunts.exe` can be debugged side by side with `restunto.exe` or the retail version for comparison.
 
 ## Analysis
 
-Analysis of the original machine code is done with [Ghidra](https://www.nsa.gov/ghidra). Since the analysis database consists of binary files unsuitable for merging in git, Ghidra provides its own server component for multi-user collaboration.
+Analysis of the original machine code is done with [Ghidra](https://www.nsa.gov/ghidra). The analysis database consists of binary files that are unsuitable for merging in git, but Ghidra provides its own server component for multi-user collaboration.
 
 ### Opening the Ghidra project
 1. In the main Ghidra project window click *File → New Project...*.
@@ -78,10 +82,16 @@ To account for issues we can't handle properly in Ghidra, we use four *patch tag
     * `<NOP>` replaces every byte in the original instruction with a `nop` opcode, effectively ignoring the original instruction while preserving alignment. Useful for "commenting out" a function call and observing the effects.
     * `<DELETE>` removes the instruction. Must be combined with another patch to make up for the code size change.
 
+## Porting code to C
+
+1. Implement the function in a file in `src/c`. When adding a new file, include it in `SRC` in `src/Makefile` and add the object file to the `FILE` directive in `src/dos16/restunts-port.lnk`.
+2. Add the function name to `PORTED_FUNCS_BY_FILE` in `ghidra/resunts-export.py` and run the export from Ghidra.
+3. Rebuild and test.
+
 ## Troubleshooting
 
 <details>
-<summary>Ghidra won't let you change the username when connecting</summary>
+<summary><b>Ghidra won't let you change the username when connecting</b></summary>
 
 Try launching Ghidra with:
 ```
@@ -92,7 +102,7 @@ This workaround will prevent you from opening other Ghidra projects because they
 </details>
 
 <details>
-<summary>Watcom Debugger won't start under DOS</summary>
+<summary><b>Watcom Debugger won't start under DOS</b></summary>
 
 Install the older [Open Watcom 1.9](https://github.com/open-watcom/open-watcom-1.9/releases/tag/ow1.9) in your DOS environment. The 2.0 project has regressions with DOS debugging:
 * open-watcom/open-watcom-v2#1396

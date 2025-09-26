@@ -2,58 +2,14 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg036.inc
 
 seg036 segment byte public use16 'STUNTSC'
     assume cs:seg036, es:nothing, ss:nothing, ds:dseg
 
-    public file_get_unflip_size
-
 ; returns size of largest shape (XxY+32) in the shape collection resource  
 ; ushort __cdecl16far file_get_unflip_size(void * memchunk_)
-file_get_unflip_size proc far
+file_get_unflip_size_asm_ proc far
     var_C      = word ptr  -12
     var_A      = word ptr  -10
     var_8      = word ptr   -8
@@ -103,7 +59,7 @@ LAB_3b0b_006b:
     mov     sp, bp
     pop     bp
     retf
-file_get_unflip_size endp
+file_get_unflip_size_asm_ endp
 
 seg036 ends
 end

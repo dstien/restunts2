@@ -2,61 +2,15 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg032.inc
 
 seg032 segment byte public use16 'STUNTSC'
     assume cs:seg032, es:nothing, ss:nothing, ds:dseg
 
-    public read_line
-    public read_line_helper
-    public read_line_helper2
-
     db 0x90
 
 ; word __cdecl16far read_line(byte param_1, size_t * param_2, word param_3, int param_4, word param_5, word param_6, word param_7, undefined * param_8, undefined2 param_9, uint param_10, int param_11)
-read_line proc far
+read_line_asm_ proc far
     var_A      = word ptr  -10
     var_8      = word ptr   -8
     var_6      = word ptr   -6
@@ -402,11 +356,11 @@ LAB_3a4b_0339:
 LAB_3a4b_033d:
     mov     word ptr [bp+var_2], 0x0
     jmp     near ptr LAB_3a4b_00b8
-read_line endp
+read_line_asm_ endp
     db 0x90
 
 ; undefined __cdecl16far read_line_helper(void)
-read_line_helper proc far
+read_line_helper_asm_ proc far
     var_6      = word ptr   -6
     var_4      = word ptr   -4
     var_2      = word ptr   -2
@@ -466,11 +420,11 @@ LAB_3a4b_03e1:
     mov     sp, bp
     pop     bp
     retf
-read_line_helper endp
+read_line_helper_asm_ endp
     db 0x90
 
 ; undefined __cdecl16far read_line_helper2(void)
-read_line_helper2 proc far
+read_line_helper2_asm_ proc far
     var_6      = word ptr   -6
     var_4      = word ptr   -4
     var_2      = word ptr   -2
@@ -549,7 +503,7 @@ LAB_3a4b_04a3:
     mov     sp, bp
     pop     bp
     retf
-read_line_helper2 endp
+read_line_helper2_asm_ endp
 
 seg032 ends
 end

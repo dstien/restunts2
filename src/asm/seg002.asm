@@ -2,69 +2,15 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg002.inc
 
 seg002 segment byte public use16 'STUNTSC'
     assume cs:seg002, es:nothing, ss:nothing, ds:dseg
 
-    public update_rpm_from_speed
-    public nopsub_19DE8
-    public nopsub_19DFF
-    public nopsub_19E09
-    public nopsub_19E13
-    public init_kevinrandom
-    public get_kevinrandom_seed
-    public get_kevinrandom
-    public intr0_handler
-    public init_div0
-    public byte_19F07
-
     db 0x90
 
 ; uint __cdecl16far update_rpm_from_speed(uint cur_rpm, uint speed, uint gear_ratio, int changing_gear, uint idle_rpm_)
-update_rpm_from_speed proc far
+update_rpm_from_speed_asm_ proc far
     cur_rpm    = word ptr    6
     speed      = word ptr    8
     gear_ratio = word ptr   10
@@ -91,10 +37,10 @@ LAB_19dc_0023:
     pop     bp
     pop     bp
     retf
-update_rpm_from_speed endp
+update_rpm_from_speed_asm_ endp
 
 ; int __cdecl16far nopsub_19DE8(int param_1)
-nopsub_19DE8 proc far
+nopsub_19DE8_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -115,10 +61,10 @@ LAB_19dc_003c:
     pop     bp
     pop     bp
     retf
-nopsub_19DE8 endp
+nopsub_19DE8_asm_ endp
 
 ; void __cdecl16far nopsub_19DFF(word param_1)
-nopsub_19DFF proc far
+nopsub_19DFF_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -127,10 +73,10 @@ nopsub_19DFF proc far
     int     0x61                               ; reserved for user interrupt
     pop     bp
     retf
-nopsub_19DFF endp
+nopsub_19DFF_asm_ endp
 
 ; void __cdecl16far nopsub_19E09(word param_1)
-nopsub_19E09 proc far
+nopsub_19E09_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -139,10 +85,10 @@ nopsub_19E09 proc far
     int     0x60
     pop     bp
     retf
-nopsub_19E09 endp
+nopsub_19E09_asm_ endp
 
 ; void __cdecl16far nopsub_19E13(word param_1)
-nopsub_19E13 proc far
+nopsub_19E13_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -155,10 +101,10 @@ nopsub_19E13 proc far
     pop     bp
     pop     bp
     retf
-nopsub_19E13 endp
+nopsub_19E13_asm_ endp
 
 ; void __cdecl16far init_kevinrandom(char * seed)
-init_kevinrandom proc far
+init_kevinrandom_asm_ proc far
     seed       = word ptr    6
 
     push    bp
@@ -180,10 +126,10 @@ init_kevinrandom proc far
     pop     bp
     pop     bp
     retf
-init_kevinrandom endp
+init_kevinrandom_asm_ endp
 
 ; void __cdecl16far get_kevinrandom_seed(char * seed)
-get_kevinrandom_seed proc far
+get_kevinrandom_seed_asm_ proc far
     seed       = word ptr    6
 
     push    bp
@@ -205,10 +151,10 @@ get_kevinrandom_seed proc far
     pop     bp
     pop     bp
     retf
-get_kevinrandom_seed endp
+get_kevinrandom_seed_asm_ endp
 
 ; int __cdecl16far get_kevinrandom(void)
-get_kevinrandom proc far
+get_kevinrandom_asm_ proc far
     mov     al, byte ptr [(g_kevinrandom_seed+5)]
     add     al, byte ptr [(g_kevinrandom_seed+4)]
     mov     byte ptr [(g_kevinrandom_seed+4)], al
@@ -235,10 +181,10 @@ LAB_19dc_0103:
     mov     al, byte ptr [g_kevinrandom_seed]
     xor     ah, ah
     retf
-get_kevinrandom endp
+get_kevinrandom_asm_ endp
 
 ; short __stdcall16near intr0_handler(void)
-intr0_handler proc near
+intr0_handler_asm_ proc near
     local_res0 = word ptr    2
 
     push    bp
@@ -260,10 +206,10 @@ intr0_handler proc near
     pop     ds
     pop     bp
     iret
-intr0_handler endp
+intr0_handler_asm_ endp
 
 ; void __cdecl16far init_div0(void)
-init_div0 proc far
+init_div0_asm_ proc far
     push    ds
     mov     ah, 0x35
     mov     al, 0x0
@@ -285,7 +231,7 @@ init_div0 proc far
                                                ; DS:DX = new vector to be used for specified interrupt
     pop     ds
     retf
-init_div0 endp
+init_div0_asm_ endp
 byte_19F07:
     db 0x1E, 0xC5, 0x16, 0xBC, 0x06, 0xB4, 0x25, 0xB0
     db 0x00, 0xCD, 0x21

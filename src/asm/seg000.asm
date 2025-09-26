@@ -2,74 +2,13 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg000.inc
 
 seg000 segment byte public use16 'STUNTSC'
     assume cs:seg000, es:nothing, ss:nothing, ds:dseg
 
-    public stuntsmain
-    public run_intro_looped
-    public run_intro_title
-    public load_intro_resources
-    public run_menu
-    public run_tracks_menu
-    public highscore_write_a
-    public highscore_text_unk
-    public print_highscore_entry
-    public enter_hiscore
-    public highscore_write_b
-    public run_car_menu
-    public run_opponent_menu
-    public run_option_menu
-    public off_1314A
-    public end_hiscore
-    public security_check
-    public set_default_car
-
 ; int __cdecl16far stuntsmain(int argc_, char * * argv_)
-stuntsmain proc far
+stuntsmain_asm_ proc far
     var_12     = word ptr  -18
     var_10     = word ptr  -16
     var_E      = word ptr  -14
@@ -607,11 +546,11 @@ LAB_1000_0575:
     mov     sp, bp
     pop     bp
     retf
-stuntsmain endp
+stuntsmain_asm_ endp
     nop
 
 ; int __cdecl16far run_intro_looped(void)
-run_intro_looped proc far
+run_intro_looped_asm_ proc far
     push    bp
     mov     bp, sp
     sub     sp, 0x2
@@ -704,12 +643,12 @@ LAB_1000_068e:
     mov     sp, bp
     pop     bp
     retf
-run_intro_looped endp
+run_intro_looped_asm_ endp
     db 0x90
     db 0x90
 
 ; int __cdecl16far run_intro_title(void)
-run_intro_title proc far
+run_intro_title_asm_ proc far
     push    bp
     mov     bp, sp
     sub     sp, 0x2
@@ -791,10 +730,10 @@ LAB_1000_077f:
     mov     sp, bp
     pop     bp
     retf
-run_intro_title endp
+run_intro_title_asm_ endp
 
 ; int __cdecl16far load_intro_resources(void)
-load_intro_resources proc far
+load_intro_resources_asm_ proc far
     var_46     = word ptr  -70
     var_44     = word ptr  -68
     var_40     = word ptr  -64
@@ -1531,10 +1470,10 @@ LAB_1000_0f34:
     mov     sp, bp
     pop     bp
     retf
-load_intro_resources endp
+load_intro_resources_asm_ endp
 
 ; int __cdecl16far run_menu(void)
-run_menu proc far
+run_menu_asm_ proc far
     var_selectedmenu = byte ptr  -16
     var_menuhit = byte ptr  -14
     var_C      = byte ptr  -12
@@ -1693,11 +1632,11 @@ LAB_1000_10ba:
     mov     sp, bp
     pop     bp
     retf
-run_menu endp
+run_menu_asm_ endp
     db 0x90
 
 ; void __cdecl16far run_tracks_menu(int skip_init)
-run_tracks_menu proc far
+run_tracks_menu_asm_ proc far
     var_16     = byte ptr  -22
     var_14     = byte ptr  -20
     var_12     = byte ptr  -18
@@ -2168,11 +2107,11 @@ LAB_1000_156a:
     call    far ptr track_setup
     call    far ptr load_tracks_menu_shapes
     jmp     near ptr LAB_1000_10ed
-run_tracks_menu endp
+run_tracks_menu_asm_ endp
     db 0x90
 
 ; int __cdecl16far highscore_write_a(int param_1)
-highscore_write_a proc far
+highscore_write_a_asm_ proc far
     var_3A     = word ptr  -58
     var_38     = byte ptr  -56
     var_27     = byte ptr  -39
@@ -2288,10 +2227,10 @@ LAB_1000_1648:
     jmp     near ptr LAB_1000_1602
 LAB_1000_168b:
     jmp     near ptr LAB_1000_15f9
-highscore_write_a endp
+highscore_write_a_asm_ endp
 
 ; void __cdecl16far highscore_text_unk(void)
-highscore_text_unk proc far
+highscore_text_unk_asm_ proc far
     var_A      = byte ptr  -10
     var_8      = word ptr   -8
     var_6      = byte ptr   -6
@@ -2526,11 +2465,11 @@ LAB_1000_18ca:
     mov     sp, bp
     pop     bp
     retf
-highscore_text_unk endp
+highscore_text_unk_asm_ endp
     db 0x90
 
 ; void __cdecl16far print_highscore_entry(int param_1, undefined1 * param_2)
-print_highscore_entry proc far
+print_highscore_entry_asm_ proc far
     var_4A     = byte ptr  -74
     var_39     = byte ptr  -57
     var_21     = byte ptr  -33
@@ -2677,10 +2616,10 @@ LAB_1000_19e7:
     mov     sp, bp
     pop     bp
     retf
-print_highscore_entry endp
+print_highscore_entry_asm_ endp
 
 ; void __cdecl16far enter_hiscore(undefined2 param_1, undefined2 param_2, undefined2 param_3, byte param_4)
-enter_hiscore proc far
+enter_hiscore_asm_ proc far
     var_3C     = word ptr  -60
     var_3A     = word ptr  -58
     var_38     = byte ptr  -56
@@ -2724,7 +2663,7 @@ LAB_1000_1a46:
     mov     bx, si
     shl     bx, 0x1
     mov     word ptr [bx+word_46170], si
-enter_hiscore endp
+enter_hiscore_asm_ endp
     inc     byte ptr [bp-0x38]
 LAB_1000_1a5d:
     mov     al, 0x34
@@ -2863,7 +2802,7 @@ LAB_1000_1baa:
     retf
 
 ; void __cdecl16far highscore_write_b(void)
-highscore_write_b proc far
+highscore_write_b_asm_ proc far
     record_idx = word ptr  -366
     records    = byte ptr  -364
 
@@ -2925,11 +2864,11 @@ LAB_1000_1bc3:
     mov     sp, bp
     pop     bp
     retf
-highscore_write_b endp
+highscore_write_b_asm_ endp
     db 0x90
 
 ; void __stdcall16far run_car_menu(GAMEINFO * gameconfig_, byte * material, byte * transmission, int unk)
-run_car_menu proc far
+run_car_menu_asm_ proc far
     var_10C    = dword ptr -268
     var_108    = byte ptr  -264
     var_106    = byte ptr  -262
@@ -4229,10 +4168,10 @@ LAB_1000_2926:
 LAB_1000_2934:
     mov     byte ptr [bp+var_106], 0x0
     jmp     near ptr LAB_1000_1fa5
-run_car_menu endp
+run_car_menu_asm_ endp
 
 ; void __cdecl16far run_opponent_menu(void)
-run_opponent_menu proc far
+run_opponent_menu_asm_ proc far
     var_1E     = byte ptr  -30
     var_1C     = byte ptr  -28
     var_1A     = dword ptr -26
@@ -4826,11 +4765,11 @@ LAB_1000_2f3a:
 LAB_1000_2f43:
     inc     byte ptr [bp+var_1C]
     jmp     near ptr LAB_1000_29a8
-run_opponent_menu endp
+run_opponent_menu_asm_ endp
     db 0x90
 
 ; byte __cdecl16far run_option_menu(void)
-run_option_menu proc far
+run_option_menu_asm_ proc far
     var_6      = byte ptr   -6
     var_4      = byte ptr   -4
     var_2      = byte ptr   -2
@@ -5060,10 +4999,10 @@ LAB_1000_3163:
     mov     sp, bp
     pop     bp
     retf
-run_option_menu endp
+run_option_menu_asm_ endp
 
 ; int __cdecl16far end_hiscore(void)
-end_hiscore proc far
+end_hiscore_asm_ proc far
     var_9E     = word ptr  -158
     var_9C     = word ptr  -156
     var_9A     = byte ptr  -154
@@ -6985,11 +6924,11 @@ LAB_1000_44be:
 LAB_1000_44c6:
     mov     byte ptr [bp+var_selectedmenu], 0x0
     jmp     near ptr LAB_1000_4188
-end_hiscore endp
+end_hiscore_asm_ endp
     pop     si
 
 ; void __cdecl16far security_check(int param_1)
-security_check proc far
+security_check_asm_ proc far
     var_440    = byte ptr  -1088
     var_43E    = byte ptr  -1086
     var_428    = word ptr  -1064
@@ -7203,10 +7142,10 @@ LAB_1000_46c5:
     mov     sp, bp
     pop     bp
     retf
-security_check endp
+security_check_asm_ endp
 
 ; void __cdecl16far set_default_car(void)
-set_default_car proc far
+set_default_car_asm_ proc far
     mov     byte ptr [gameconfig], 0x43
     mov     byte ptr [gameconfig.(game_playercarid+1)], 0x4f
     mov     byte ptr [gameconfig.(game_playercarid+2)], 0x55
@@ -7217,7 +7156,7 @@ set_default_car proc far
     mov     byte ptr [gameconfig.game_playertransmission], 0x1
     mov     byte ptr [gameconfig.game_opponentcarid], 0xff
     retf
-set_default_car endp
+set_default_car_asm_ endp
 
 seg000 ends
 end

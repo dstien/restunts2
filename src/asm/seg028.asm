@@ -2,76 +2,13 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg028.inc
 
 seg028 segment byte public use16 'STUNTSC'
     assume cs:seg028, es:nothing, ss:nothing, ds:dseg
 
-    public audiodriver_timer
-    public sub_3868A
-    public sub_386D6
-    public sub_38702
-    public off_38A1E
-    public sub_38AA8
-    public sub_38AC4
-    public sub_38AEA
-    public sub_38BEA
-    public audio_unk2
-    public audio_unk4
-    public audio_drum_unk
-    public audio_drum_unk2
-    public sub_39088
-    public sub_390C8
-    public sub_3945A
-    public sub_3963C
-    public sub_3968A
-    public sub_39700
-    public audio_driver_func1E
-
 ; void __cdecl16far audiodriver_timer(void)
-audiodriver_timer proc far
+audiodriver_timer_asm_ proc far
     push    ds
 ; <REPLACE>
     mov     ax, seg dseg
@@ -107,10 +44,10 @@ LAB_3863_0050:
 not_initialised:
     pop     ds
     retf
-audiodriver_timer endp
+audiodriver_timer_asm_ endp
 
 ; void __cdecl16far sub_3868A(void)
-sub_3868A proc far
+sub_3868A_asm_ proc far
     var_2      = byte ptr   -2
 
     push    bp
@@ -151,11 +88,11 @@ LAB_3863_00a0:
     mov     sp, bp
     pop     bp
     retf
-sub_3868A endp
+sub_3868A_asm_ endp
     db 0x90
 
 ; void __cdecl16far sub_386D6(void)
-sub_386D6 proc far
+sub_386D6_asm_ proc far
     var_2      = byte ptr   -2
 
     push    bp
@@ -182,11 +119,11 @@ LAB_3863_00b6:
     mov     sp, bp
     pop     bp
     retf
-sub_386D6 endp
+sub_386D6_asm_ endp
     db 0x90
 
 ; byte * __cdecl16far sub_38702(void)
-sub_38702 proc far
+sub_38702_asm_ proc far
     var_E      = byte ptr  -14
     var_C      = dword ptr -12
     var_8      = dword ptr  -8
@@ -601,11 +538,11 @@ LAB_3863_0470:
     mov     sp, bp
     pop     bp
     retf
-sub_38702 endp
+sub_38702_asm_ endp
     db 0x90
 
 ; undefined __cdecl16far sub_38AA8(int param_1, byte param_2)
-sub_38AA8 proc far
+sub_38AA8_asm_ proc far
     param_1    = word ptr    6
     param_2    = byte ptr    8
 
@@ -625,11 +562,11 @@ sub_38AA8 proc far
     pop     ds
     pop     bp
     retf
-sub_38AA8 endp
+sub_38AA8_asm_ endp
     db 0x90
 
 ; undefined2 __cdecl16far sub_38AC4(uint param_1, int param_2)
-sub_38AC4 proc far
+sub_38AC4_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
 
@@ -654,10 +591,10 @@ sub_38AC4 proc far
     pop     si
     pop     bp
     retf
-sub_38AC4 endp
+sub_38AC4_asm_ endp
 
 ; undefined __cdecl16far sub_38AEA(int param_1, char param_2, int param_3)
-sub_38AEA proc far
+sub_38AEA_asm_ proc far
     var_12     = word ptr  -18
     var_10     = word ptr  -16
     var_E      = word ptr  -14
@@ -776,10 +713,10 @@ LAB_3863_05b3:
     mov     sp, bp
     pop     bp
     retf
-sub_38AEA endp
+sub_38AEA_asm_ endp
 
 ; undefined __cdecl16far sub_38BEA(int param_1, uint param_2)
-sub_38BEA proc far
+sub_38BEA_asm_ proc far
     var_6      = dword ptr  -6
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -832,10 +769,10 @@ caseD_7_:
     mov     sp, bp
     pop     bp
     retf
-sub_38BEA endp
+sub_38BEA_asm_ endp
 
 ; void __cdecl16far audio_unk2(uint chunk_idx, byte value)
-audio_unk2 proc far
+audio_unk2_asm_ proc far
     var_C      = dword ptr -12
     var_6      = word ptr   -6
     var_4      = word ptr   -4
@@ -921,11 +858,11 @@ LAB_3863_06c0:
     mov     sp, bp
     pop     bp
     retf
-audio_unk2 endp
+audio_unk2_asm_ endp
     db 0x90
 
 ; void __cdecl16far audio_unk4(uint chunk_idx, undefined4 param_2)
-audio_unk4 proc far
+audio_unk4_asm_ proc far
     var_A      = dword ptr -10
     var_4      = word ptr   -4
     var_2      = word ptr   -2
@@ -1034,11 +971,11 @@ LAB_3863_07ae:
     mov     sp, bp
     pop     bp
     retf
-audio_unk4 endp
+audio_unk4_asm_ endp
     db 0x90
 
 ; byte * __cdecl16far audio_drum_unk(word param_1, word param_2)
-audio_drum_unk proc far
+audio_drum_unk_asm_ proc far
     var_12     = dword ptr -18
     var_E      = dword ptr -14
     var_A      = word ptr  -10
@@ -1299,10 +1236,10 @@ LAB_3863_09c2:
     mov     sp, bp
     pop     bp
     retf
-audio_drum_unk endp
+audio_drum_unk_asm_ endp
 
 ; undefined __cdecl16far audio_drum_unk2(word param_1, word param_2)
-audio_drum_unk2 proc far
+audio_drum_unk2_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
 
@@ -1329,11 +1266,11 @@ audio_drum_unk2 proc far
     pop     ds
     pop     bp
     retf
-audio_drum_unk2 endp
+audio_drum_unk2_asm_ endp
     db 0x90
 
 ; undefined __cdecl16far sub_39088(void)
-sub_39088 proc far
+sub_39088_asm_ proc far
     var_4      = dword ptr  -4
 
     push    bp
@@ -1367,11 +1304,11 @@ sub_39088 proc far
     mov     sp, bp
     pop     bp
     retf
-sub_39088 endp
+sub_39088_asm_ endp
     db 0x90
 
 ; uint * __cdecl16far sub_390C8(undefined4 param_1, int param_2)
-sub_390C8 proc far
+sub_390C8_asm_ proc far
     local_1c   = word ptr  -26
     local_1a   = word ptr  -24
     local_18   = word ptr  -22
@@ -1770,11 +1707,11 @@ LAB_3863_0e22:
     mov     sp, bp
     pop     bp
     retf
-sub_390C8 endp
+sub_390C8_asm_ endp
     db 0x90
 
 ; undefined __cdecl16far sub_3945A(word param_1, void * param_2)
-sub_3945A proc far
+sub_3945A_asm_ proc far
     var_C      = word ptr  -12
     var_A      = word ptr  -10
     var_8      = byte ptr   -8
@@ -1995,10 +1932,10 @@ LAB_3863_0ff9:
     mov     sp, bp
     pop     bp
     retf
-sub_3945A endp
+sub_3945A_asm_ endp
 
 ; undefined __cdecl16far sub_3963C(void)
-sub_3963C proc far
+sub_3963C_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
 
@@ -2044,10 +1981,10 @@ LAB_3863_1053:
     mov     sp, bp
     pop     bp
     retf
-sub_3963C endp
+sub_3963C_asm_ endp
 
 ; undefined __cdecl16far sub_3968A(byte * param_1)
-sub_3968A proc far
+sub_3968A_asm_ proc far
     var_4      = dword ptr  -4
     param_1    = word ptr    6
 
@@ -2104,11 +2041,11 @@ LAB_3863_10c2:
     mov     sp, bp
     pop     bp
     retf
-sub_3968A endp
+sub_3968A_asm_ endp
     db 0x90
 
 ; undefined __cdecl16far sub_39700(void)
-sub_39700 proc far
+sub_39700_asm_ proc far
     var_C      = dword ptr -12
     var_8      = word ptr   -8
     var_6      = dword ptr  -6
@@ -2356,10 +2293,10 @@ LAB_3863_1316:
     mov     sp, bp
     pop     bp
     retf
-sub_39700 endp
+sub_39700_asm_ endp
 
 ; void __cdecl16far audio_driver_func1E(uint param_1, uint param_2)
-audio_driver_func1E proc far
+audio_driver_func1E_asm_ proc far
     var_16     = dword ptr -22
     var_12     = word ptr  -18
     var_10     = dword ptr -16
@@ -2519,7 +2456,7 @@ LAB_3863_149a:
     mov     sp, bp
     pop     bp
     retf
-audio_driver_func1E endp
+audio_driver_func1E_asm_ endp
 
 seg028 ends
 end

@@ -2,61 +2,15 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg024.inc
 
 seg024 segment byte public use16 'STUNTSC'
     assume cs:seg024, es:nothing, ss:nothing, ds:dseg
 
-    public mat_rot_x
-    public mat_rot_y
-    public mat_rot_z
-
     db 0x90
 
 ; void __cdecl16far mat_rot_x(MATRIX * outmat, int angle)
-mat_rot_x proc far
+mat_rot_x_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     outmat     = word ptr    6
@@ -90,7 +44,7 @@ mat_rot_x proc far
     pop     bp
     retf
     db 0x90
-mat_rot_x endp
+mat_rot_x_asm_ endp
 ; Calvin's notation names rotation matrices according 
 ; to the axis of rotation, while Duplode tends to 
 ; think in terms of the plane on which the rotating 
@@ -99,7 +53,7 @@ mat_rot_x endp
 ; mistakes.
 
 ; void __cdecl16far mat_rot_y(MATRIX * outmat, int angle)
-mat_rot_y proc far
+mat_rot_y_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     outmat     = word ptr    6
@@ -133,10 +87,10 @@ mat_rot_y proc far
     mov     sp, bp
     pop     bp
     retf
-mat_rot_y endp
+mat_rot_y_asm_ endp
 
 ; void __cdecl16far mat_rot_z(MATRIX * outmat, int angle)
-mat_rot_z proc far
+mat_rot_z_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     outmat     = word ptr    6
@@ -169,7 +123,7 @@ mat_rot_z proc far
     mov     sp, bp
     pop     bp
     retf
-mat_rot_z endp
+mat_rot_z_asm_ endp
 
 seg024 ends
 end

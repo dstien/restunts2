@@ -2,100 +2,13 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg027.inc
 
 seg027 segment byte public use16 'STUNTSC'
     assume cs:seg027, es:nothing, ss:nothing, ds:dseg
 
-    public init_audio_resources
-    public load_audio_finalize
-    public audio_unk
-    public sub_372F4
-    public sub_3736A
-    public audio_enable_flag2
-    public audio_disable_flag2
-    public audio_toggle_flag2
-    public nopsub_373FE
-    public nopsub_37456
-    public sub_37470
-    public sub_374DE
-    public audio_check_flag2
-    public audio_check_flag
-    public audio_init_chunk2
-    public audio_enable_flag6
-    public audio_disable_flag6
-    public audio_toggle_flag6
-    public sub_3771E
-    public nopsub_37750
-    public audio_driver_func3F
-    public sub_37868
-    public nopsub_37898
-    public nopsub_378AE
-    public nopsub_378BC
-    public audio_load_driver
-    public audiodrv_atexit
-    public load_sfx_ge
-    public nopsub_37C38
-    public load_sfx_file
-    public load_song_file
-    public load_voice_file
-    public nopsub_load_sample_file
-    public audio_init_chunk
-    public audio_map_song_instruments
-    public nopsub_3803C
-    public sub_38156
-    public sub_38178
-    public audio_map_song_tracks
-    public off_383A0
-    public audioresource_get_dword
-    public audioresource_get_word
-    public audioresource_copy_4_bytes
-    public nopsub_debug_music
-
 ; void * __cdecl16far init_audio_resources(void * sng_file_ptr, void * vce_file_ptr, char * res_id)
-init_audio_resources proc far
+init_audio_resources_asm_ proc far
     var_titlptr = dword ptr -12
     var_8      = word ptr   -8
     var_6      = word ptr   -6
@@ -176,10 +89,10 @@ LAB_370d_00a2:
     mov     sp, bp
     pop     bp
     retf
-init_audio_resources endp
+init_audio_resources_asm_ endp
 
 ; void __cdecl16far load_audio_finalize(void * Mnote)
-load_audio_finalize proc far
+load_audio_finalize_asm_ proc far
     var_6      = dword ptr  -6
     var_2      = word ptr   -2
     Mnote      = dword ptr   6
@@ -242,11 +155,11 @@ LAB_370d_013f:
     mov     sp, bp
     pop     bp
     retf
-load_audio_finalize endp
+load_audio_finalize_asm_ endp
     db 2 dup (0x90)
 
 ; void __cdecl16far audio_unk(void)
-audio_unk proc far
+audio_unk_asm_ proc far
     var_C      = word ptr  -12
     var_A      = dword ptr -10
     var_4      = word ptr   -4
@@ -340,11 +253,11 @@ LAB_370d_0217:
     mov     sp, bp
     pop     bp
     retf
-audio_unk endp
+audio_unk_asm_ endp
     db 0x90
 
 ; void __cdecl16far sub_372F4(void)
-sub_372F4 proc far
+sub_372F4_asm_ proc far
     var_6      = dword ptr  -6
     var_2      = word ptr   -2
 
@@ -396,10 +309,10 @@ LAB_370d_028a:
     mov     sp, bp
     pop     bp
     retf
-sub_372F4 endp
+sub_372F4_asm_ endp
 
 ; void __cdecl16far sub_3736A(void)
-sub_3736A proc far
+sub_3736A_asm_ proc far
     mov     word ptr [word_4063A], 0x1
     mov     byte ptr [byte_40632], 0x0
     mov     ax, 0xf
@@ -428,17 +341,17 @@ sub_3736A proc far
     call    far ptr sub_39700
     mov     word ptr [word_4063A], 0x0
     retf
-sub_3736A endp
+sub_3736A_asm_ endp
     db 0x90
 
 ; void __cdecl16far audio_enable_flag2(void)
-audio_enable_flag2 proc far
+audio_enable_flag2_asm_ proc far
     mov     byte ptr [audioflag2], 0x1
     retf
-audio_enable_flag2 endp
+audio_enable_flag2_asm_ endp
 
 ; void __cdecl16far audio_disable_flag2(void)
-audio_disable_flag2 proc far
+audio_disable_flag2_asm_ proc far
     mov     byte ptr [audioflag2], 0x0
     mov     word ptr [word_4063A], 0x1
     cmp     byte ptr [byte_44290], 0x0
@@ -455,10 +368,10 @@ LAB_370d_030c:
     call    far ptr sub_39700
     mov     word ptr [word_4063A], 0x0
     retf
-audio_disable_flag2 endp
+audio_disable_flag2_asm_ endp
 
 ; int __cdecl16far audio_toggle_flag2(void)
-audio_toggle_flag2 proc far
+audio_toggle_flag2_asm_ proc far
     cmp     byte ptr [audioflag2], 0x1
     jnz     LAB_370d_0326
     push    cs
@@ -470,10 +383,10 @@ LAB_370d_0326:
     call    near ptr audio_enable_flag2
     mov     ax, 0x1
     retf
-audio_toggle_flag2 endp
+audio_toggle_flag2_asm_ endp
 
 ; int __cdecl16far nopsub_373FE(void)
-nopsub_373FE proc far
+nopsub_373FE_asm_ proc far
     var_2      = word ptr   -2
 
     push    bp
@@ -521,11 +434,11 @@ LAB_370d_0376:
     jc      LAB_370d_0364
     mov     word ptr [bp+var_2], cx
     jmp     LAB_370d_0344
-nopsub_373FE endp
+nopsub_373FE_asm_ endp
     db 0x90
 
 ; void __cdecl16far nopsub_37456(undefined2 param_1, undefined2 param_2)
-nopsub_37456 proc far
+nopsub_37456_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
 
@@ -542,10 +455,10 @@ nopsub_37456 proc far
     add     sp, 0x8
     pop     bp
     retf
-nopsub_37456 endp
+nopsub_37456_asm_ endp
 
 ; int __cdecl16far sub_37470(int param_1, byte param_2)
-sub_37470 proc far
+sub_37470_asm_ proc far
     var_2      = word ptr   -2
     param_1    = word ptr    6
     param_2    = byte ptr    8
@@ -600,11 +513,11 @@ LAB_370d_03fe:
     mov     ax, 0x4c
     imul    bx
     jmp     LAB_370d_03ec
-sub_37470 endp
+sub_37470_asm_ endp
     db 0x90
 
 ; void __cdecl16far sub_374DE(uint param_1)
-sub_374DE proc far
+sub_374DE_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -620,11 +533,11 @@ sub_374DE proc far
 LAB_370d_0427:
     pop     bp
     retf
-sub_374DE endp
+sub_374DE_asm_ endp
     db 0x90
 
 ; void __cdecl16far audio_check_flag2(undefined2 param_1, undefined2 param_2, uint param_3, byte param_4)
-audio_check_flag2 proc far
+audio_check_flag2_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
     param_3    = word ptr   10
@@ -645,11 +558,11 @@ audio_check_flag2 proc far
     add     sp, 0xa
     pop     bp
     retf
-audio_check_flag2 endp
+audio_check_flag2_asm_ endp
     db 0x90
 
 ; int __cdecl16far audio_check_flag(undefined4 param_1, int param_2, byte param_3, int param_4)
-audio_check_flag proc far
+audio_check_flag_asm_ proc far
     var_6      = word ptr   -6
     var_4      = word ptr   -4
     var_2      = word ptr   -2
@@ -795,11 +708,11 @@ LAB_370d_0542:
     mov     sp, bp
     pop     bp
     retf
-audio_check_flag endp
+audio_check_flag_asm_ endp
     db 0x90
 
 ; void __cdecl16far audio_init_chunk2(uint param_1)
-audio_init_chunk2 proc far
+audio_init_chunk2_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -835,10 +748,10 @@ audio_init_chunk2 proc far
 LAB_370d_05c4:
     pop     bp
     retf
-audio_init_chunk2 endp
+audio_init_chunk2_asm_ endp
 
 ; void __cdecl16far audio_enable_flag6(void)
-audio_enable_flag6 proc far
+audio_enable_flag6_asm_ proc far
     var_2      = word ptr   -2
 
     push    bp
@@ -865,10 +778,10 @@ LAB_370d_05f5:
     mov     sp, bp
     pop     bp
     retf
-audio_enable_flag6 endp
+audio_enable_flag6_asm_ endp
 
 ; void __cdecl16far audio_disable_flag6(void)
-audio_disable_flag6 proc far
+audio_disable_flag6_asm_ proc far
     var_2      = word ptr   -2
 
     push    bp
@@ -900,10 +813,10 @@ LAB_370d_0632:
     mov     sp, bp
     pop     bp
     retf
-audio_disable_flag6 endp
+audio_disable_flag6_asm_ endp
 
 ; int __cdecl16far audio_toggle_flag6(void)
-audio_toggle_flag6 proc far
+audio_toggle_flag6_asm_ proc far
     cmp     byte ptr [audioflag6], 0x1
     jnz     LAB_370d_0646
     push    cs
@@ -915,10 +828,10 @@ LAB_370d_0646:
     call    near ptr audio_enable_flag6
     mov     ax, 0x1
     retf
-audio_toggle_flag6 endp
+audio_toggle_flag6_asm_ endp
 
 ; int __cdecl16far sub_3771E(int param_1)
-sub_3771E proc far
+sub_3771E_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -944,10 +857,10 @@ LAB_370d_065e:
     sub     ax, ax
     pop     bp
     retf
-sub_3771E endp
+sub_3771E_asm_ endp
 
 ; void __cdecl16far nopsub_37750(int param_1, undefined2 param_2, undefined2 param_3)
-nopsub_37750 proc far
+nopsub_37750_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
     param_3    = word ptr   10
@@ -963,11 +876,11 @@ nopsub_37750 proc far
     mov     word ptr [bx+(audiochunks_unk+74)], dx
     pop     bp
     retf
-nopsub_37750 endp
+nopsub_37750_asm_ endp
     db 0x90
 
 ; void __cdecl16far audio_driver_func3F(word param_1)
-audio_driver_func3F proc far
+audio_driver_func3F_asm_ proc far
     var_A      = dword ptr -10
     var_6      = word ptr   -6
     var_4      = word ptr   -4
@@ -1071,11 +984,11 @@ LAB_370d_0792:
     mov     sp, bp
     pop     bp
     retf
-audio_driver_func3F endp
+audio_driver_func3F_asm_ endp
     db 0x90
 
 ; void __cdecl16far sub_37868(byte param_1)
-sub_37868 proc far
+sub_37868_asm_ proc far
     var_2      = word ptr   -2
     param_1    = byte ptr    6
 
@@ -1106,10 +1019,10 @@ LAB_370d_07b3:
     mov     sp, bp
     pop     bp
     retf
-sub_37868 endp
+sub_37868_asm_ endp
 
 ; void __cdecl16far nopsub_37898(byte param_1)
-nopsub_37898 proc far
+nopsub_37898_asm_ proc far
     param_1    = byte ptr    6
 
     push    bp
@@ -1122,11 +1035,11 @@ nopsub_37898 proc far
     add     sp, 0x2
     pop     bp
     retf
-nopsub_37898 endp
+nopsub_37898_asm_ endp
     db 0x90
 
 ; byte __cdecl16far nopsub_378AE(int param_1)
-nopsub_378AE proc far
+nopsub_378AE_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -1136,10 +1049,10 @@ nopsub_378AE proc far
     sub     ah, ah
     pop     bp
     retf
-nopsub_378AE endp
+nopsub_378AE_asm_ endp
 
 ; byte __cdecl16far nopsub_378BC(int param_1)
-nopsub_378BC proc far
+nopsub_378BC_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -1149,10 +1062,10 @@ nopsub_378BC proc far
     sub     ah, ah
     pop     bp
     retf
-nopsub_378BC endp
+nopsub_378BC_asm_ endp
 
 ; short __cdecl16far audio_load_driver(char * driver, short param_2, char * param_3)
-audio_load_driver proc far
+audio_load_driver_asm_ proc far
     var_C      = dword ptr -12
     var_8      = word ptr   -8
     var_6      = word ptr   -6
@@ -1329,7 +1242,7 @@ LAB_370d_0982:
     mov     ax, offset aCanTFindDriver
     push    ax
     call    far ptr fatal_error
-audio_load_driver endp
+audio_load_driver_asm_ endp
     add     sp, 0x2
     pop     si
     pop     di
@@ -1338,7 +1251,7 @@ audio_load_driver endp
     retf
 
 ; void __cdecl16far audiodrv_atexit(void)
-audiodrv_atexit proc far
+audiodrv_atexit_asm_ proc far
     var_4      = dword ptr  -4
 
     push    bp
@@ -1403,11 +1316,11 @@ LAB_370d_0a39:
     mov     sp, bp
     pop     bp
     retf
-audiodrv_atexit endp
+audiodrv_atexit_asm_ endp
     db 0x90
 
 ; void * __cdecl16far load_sfx_ge(char * filename, char * extension, char * audiodriver)
-load_sfx_ge proc far
+load_sfx_ge_asm_ proc far
     var_8      = byte ptr   -8
     var_7      = byte ptr   -7
     var_6      = byte ptr   -6
@@ -1527,10 +1440,10 @@ LAB_370d_0b52:
     mov     word ptr [bp+var_2], dx
     or      ax, dx
     jmp     near ptr LAB_370d_0a6e
-load_sfx_ge endp
+load_sfx_ge_asm_ endp
 
 ; void __cdecl16far nopsub_37C38(word param_1)
-nopsub_37C38 proc far
+nopsub_37C38_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -1539,11 +1452,11 @@ nopsub_37C38 proc far
     mov     word ptr [word_4063C], ax
     pop     bp
     retf
-nopsub_37C38 endp
+nopsub_37C38_asm_ endp
     db 0x90
 
 ; void * __cdecl16far load_sfx_file(char * filename)
-load_sfx_file proc far
+load_sfx_file_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     filename   = word ptr    6
@@ -1597,11 +1510,11 @@ LAB_370d_0bdf:
     mov     sp, bp
     pop     bp
     retf
-load_sfx_file endp
+load_sfx_file_asm_ endp
     db 0x90
 
 ; void * __cdecl16far load_song_file(char * filename)
-load_song_file proc far
+load_song_file_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     filename   = word ptr    6
@@ -1637,10 +1550,10 @@ LAB_370d_0c2a:
     mov     sp, bp
     pop     bp
     retf
-load_song_file endp
+load_song_file_asm_ endp
 
 ; void * __cdecl16far load_voice_file(char * filename)
-load_voice_file proc far
+load_voice_file_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     filename   = word ptr    6
@@ -1694,11 +1607,11 @@ LAB_370d_0c9f:
     mov     sp, bp
     pop     bp
     retf
-load_voice_file endp
+load_voice_file_asm_ endp
     db 0x90
 
 ; void * __cdecl16far nopsub_load_sample_file(char * filename)
-nopsub_load_sample_file proc far
+nopsub_load_sample_file_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     filename   = word ptr    6
@@ -1731,10 +1644,10 @@ LAB_370d_0ce2:
     mov     sp, bp
     pop     bp
     retf
-nopsub_load_sample_file endp
+nopsub_load_sample_file_asm_ endp
 
 ; undefined __cdecl16far audio_init_chunk(int param_1, int param_2, int param_3, int param_4, undefined2 param_5, undefined1 param_6, undefined1 param_7)
-audio_init_chunk proc far
+audio_init_chunk_asm_ proc far
     var_A      = word ptr  -10
     var_8      = word ptr   -8
     var_6      = word ptr   -6
@@ -1846,10 +1759,10 @@ LAB_370d_0dea:
     mov     sp, bp
     pop     bp
     retf
-audio_init_chunk endp
+audio_init_chunk_asm_ endp
 
 ; void __cdecl16far audio_map_song_instruments(void * songdata, void * voicedata)
-audio_map_song_instruments proc far
+audio_map_song_instruments_asm_ proc far
     var_22     = word ptr  -34
     var_20     = word ptr  -32
     var_1E     = word ptr  -30
@@ -2006,10 +1919,10 @@ LAB_370d_0f66:
     mov     sp, bp
     pop     bp
     retf
-audio_map_song_instruments endp
+audio_map_song_instruments_asm_ endp
 
 ; undefined __cdecl16far nopsub_3803C(undefined4 param_1, int param_2, int param_3)
-nopsub_3803C proc far
+nopsub_3803C_asm_ proc far
     var_22     = word ptr  -34
     var_20     = word ptr  -32
     var_1C     = word ptr  -28
@@ -2139,11 +2052,11 @@ LAB_370d_107f:
     mov     sp, bp
     pop     bp
     retf
-nopsub_3803C endp
+nopsub_3803C_asm_ endp
     db 0x90
 
 ; void __cdecl16far sub_38156(int param_1)
-sub_38156 proc far
+sub_38156_asm_ proc far
     var_2      = word ptr   -2
     param_1    = word ptr    6
 
@@ -2160,10 +2073,10 @@ sub_38156 proc far
     mov     sp, bp
     pop     bp
     retf
-sub_38156 endp
+sub_38156_asm_ endp
 
 ; void __cdecl16far sub_38178(void)
-sub_38178 proc far
+sub_38178_asm_ proc far
     var_10     = dword ptr -16
     var_C      = word ptr  -12
     var_A      = word ptr  -10
@@ -2254,11 +2167,11 @@ LAB_370d_1151:
     mov     sp, bp
     pop     bp
     retf
-sub_38178 endp
+sub_38178_asm_ endp
     db 0x90
 
 ; void __cdecl16far audio_map_song_tracks(void * songchunk)
-audio_map_song_tracks proc far
+audio_map_song_tracks_asm_ proc far
     var_counter_shl2 = word ptr  -50
     var_30     = word ptr  -48
     var_2E     = word ptr  -46
@@ -2577,10 +2490,10 @@ LAB_370d_1424:
     mov     sp, bp
     pop     bp
     retf
-audio_map_song_tracks endp
+audio_map_song_tracks_asm_ endp
 
 ; dword __cdecl16far audioresource_get_dword(void * data)
-audioresource_get_dword proc far
+audioresource_get_dword_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     data       = dword ptr  10
@@ -2596,10 +2509,10 @@ audioresource_get_dword proc far
     mov     sp, bp
     pop     bp
     retf
-audioresource_get_dword endp
+audioresource_get_dword_asm_ endp
 
 ; word __cdecl16far audioresource_get_word(void * data)
-audioresource_get_word proc far
+audioresource_get_word_asm_ proc far
     var_2      = word ptr   -2
     data       = dword ptr   6
 
@@ -2612,11 +2525,11 @@ audioresource_get_word proc far
     mov     sp, bp
     pop     bp
     retf
-audioresource_get_word endp
+audioresource_get_word_asm_ endp
     db 0x90
 
 ; void __cdecl16far audioresource_copy_4_bytes(void * data_src, void * data_dst)
-audioresource_copy_4_bytes proc far
+audioresource_copy_4_bytes_asm_ proc far
     data_src   = dword ptr   6
     data_dst   = dword ptr  10
 
@@ -2646,11 +2559,11 @@ audioresource_copy_4_bytes proc far
     mov     byte ptr es:[bx], al
     pop     bp
     retf
-audioresource_copy_4_bytes endp
+audioresource_copy_4_bytes_asm_ endp
     db 0x90
 
 ; undefined __cdecl16far nopsub_debug_music(void)
-nopsub_debug_music proc far
+nopsub_debug_music_asm_ proc far
     local_a    = word ptr   -8
     local_8    = word ptr   -6
     local_6    = word ptr   -4
@@ -2739,7 +2652,7 @@ LAB_370d_1530:
     mov     sp, bp
     pop     bp
     retf
-nopsub_debug_music endp
+nopsub_debug_music_asm_ endp
 
 seg027 ends
 end

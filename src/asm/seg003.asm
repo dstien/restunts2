@@ -2,75 +2,16 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg003.inc
 
 seg003 segment byte public use16 'STUNTSC'
     assume cs:seg003, es:nothing, ss:nothing, ds:dseg
-
-    public sub_19F14
-    public init_rect_arrays
-    public update_frame
-    public skybox_op_helper2
-    public skybox_op
-    public transformed_shape_add_for_sort
-    public draw_track_preview
-    public draw_ingame_text
-    public do_sinking
-    public init_crak
-    public load_skybox
-    public unload_skybox
-    public load_sdgame2_shapes
-    public free_sdgame2
-    public setup_intro
-    public intro_op
 
     pop     ds
     retf
 
 ; void __cdecl16far sub_19F14(RECTANGLE * rect)
-sub_19F14 proc far
+sub_19F14_asm_ proc far
     var_rectptr = word ptr   -2
     rect       = word ptr    6
 
@@ -235,10 +176,10 @@ LAB_19f1_0180:
     mov     sp, bp
     pop     bp
     retf
-sub_19F14 endp
+sub_19F14_asm_ endp
 
 ; void __cdecl16far init_rect_arrays(void)
-init_rect_arrays proc far
+init_rect_arrays_asm_ proc far
     push    bp
     mov     bp, sp
     sub     sp, 0x2
@@ -300,10 +241,10 @@ LAB_19f1_01de:
     mov     sp, bp
     pop     bp
     retf
-init_rect_arrays endp
+init_rect_arrays_asm_ endp
 
 ; void __cdecl16far update_frame(char unk, RECTANGLE * cliprect)
-update_frame proc far
+update_frame_asm_ proc far
     var_lastpos2lookup = dword ptr -340
     var_lastposlookupw = word ptr  -336
     var_transformresult = word ptr  -334
@@ -3719,10 +3660,10 @@ LAB_19f1_23e8:
     mov     sp, bp
     pop     bp
     retf
-update_frame endp
+update_frame_asm_ endp
 
 ; void __cdecl16far skybox_op_helper2(RECTANGLE * rect, int unk_x, int height)
-skybox_op_helper2 proc far
+skybox_op_helper2_asm_ proc far
     rect       = word ptr    6
     unk_x      = word ptr    8
     height     = word ptr   10
@@ -3865,11 +3806,11 @@ LAB_19f1_255d:
     mov     sp, bp
     pop     bp
     retf
-skybox_op_helper2 endp
+skybox_op_helper2_asm_ endp
     db 0x90
 
 ; int __cdecl16far skybox_op(int unk1, RECTANGLE * rect, int unk2, MATRIX * mat, int unk_z, int unk_x, int unk_y)
-skybox_op proc far
+skybox_op_asm_ proc far
     var_78     = byte ptr  -120
     var_76     = word ptr  -118
     var_72     = word ptr  -114
@@ -4615,10 +4556,10 @@ LAB_19f1_2c67:
     mov     sp, bp
     pop     bp
     retf
-skybox_op endp
+skybox_op_asm_ endp
 
 ; void __cdecl16far transformed_shape_add_for_sort(int z_adjust, byte param_2)
-transformed_shape_add_for_sort proc far
+transformed_shape_add_for_sort_asm_ proc far
     transformedpos = byte ptr  -12
     shapepos   = byte ptr   -6
     z_adjust   = word ptr    6
@@ -4667,11 +4608,11 @@ transformed_shape_add_for_sort proc far
     mov     sp, bp
     pop     bp
     retf
-transformed_shape_add_for_sort endp
+transformed_shape_add_for_sort_asm_ endp
     db 0x90
 
 ; void __cdecl16far draw_track_preview(void)
-draw_track_preview proc far
+draw_track_preview_asm_ proc far
     var_42     = word ptr  -66
     var_40     = word ptr  -64
     var_3E     = word ptr  -62
@@ -5257,10 +5198,10 @@ LAB_19f1_3218:
     mov     sp, bp
     pop     bp
     retf
-draw_track_preview endp
+draw_track_preview_asm_ endp
 
 ; RECTANGLE * __cdecl16far draw_ingame_text(void)
-draw_ingame_text proc far
+draw_ingame_text_asm_ proc far
     push    bp
     mov     bp, sp
     sub     sp, 0x2
@@ -5680,10 +5621,10 @@ LAB_19f1_361b:
     mov     sp, bp
     pop     bp
     retf
-draw_ingame_text endp
+draw_ingame_text_asm_ endp
 
 ; RECTANGLE * __cdecl16far do_sinking(int frame, int top, int height)
-do_sinking proc far
+do_sinking_asm_ proc far
     frame      = word ptr    6
     top        = word ptr    8
     height     = word ptr   10
@@ -5744,11 +5685,11 @@ LAB_19f1_363c:
     mov     sp, bp
     pop     bp
     retf
-do_sinking endp
+do_sinking_asm_ endp
     db 0x90
 
 ; RECTANGLE * __cdecl16far init_crak(int frame, int top, int height)
-init_crak proc far
+init_crak_asm_ proc far
     var_1A     = word ptr  -26
     var_18     = word ptr  -24
     var_14     = word ptr  -20
@@ -5971,11 +5912,11 @@ LAB_19f1_3888:
     mov     sp, bp
     pop     bp
     retf
-init_crak endp
+init_crak_asm_ endp
     db 0x90
 
 ; void __cdecl16far load_skybox(byte unk)
-load_skybox proc far
+load_skybox_asm_ proc far
     var_4      = word ptr   -4
     unk        = byte ptr    6
 
@@ -6083,10 +6024,10 @@ LAB_19f1_399f:
     mov     sp, bp
     pop     bp
     retf
-load_skybox endp
+load_skybox_asm_ endp
 
 ; void __cdecl16far unload_skybox(void)
-unload_skybox proc far
+unload_skybox_asm_ proc far
     cmp     byte ptr [byte_3B8F6], 0x0
     jz      LAB_19f1_39bb
     push    word ptr [skybox_res_seg]
@@ -6096,11 +6037,11 @@ unload_skybox proc far
 LAB_19f1_39bb:
     mov     byte ptr [byte_3B8F6], 0x0
     retf
-unload_skybox endp
+unload_skybox_asm_ endp
     db 0x90
 
 ; void __cdecl16far load_sdgame2_shapes(void)
-load_sdgame2_shapes proc far
+load_sdgame2_shapes_asm_ proc far
     push    bp
     mov     bp, sp
     sub     sp, 0x2
@@ -6140,21 +6081,21 @@ LAB_19f1_39f8:
     mov     sp, bp
     pop     bp
     retf
-load_sdgame2_shapes endp
+load_sdgame2_shapes_asm_ endp
     db 0x90
 
 ; void __cdecl16far free_sdgame2(void)
-free_sdgame2 proc far
+free_sdgame2_asm_ proc far
     push    word ptr [sdgame2ptr+2]
     push    word ptr [sdgame2ptr]
     call    far ptr mmgr_free
     add     sp, 0x4
     retf
-free_sdgame2 endp
+free_sdgame2_asm_ endp
     db 0x90
 
 ; int __cdecl16far setup_intro(void)
-setup_intro proc far
+setup_intro_asm_ proc far
     var_5D4    = word ptr  -1492
     var_5D2    = word ptr  -1490
     var_5D0    = byte ptr  -1488
@@ -6701,10 +6642,10 @@ LAB_19f1_3f7c:
     mov     sp, bp
     pop     bp
     retf
-setup_intro endp
+setup_intro_asm_ endp
 
 ; void __cdecl16far intro_op(int unk_x, int unk_y, int unk_z, int unk_ang_y, int unk_ang_x, int param_6, int param_7, int param_8, int param_9, int * param_10, RECTANGLE * rect1, RECTANGLE * rect2, RECTANGLE * rect3)
-intro_op proc far
+intro_op_asm_ proc far
     var_42     = word ptr  -66
     var_vec    = byte ptr  -64
     var_point  = dword ptr -58
@@ -7047,7 +6988,7 @@ LAB_19f1_428a:
     mov     sp, bp
     pop     bp
     retf
-intro_op endp
+intro_op_asm_ endp
 
 seg003 ends
 end

@@ -19,6 +19,24 @@ PROJECT_DIR_OVERRIDE = ""
 # by side in a disassembly output.
 DEBUG = False
 
+# Add ported functions here and re-run the export so that the built assembly
+# code will use the C implementation instead.
+PORTED_FUNCS_BY_FILE = {
+    "math.c": {
+        "sin_fast",
+        "cos_fast",
+    },
+}
+# Source file by function for quick lookup of whether a function is ported.
+PORTED_FUNCS = dict(
+    (func, file)
+    for file, funcs in PORTED_FUNCS_BY_FILE.iteritems()
+    for func in funcs
+)
+
+# The original Microsoft CRT that we will not be porting.
+CRT_SEG = "seg010"
+
 # Bytes safe to emit inside string literals.
 STRING_CHARS = " !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
 
@@ -549,6 +567,15 @@ def write_asm():
                 comment = pattern.sub("", comment)
         return comment, content
 
+    # Add the "_asm_" suffix to function names that can be ported. When building,
+    # defining the RESTUNTS_ORIGINAL macro will decide whether to map functions
+    # to their ASM or C implementations.
+    def func_name_decoration(seg_name, func_name):
+        if seg_name != CRT_SEG:
+            return func_name + "_asm_"
+        else:
+            return func_name
+
     # Check if given function is far.
     def func_is_far(func):
         return "far" in func.getCallingConventionName()
@@ -599,27 +626,52 @@ def write_asm():
             return { 1: "db", 2: "dw", 4: "dd" }.get(type.getLength(), "??")
 
     # Publics in asm and inc files.
-    def write_publics(f, block, is_extern):
+    def write_publics(f, block, seg_name, is_extern):
         prefix = "public" if not is_extern else "extrn"
         template = "{name}" if not is_extern else "{name}:{type}"
         addr_start = block.getStart()
         addr_end = block.getEnd()
-        rows = []
+        syms = []
+        funcs = []
+        funcs_port = []
+        funcs_orig = []
 
-        syms = symtab.getSymbols(AddressSet(addr_start, addr_end), SymbolType.FUNCTION, True)
-        for s in syms:
-            rows.append((s.getAddress(), template.format(name=s.getName(), type="proc")))
+        for s in symtab.getSymbols(AddressSet(addr_start, addr_end), SymbolType.FUNCTION, True):
+            func_name = s.getName()
+            syms.append((s.getAddress(), template.format(name=func_name_decoration(seg_name, func_name), type="proc")))
 
-        syms = symtab.getSymbols(AddressSet(addr_start, addr_end), SymbolType.LABEL, True)
-        for s in syms:
+            funcs.append(func_name)
+            if func_name in PORTED_FUNCS:
+                funcs_port.append(func_name)
+            else:
+                funcs_orig.append(func_name)
+
+        for s in symtab.getSymbols(AddressSet(addr_start, addr_end), SymbolType.LABEL, True):
             name = s.getName()
             data = prog.getListing().getDefinedDataAt(s.getAddress())
             if data is not None or name.startswith("unk_"):
-                rows.append((s.getAddress(), template.format(name=name, type=pub_type_name(data))))
+                syms.append((s.getAddress(), template.format(name=name, type=pub_type_name(data))))
 
-        rows.sort()
-        for _, symbol in rows:
+        syms.sort()
+        for _, symbol in syms:
             f.write("    {} {}\n".format(prefix, symbol))
+
+        if funcs and seg_name != CRT_SEG:
+            f.write("\n")
+            f.write("    ifdef RESTUNTS_ORIGINAL\n")
+            f.write("        ; Alias all functions to the original asm implementation.\n")
+            for func_name in funcs:
+                f.write("        {} = {}\n".format(func_name, func_name_decoration(seg_name, func_name)))
+            f.write("    else\n")
+            if funcs_orig:
+                f.write("        ; Alias unported functions to the original asm implementation.\n")
+            for func_name in funcs_orig:
+                f.write("        {} = {}\n".format(func_name, func_name_decoration(seg_name, func_name)))
+            if funcs_port:
+                f.write("        ; Functions ported to C are external.\n")
+            for func_name in funcs_port:
+                f.write("        extrn {}:proc\n".format(func_name))
+            f.write("    endif\n")
 
     # Segment declaration in asm and inc files.
     def seg_decl(block, is_data):
@@ -631,13 +683,30 @@ def write_asm():
             seg_class = "STUNTSC"
         return "{} segment byte public use16 '{}'\n".format(seg_name, seg_class)
 
-    # A segment's accompanying include file with its publics to be used by other segment's asm file.
-    def write_inc(block, is_data):
-        seg_name = block.getName()
-        with open(os.path.join(asm_dir, seg_name + ".inc"), "w") as f:
+    # A segment's accompanying definitions file with its publics to be used by
+    # other segment's asm file.
+    def write_def(block, seg_name, is_data):
+        with open(os.path.join(asm_dir, seg_name + ".def"), "w") as f:
             f.write(banner)
             f.write(seg_decl(block, is_data))
-            write_publics(f, block, True)
+            write_publics(f, block, seg_name, True)
+            f.write("{} ends\n".format(seg_name))
+
+    # A segment's accompanying include file to keep the verbose includes,
+    # publics and aliases/externs for porting separated from the code.
+    def write_inc(block, seg_name, is_data):
+        with open(os.path.join(asm_dir, seg_name + ".inc"), "w") as f:
+            f.write(banner)
+            f.write("include custom.inc\n")
+            f.write("include structs.inc\n")
+            for ib in mem.getBlocks():
+                iname = ib.getName()
+                # Skip stack which has nothing to include.
+                if ib != block and iname != "dsegs":
+                    f.write('include {}.def\n'.format(ib.getName()))
+            f.write("\n")
+            f.write(seg_decl(block, is_data))
+            write_publics(f, block, seg_name, False)
             f.write("{} ends\n".format(seg_name))
 
     # Format a segment as Watcom compatible 8086 assembly.
@@ -655,33 +724,24 @@ def write_asm():
                 return
             is_data = seg_comment.startswith(("DATA", "BSS"))
 
-        write_inc(block, is_data)
-
+        # Must print some progress since it's so slow.
         print(seg_name)
+
+        write_def(block, seg_name, is_data)
+        write_inc(block, seg_name, is_data)
 
         with open(os.path.join(asm_dir, seg_name + ".asm"), "w") as f:
             f.write(banner)
             f.write(".8086\n")
-            f.write(".model medium\n")
-            f.write("\n")
-            f.write('include custom.inc\n')
-            f.write('include structs.inc\n')
-            for ib in mem.getBlocks():
-                iname = ib.getName()
-                # Skip stack which has nothing to include.
-                if ib != block and iname != "dsegs":
-                    f.write('include {}.inc\n'.format(ib.getName()))
+            f.write(".model medium\n\n")
+            f.write("include {}.inc\n\n".format(seg_name))
 
             # Group DATA and BSS.
             if seg_name.startswith("dseg"):
-                f.write("DGROUP group {}\n".format(seg_name))
+                f.write("DGROUP group {}\n\n".format(seg_name))
 
-            f.write("\n")
             f.write(seg_decl(block, is_data))
             f.write("    assume cs:{}, es:nothing, ss:nothing, ds:dseg\n\n".format(seg_name))
-
-            write_publics(f, block, False)
-            f.write("\n")
 
             start_addr = block.getStart()
             func = None
@@ -694,7 +754,7 @@ def write_asm():
 
                 # Left previous function.
                 if func and addr > func.getBody().getMaxAddress():
-                    f.write("{name} endp\n".format(name=func_name))
+                    f.write("{} endp\n".format(func_name))
                     func = None
                     func_name = ""
 
@@ -743,10 +803,10 @@ def write_asm():
                 if begin_func:
                     # Close previous function.
                     if func:
-                        f.write("{name} endp\n".format(name=func_name))
+                        f.write("{} endp\n".format(func_name))
 
                     func = begin_func
-                    func_name = func.getName()
+                    func_name = func_name_decoration(seg_name, func.getName())
                     if func_name == "start":
                         is_start = True
 

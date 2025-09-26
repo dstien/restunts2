@@ -2,314 +2,15 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg012.inc
 
 seg012 segment byte public use16 'STUNTSC'
     assume cs:seg012, es:nothing, ss:nothing, ds:dseg
 
-    public fatal_error
-    public polarAngle
-    public off_2EA9B
-    public sub_2EAD4
-    public set_add_value
-    public sub_2EB07
-    public sub_2EB1E
-    public draw_line_related_alt
-    public draw_line_related
-    public off_2ECB9
-    public off_2ECF8
-    public off_2EDBD
-    public off_2EE82
-    public off_2F02B
-    public parse_shape2d_helper
-    public parse_shape2d_helper2
-    public word_2F354
-    public word_2F356
-    public word_2F358
-    public word_2F35A
-    public criterr_interrupt_handler
-    public set_criterr_handler
-    public criterr_exithandler
-    public preRender_unk
-    public nopsub_2F424
-    public nopsub_2F436
-    public len_off_2F44A
-    public off_2F44A
-    public caseD_7
-    public caseD_5
-    public preRender_line
-    public add_exit_handler
-    public call_exitlist
-    public call_exitlist2
-    public file_paras
-    public file_paras_nofatal
-    public file_paras_fatal
-    public file_decomp_paras
-    public file_decomp_paras_nofatal
-    public file_decomp_paras_fatal
-    public file_find
-    public file_find_next
-    public multiply_and_scale
-    public video_set_mode4
-    public polarRadius2D
-    public video_set_mode7
-    public nopsub_30180
-    public timer_setup_interrupt
-    public audio_stop_unk
-    public timer_reg_callback
-    public timer_remove_callback
-    public compare_ds_ss
-    public timer_intr_callback
-    public sub_303BA
-    public set_bios_mode3
-    public kb_parse_key
-    public kb_reg_callback
-    public nopsub_304AF
-    public nopsub_304B6
-    public kb_get_char
-    public get_kb_or_joy_flags
-    public nopsub_305C8
-    public get_joy_flags
-    public sub_307B4
-    public sub_307D2
-    public sub_307E3
-    public nopsub_307FA
-    public kb_init_interrupt
-    public kb_exit_handler
-    public kb_int9_handler
-    public kb_int16_handler
-    public kb_get_key_state
-    public kb_call_readchar_callback
-    public kb_read_char
-    public kb_checking
-    public nopsub_kb_set_readchar_callback
-    public nopsub_kb_get_readchar_callback
-    public flush_stdin
-    public kb_check
-    public nopsub_30A77
-    public nopsub_30A97
-    public file_read
-    public file_read_nofatal
-    public file_read_fatal
-    public file_decomp_rle
-    public file_decomp_rle_single
-    public file_decomp_rle_seq
-    public file_load_binary
-    public file_load_binary_nofatal
-    public file_decomp
-    public file_decomp_nofatal
-    public file_decomp_fatal
-    public off_compression_type
-    public locate_shape_nofatal
-    public locate_shape_fatal
-    public locate_sound_fatal
-    public mmgr_alloc_resmem
-    public mmgr_alloc_a000
-    public nopsub_310FE
-    public nopsub_3111D
-    public nopsub_31157
-    public nopsub_31169
-    public mmgr_get_ofs_diff
-    public mmgr_copy_paras
-    public copy_paras_reverse
-    public mmgr_path_to_name
-    public mmgr_alloc_pages
-    public mmgr_find_free
-    public mmgr_get_chunk_by_name
-    public nopsub_31429
-    public mmgr_free
-    public nopsub_31525
-    public mmgr_release
-    public mmgr_get_chunk_size
-    public mmgr_resize_memory
-    public mmgr_op_unk
-    public preRender_default
-    public preRender_default_alt
-    public skybox_op_helper
-    public preRender_wheel_helper4
-    public preRender_helper
-    public preRender_helper2
-    public off_31A82
-    public preRender_helper3
-    public off_31B84
-    public off_31CF7
-    public nopsub_31F39
-    public nopsub_31F55
-    public nopsub_3215A
-    public nopsub_3216C
-    public nopsub_debug_print
-    public nopsub_322B4
-    public nopsub_322C0
-    public nopsub_322DF
-    public set_projection
-    public vector_to_point
-    public sprite_free_wnd
-    public file_write_nofatal
-    public file_write_fatal
-    public video_add_exithandler
-    public video_on_exit
-    public sprite_copy_both_to_arg
-    public sprite_copy_arg_to_both
-    public file_get_res_shape_count
-    public file_get_shape2d
-    public nopsub_326BA
-    public sin_fast
-    public off_326F2
-    public cos_fast
-    public nopsub_32738
-    public nopsub_32746
-    public nopsub_32751
-    public projectiondata9_times_ratio
-    public nopsub_3276A
-    public timer_get_counter
-    public timer_custom_delta
-    public timer_get_delta
-    public timer_reset
-    public timer_copy_counter
-    public timer_wait_for_dx
-    public timer_compare_dx
-    public timer_get_counter_unk
-    public font_op
-    public font_op2
-    public preRender_patterned
-    public nopsub_328C9
-    public nopsub_328DB
-    public mat_mul_vector
-    public mat_multiply
-    public mat_invert
-    public fliphandlers
-    public file_unflip_shape2d
-    public vle_esc1
-    public vle_esc2
-    public file_decomp_vle
-    public nopsub_32FEE
-    public video_get_status
-    public nopsub_33006
-    public vector_op_unk
-    public preRender_sphere
-    public nopsub_3320E
-    public sprite_set_1_size
-    public video_clear_color
-    public sprite_clear_1_color
-    public nopsub_33330
-    public draw_unknown_lines
-    public putpixel_line1_maybe
-    public off_3340A
-    public sprite_1_unk2
-    public sprite_1_fill_rect
-    public sprite_1_unk3
-    public font_draw_text
-    public video_set_mode_13h
-    public file_load_shape2d_res_fatal_thunk
-    public file_load_shape2d_res_nofatal_thunk
-    public file_load_shape2d_res_thunk
-    public parse_shape2d_thunk
-    public file_load_shape2d_fatal_thunk
-    public file_load_shape2d_nofatal_thunk
-    public file_load_shape2d_thunk
-    public sprite_putimage_and_alt2
-    public sprite_putimage_and
-    public nopsub_339FA
-    public putpixel_iconMask
-    public nopsub_33AC0
-    public nopsub_33AE4
-    public shape2d_render_bmp_as_mask
-    public nopsub_33B98
-    public sprite_putimage_and_alt
-    public sprite_putimage
-    public nopsub_33D0C
-    public sprite_shape_to_1
-    public sprite_shape_to_1_alt
-    public nopsub_33DBE
-    public shape2d_op_unk5
-    public shape2d_op_unk
-    public nopsub_33E90
-    public shape2d_op_unk2
-    public shape2d_op_unk3
-    public sprite_putimage_or_alt
-    public sprite_putimage_or
-    public putpixel_iconFillings
-    public shape2d_op_unk4
-    public sprite_putimage_transparent
-    public sub_34526
-    public sub_345BC
-    public video_set_palette
-    public draw_filled_lines
-    public nopsub_34736
-    public sprite_clear_shape_alt
-    public sprite_clear_shape
-    public shape_op_explosion
-    public sprite1
-    public sprite2
-    public lineoffsets
-    public font_set_colour
-    public nopsub_2ea2_6107
-    public nopsub_2ea2_611e
-    public nopsub_2ea2_6140
-    public set_fontdefseg
-    public draw_patterned_lines
-    public sprite_make_wnd
-    public next_wnd_def
-    public wnd_defs
-    public sprite_set_1_from_argptr
-    public sprite_copy_2_to_1
-    public putpixel_single_maybe
-    public sub_35B76
-    public sub_35C4E
-    public incnums
-    public sub_35DC8
-    public sub_35DE6
-    public sub_35E08
-    public file_load_shape2d_palmap_apply
-    public file_load_shape2d_expand
-    public file_unflip_shape2d_pes
-
     db 0x90
 
 ; void __stdcall16near fatal_error(char * fmt, ...)
-fatal_error proc near
+fatal_error_asm_ proc near
     fmt        = word ptr    4
 
     pop     ax
@@ -321,11 +22,11 @@ fatal_error proc near
     call    far ptr _printf
     add     sp, 0x2
     call    far ptr _abort
-fatal_error endp
+fatal_error_asm_ endp
     db 0
 
 ; int __cdecl16far polarAngle(int z_, int y_)
-polarAngle proc far
+polarAngle_asm_ proc far
     z_         = word ptr    6
     y_         = word ptr    8
 
@@ -406,19 +107,19 @@ LAB_2ea2_00a8:
 LAB_2ea2_00af:
     sub     ah, 0x2
     jmp     LAB_2ea2_0090
-polarAngle endp
+polarAngle_asm_ endp
 
 ; word __cdecl16far sub_2EAD4(void)
-sub_2EAD4 proc far
+sub_2EAD4_asm_ proc far
     cli
     mov     ax, word ptr [word_3F87C]
     mov     dx, word ptr [word_3F87E]
     sti
     retf
-sub_2EAD4 endp
+sub_2EAD4_asm_ endp
 
 ; void __cdecl16far set_add_value(uint param_1, int param_2)
-set_add_value proc far
+set_add_value_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
 
@@ -431,7 +132,7 @@ set_add_value proc far
     mov     word ptr [word_3F1C4], dx
     pop     bp
     retf
-set_add_value endp
+set_add_value_asm_ endp
 LAB_2ea2_00d5:
     call    far ptr sub_2EAD4
     cmp     dx, word ptr [word_3F1C4]
@@ -441,7 +142,7 @@ LAB_2ea2_00d5:
     retf
 
 ; undefined2 __cdecl16far sub_2EB07(void)
-sub_2EB07 proc far
+sub_2EB07_asm_ proc far
     call    far ptr sub_2EAD4
     xor     cx, cx
     cmp     dx, word ptr [word_3F1C4]
@@ -452,10 +153,10 @@ sub_2EB07 proc far
 LAB_2ea2_00fb:
     mov     ax, cx
     retf
-sub_2EB07 endp
+sub_2EB07_asm_ endp
 
 ; undefined __cdecl16far sub_2EB1E(uint param_1, int param_2)
-sub_2EB1E proc far
+sub_2EB1E_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -478,10 +179,10 @@ LAB_2ea2_0115:
     mov     sp, bp
     pop     bp
     retf
-sub_2EB1E endp
+sub_2EB1E_asm_ endp
 
 ; uint __cdecl16far draw_line_related_alt(uint x1_, uint y1_, uint x2_, uint y2_, uint unk)
-draw_line_related_alt proc far
+draw_line_related_alt_asm_ proc far
     var_4      = byte ptr   -4
     x1_        = word ptr    6
     y1_        = word ptr    8
@@ -496,10 +197,10 @@ draw_line_related_alt proc far
     push    di
     mov     byte ptr [bp+var_4], 0x1
     jmp     _draw_line_related
-draw_line_related_alt endp
+draw_line_related_alt_asm_ endp
 
 ; uint __cdecl16far draw_line_related(uint x1_, uint y1_, uint x2_, uint y2_, uint unk)
-draw_line_related proc far
+draw_line_related_asm_ proc far
     var_4      = byte ptr   -4
     var_2      = word ptr   -2
     x1_        = word ptr    6
@@ -1371,10 +1072,10 @@ LAB_2ea2_08ec:
 LAB_2ea2_08ef:
     sub     word ptr [si+0x8], dx
     jmp     LAB_2ea2_0890
-draw_line_related endp
+draw_line_related_asm_ endp
 
 ; int __cdecl16far parse_shape2d_helper(int param_1, int param_2)
-parse_shape2d_helper proc far
+parse_shape2d_helper_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
 
@@ -1394,10 +1095,10 @@ parse_shape2d_helper proc far
     adc     dx, 0x0
     pop     bp
     retf
-parse_shape2d_helper endp
+parse_shape2d_helper_asm_ endp
 
 ; uint __cdecl16far parse_shape2d_helper2(uint param_1)
-parse_shape2d_helper2 proc far
+parse_shape2d_helper2_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -1416,7 +1117,7 @@ parse_shape2d_helper2 proc far
     and     ax, 0xf
     pop     bp
     retf
-parse_shape2d_helper2 endp
+parse_shape2d_helper2_asm_ endp
 word_2F354:
     dw 0x0000
 word_2F356:
@@ -1427,7 +1128,7 @@ word_2F35A:
     dw 0x0000
 
 ; void __stdcall16near criterr_interrupt_handler(void)
-criterr_interrupt_handler proc near
+criterr_interrupt_handler_asm_ proc near
     push    bx
     push    dx
     push    cx
@@ -1449,10 +1150,10 @@ criterr_interrupt_handler proc near
     pop     dx
     pop     bx
     iret
-criterr_interrupt_handler endp
+criterr_interrupt_handler_asm_ endp
 
 ; void __cdecl16far set_criterr_handler(void * func_cb)
-set_criterr_handler proc far
+set_criterr_handler_asm_ proc far
     func_cb    = dword ptr   6
 
     push    bp
@@ -1485,10 +1186,10 @@ set_criterr_handler proc far
     pop     ds
     pop     bp
     retf
-set_criterr_handler endp
+set_criterr_handler_asm_ endp
 
 ; void __cdecl16far criterr_exithandler(void)
-criterr_exithandler proc far
+criterr_exithandler_asm_ proc far
     push    ds
     mov     ax, word ptr cs:[word_2F356]
     sub     ax, word ptr cs:[word_2F354]
@@ -1503,10 +1204,10 @@ criterr_exithandler proc far
 LAB_2ea2_09b8:
     pop     ds
     retf
-criterr_exithandler endp
+criterr_exithandler_asm_ endp
 
 ; void __cdecl16far preRender_unk(uint colour, uint unk1, uint vertlinecount, POINT2D * vertlines, uint unk2)
-preRender_unk proc far
+preRender_unk_asm_ proc far
     var_A      = byte ptr  -10
     colour     = word ptr    6
     unk1       = word ptr    8
@@ -1544,10 +1245,10 @@ LAB_2ea2_09dd:
     mov     ax, offset preRender_line
     mov     word ptr [imagefunc], ax
     jmp     near ptr offset loc_3180A
-preRender_unk endp
+preRender_unk_asm_ endp
 
 ; void __cdecl16far nopsub_2F424(uint color, uint unk1, uint vertlinecount, POINT2D * vertlines, uint unk2)
-nopsub_2F424 proc far
+nopsub_2F424_asm_ proc far
     var_A      = byte ptr  -10
     color      = word ptr    6
     unk1       = word ptr    8
@@ -1563,10 +1264,10 @@ nopsub_2F424 proc far
     lea     si, [bp+unk2]
     mov     byte ptr [bp+var_A], 0x0
     jmp     LAB_2ea2_09dd
-nopsub_2F424 endp
+nopsub_2F424_asm_ endp
 
 ; void __cdecl16far nopsub_2F436(uint color, uint unk1, uint vertlinecount, POINT2D * vertlines, uint unk2)
-nopsub_2F436 proc far
+nopsub_2F436_asm_ proc far
     var_A      = byte ptr  -10
     color      = word ptr    6
     unk1       = word ptr    8
@@ -1582,7 +1283,7 @@ nopsub_2F436 proc far
     lea     si, [bp+unk2]
     mov     byte ptr [bp+var_A], 0x1
     jmp     LAB_2ea2_09dd
-nopsub_2F436 endp
+nopsub_2F436_asm_ endp
 ; these could be interpolation tables? 
 ; each entry in the table points at arrays which grows by one 
 ; each array has values going from 0->FFFF  
@@ -2867,7 +2568,7 @@ WORD_2ea2_135c:
     dw 0xFAC6
 
 ; void __cdecl16far preRender_line(int x1_, int y1_, int x2_, int y2_, uint colour)
-preRender_line proc far
+preRender_line_asm_ proc far
     var_1C     = byte ptr  -28
     x1_        = word ptr    6
     y1_        = word ptr    8
@@ -2903,10 +2604,10 @@ LAB_2ea2_13f8:
     mov     sp, bp
     pop     bp
     retf
-preRender_line endp
+preRender_line_asm_ endp
 
 ; void __cdecl16far add_exit_handler(void * func_cb)
-add_exit_handler proc far
+add_exit_handler_asm_ proc far
     func_cb    = dword ptr   6
 
     push    bp
@@ -2936,10 +2637,10 @@ LAB_2ea2_1428:
 LAB_2ea2_1437:
     pop     bp
     retf
-add_exit_handler endp
+add_exit_handler_asm_ endp
 
 ; void __cdecl16far call_exitlist(void)
-call_exitlist proc far
+call_exitlist_asm_ proc far
     push    di
     mov     di, 0x28
 LAB_2ea2_143d:
@@ -2956,19 +2657,19 @@ LAB_2ea2_144b:
 LAB_2ea2_1452:
     pop     di
     retf
-call_exitlist endp
+call_exitlist_asm_ endp
 
 ; undefined2 __stdcall16near call_exitlist2(void)
-call_exitlist2 proc near
+call_exitlist2_asm_ proc near
     call    far ptr call_exitlist
     xor     ax, ax
     push    ax
     call    far ptr libsub_quit_to_dos_alt
-call_exitlist2 endp
+call_exitlist2_asm_ endp
     db 0
 
 ; uint __cdecl16far file_paras(char * filename, int is_fatal)
-file_paras proc far
+file_paras_asm_ proc far
     var_fatal  = word ptr   -6
     var_length = word ptr   -4
     var_filehandle = word ptr   -2
@@ -2985,10 +2686,10 @@ file_paras proc far
     mov     word ptr [bp+var_fatal], ax
     jmp     _file_paras
     db 0x90
-file_paras endp
+file_paras_asm_ endp
 
 ; int __stdcall16near file_paras_nofatal(void)
-file_paras_nofatal proc near
+file_paras_nofatal_asm_ proc near
     var_6      = word ptr   -6
 
     push    bp
@@ -2999,11 +2700,11 @@ file_paras_nofatal proc near
     push    di
     mov     word ptr [bp+var_6], 0x0
     jmp     _file_paras
-file_paras_nofatal endp
+file_paras_nofatal_asm_ endp
     db 0x90
 
 ; uint __stdcall16near file_paras_fatal(void)
-file_paras_fatal proc near
+file_paras_fatal_asm_ proc near
     var_fatal  = word ptr   -6
 
     push    bp
@@ -3013,7 +2714,7 @@ file_paras_fatal proc near
     push    si
     push    di
     mov     word ptr [bp+var_fatal], 0x1
-file_paras_fatal endp
+file_paras_fatal_asm_ endp
 _file_paras:
     mov     dx, word ptr [bp+filename]
     mov     ah, 0x3d
@@ -3083,7 +2784,7 @@ LAB_2ea2_14e0:
     retf
 
 ; uint __cdecl16far file_decomp_paras(char * filename, int is_fatal)
-file_decomp_paras proc far
+file_decomp_paras_asm_ proc far
     var_fatal  = word ptr   -8
     var_6      = byte ptr   -6
     var_5      = word ptr   -5
@@ -3101,10 +2802,10 @@ file_decomp_paras proc far
     mov     word ptr [bp+var_fatal], ax
     jmp     _file_decomp_paras
     db 0x90
-file_decomp_paras endp
+file_decomp_paras_asm_ endp
 
 ; int __stdcall16near file_decomp_paras_nofatal(void)
-file_decomp_paras_nofatal proc near
+file_decomp_paras_nofatal_asm_ proc near
     var_fatal  = word ptr   -8
 
     push    bp
@@ -3115,11 +2816,11 @@ file_decomp_paras_nofatal proc near
     push    di
     mov     word ptr [bp+var_fatal], 0x0
     jmp     _file_decomp_paras
-file_decomp_paras_nofatal endp
+file_decomp_paras_nofatal_asm_ endp
     db 0x90
 
 ; uint __stdcall16near file_decomp_paras_fatal(void)
-file_decomp_paras_fatal proc near
+file_decomp_paras_fatal_asm_ proc near
     var_fatal  = word ptr   -8
 
     push    bp
@@ -3129,7 +2830,7 @@ file_decomp_paras_fatal proc near
     push    si
     push    di
     mov     word ptr [bp+var_fatal], 0x1
-file_decomp_paras_fatal endp
+file_decomp_paras_fatal_asm_ endp
 _file_decomp_paras:
     mov     dx, word ptr [bp+filename]
     mov     dx, word ptr [bp+filename]
@@ -3204,7 +2905,7 @@ LAB_2ea2_15a4:
     call    far ptr fatal_error
 
 ; char * __cdecl16far file_find(char * query)
-file_find proc far
+file_find_asm_ proc far
     query      = word ptr    6
 
     push    bp
@@ -3262,10 +2963,10 @@ LAB_2ea2_1605:
 _file_find_err:
     xor     ax, ax
     jmp     LAB_2ea2_1605
-file_find endp
+file_find_asm_ endp
 
 ; char * __stdcall16near file_find_next(void)
-file_find_next proc near
+file_find_next_asm_ proc near
     push    bp
     mov     bp, sp
     push    ds
@@ -3281,7 +2982,7 @@ file_find_next proc near
                                                ; last AH = 4Eh/4Fh call
     jc      _file_find_err
     jmp     _file_find_ok
-file_find_next endp
+file_find_next_asm_ endp
     db 0
 ;  
 ; Formely called scale_value. 
@@ -3292,7 +2993,7 @@ file_find_next endp
 ; and sines given by sinetable.  
 
 ; short __cdecl16far multiply_and_scale(short a1, short a2)
-multiply_and_scale proc far
+multiply_and_scale_asm_ proc far
     a1         = word ptr    6
     a2         = word ptr    8
 
@@ -3309,10 +3010,10 @@ multiply_and_scale proc far
     mov     ax, dx
     pop     bp
     retf
-multiply_and_scale endp
+multiply_and_scale_asm_ endp
 
 ; void __cdecl16far video_set_mode4(void)
-video_set_mode4 proc far
+video_set_mode4_asm_ proc far
     push    di
     mov     byte ptr [byte_3F85A], 0x1
     mov     ax, 0x40
@@ -3361,11 +3062,11 @@ LAB_2ea2_1671:
     out     dx, al
     pop     di
     retf
-video_set_mode4 endp
+video_set_mode4_asm_ endp
     db 0
 
 ; int __cdecl16far polarRadius2D(int z_, int y_)
-polarRadius2D proc far
+polarRadius2D_asm_ proc far
     z_         = word ptr    6
     y_         = word ptr    8
 
@@ -3427,10 +3128,10 @@ LAB_2ea2_16f2:
     div     bx
     pop     bp
     retf
-polarRadius2D endp
+polarRadius2D_asm_ endp
 
 ; void __cdecl16far video_set_mode7(void)
-video_set_mode7 proc far
+video_set_mode7_asm_ proc far
     push    di
     cmp     byte ptr [byte_3F85A], 0x0
     jnz     LAB_2ea2_170f
@@ -3484,10 +3185,10 @@ LAB_2ea2_1736:
                                                ; AL = mode
     pop     di
     retf
-video_set_mode7 endp
+video_set_mode7_asm_ endp
 
 ; void __stdcall16near nopsub_30180(void)
-nopsub_30180 proc near
+nopsub_30180_asm_ proc near
     push    bp
     mov     bp, sp
     mov     dx, 0x2e9c
@@ -3496,11 +3197,11 @@ nopsub_30180 proc near
     mov     word ptr [word_3F882], 0x64
     mov     byte ptr [byte_3F880], 0x1
     jmp     LAB_2ea2_17dd
-nopsub_30180 endp
+nopsub_30180_asm_ endp
     db 0x90
 
 ; void __cdecl16far timer_setup_interrupt(void)
-timer_setup_interrupt proc far
+timer_setup_interrupt_asm_ proc far
     push    bp
     mov     dx, 0x2e9c                         ; 11977. afaict this is used as freq-parameter, which gives
                                                ; 1193180 / 11977 = ca99.6 = ca 100 ??
@@ -3591,10 +3292,10 @@ LAB_2ea2_182a:
     add     sp, 0x4
     pop     bp
     retf
-timer_setup_interrupt endp
+timer_setup_interrupt_asm_ endp
 
 ; void __cdecl16far audio_stop_unk(void)
-audio_stop_unk proc far
+audio_stop_unk_asm_ proc far
     xor     ax, ax
     mov     es, ax
     mov     ax, es:[0x22]
@@ -3641,10 +3342,10 @@ LAB_2ea2_1861:
                                                ; 6: 0=hold keyboard clock low
                                                ; 7: 0=enable kbrd
     retf
-audio_stop_unk endp
+audio_stop_unk_asm_ endp
 
 ; void __cdecl16far timer_reg_callback(void * func_ptr)
-timer_reg_callback proc far
+timer_reg_callback_asm_ proc far
     func_ptr   = dword ptr   6
 
     push    bp
@@ -3668,10 +3369,10 @@ LAB_2ea2_18a7:
     mov     word ptr [bx+0x6], 0x0
     pop     bp
     retf
-timer_reg_callback endp
+timer_reg_callback_asm_ endp
 
 ; undefined __cdecl16far timer_remove_callback(int param_1, int param_2)
-timer_remove_callback proc far
+timer_remove_callback_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
 
@@ -3708,10 +3409,10 @@ LAB_2ea2_18f1:
     sti
     pop     bp
     retf
-timer_remove_callback endp
+timer_remove_callback_asm_ endp
 
 ; bool __cdecl16far compare_ds_ss(void)
-compare_ds_ss proc far
+compare_ds_ss_asm_ proc far
     xor     ax, ax
     mov     bx, ss
     mov     dx, ds
@@ -3720,10 +3421,10 @@ compare_ds_ss proc far
     inc     ax
 LAB_2ea2_1908:
     retf
-compare_ds_ss endp
+compare_ds_ss_asm_ endp
 
 ; undefined4 __stdcall16near timer_intr_callback(void)
-timer_intr_callback proc near
+timer_intr_callback_asm_ proc near
     cli
     push    ds
     push    es
@@ -3798,10 +3499,10 @@ LAB_2ea2_1990:
     pop     es
     pop     ds
     iret
-timer_intr_callback endp
+timer_intr_callback_asm_ endp
 
 ; void __cdecl16near sub_303BA(void)
-sub_303BA proc near
+sub_303BA_asm_ proc near
     cmp     byte ptr [byte_3F880], 0x0
     jz      LAB_2ea2_19b1
     dec     word ptr [word_3F882]
@@ -3812,11 +3513,11 @@ LAB_2ea2_19b1:
     pushf
     call    dword ptr [dword_3F874]
     ret
-sub_303BA endp
+sub_303BA_asm_ endp
     db 0
 
 ; void __cdecl16far set_bios_mode3(void)
-set_bios_mode3 proc far
+set_bios_mode3_asm_ proc far
     xor     ax, ax
     push    ax
     call    far ptr video_clear_color
@@ -3838,10 +3539,10 @@ caseD_0:
                                                ; BH = 00h, BL = border color
                                                ; BH = 01h, BL = palette (0-3)
     retf
-set_bios_mode3 endp
+set_bios_mode3_asm_ endp
 
 ; uint __cdecl16far kb_parse_key(uint keycode)
-kb_parse_key proc far
+kb_parse_key_asm_ proc far
     keycode    = word ptr    6
 
     push    bp
@@ -3889,10 +3590,10 @@ LAB_2ea2_1a34:
     mov     byte ptr [in_kb_parse_key], 0x0
     pop     bp
     retf
-kb_parse_key endp
+kb_parse_key_asm_ endp
 
 ; void __cdecl16far kb_reg_callback(uint keycode, void * func_cb)
-kb_reg_callback proc far
+kb_reg_callback_asm_ proc far
     keycode    = word ptr    6
     func_cb    = dword ptr  10
 
@@ -3938,10 +3639,10 @@ LAB_2ea2_1a7f:
     mov     byte ptr [bx+callbackflags2], al
     pop     bp
     retf
-kb_reg_callback endp
+kb_reg_callback_asm_ endp
 
 ; undefined __stdcall16near nopsub_304AF(undefined2 param_1, uint param_2)
-nopsub_304AF proc near
+nopsub_304AF_asm_ proc near
     param_1    = word ptr    4
     param_2    = word ptr    6
 
@@ -3949,10 +3650,10 @@ nopsub_304AF proc near
     mov     bp, sp
     xor     ax, ax
     jmp     LAB_2ea2_1a6d
-nopsub_304AF endp
+nopsub_304AF_asm_ endp
 
 ; uint __cdecl16far nopsub_304B6(void)
-nopsub_304B6 proc far
+nopsub_304B6_asm_ proc far
     mov     ah, 0x1
     int     0x16                               ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR
                                                ; Return: ZF clear if character in buffer
@@ -4010,10 +3711,10 @@ LAB_2ea2_1aef:
     mov     byte ptr [byte_3FB06], 0x3
     mov     word ptr [word_3FB04], ax
     jmp     LAB_2ea2_1adc
-nopsub_304B6 endp
+nopsub_304B6_asm_ endp
 
 ; uint __cdecl16far kb_get_char(void)
-kb_get_char proc far
+kb_get_char_asm_ proc far
     mov     ah, 0x1
     int     0x16                               ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR
                                                ; Return: ZF clear if character in buffer
@@ -4035,10 +3736,10 @@ LAB_2ea2_1b02:
     add     sp, 0x2
 LAB_2ea2_1b17:
     retf
-kb_get_char endp
+kb_get_char_asm_ endp
 
 ; uint __cdecl16far get_kb_or_joy_flags(void)
-get_kb_or_joy_flags proc far
+get_kb_or_joy_flags_asm_ proc far
     xor     ax, ax
     xor     bx, bx
     mov     bl, byte ptr [kbscancodes]
@@ -4096,10 +3797,10 @@ LAB_2ea2_1b9e:
     call    far ptr get_joy_flags
 LAB_2ea2_1ba7:
     retf
-get_kb_or_joy_flags endp
+get_kb_or_joy_flags_asm_ endp
 
 ; byte __cdecl16far nopsub_305C8(void)
-nopsub_305C8 proc far
+nopsub_305C8_asm_ proc far
     xor     cx, cx
     xor     bx, bx
     mov     bl, byte ptr [kbscancodes]
@@ -4124,10 +3825,10 @@ LAB_2ea2_1bc8:
 LAB_2ea2_1bd9:
     or      ax, cx
     retf
-nopsub_305C8 endp
+nopsub_305C8_asm_ endp
 
 ; byte __cdecl16far get_joy_flags(void)
-get_joy_flags proc far
+get_joy_flags_asm_ proc far
     test    byte ptr [byte_3FE00], 0x1
     jnz     LAB_2ea2_1be6
     xor     ax, ax
@@ -4317,20 +4018,20 @@ LAB_2ea2_1d7a:
 LAB_2ea2_1d8d:
     or      byte ptr [joyinput], 0x1
     jmp     LAB_2ea2_1d7a
-get_joy_flags endp
+get_joy_flags_asm_ endp
 
 ; void __cdecl16far sub_307B4(void)
-sub_307B4 proc far
+sub_307B4_asm_ proc far
     mov     byte ptr [byte_3FE00], 0x1
     mov     word ptr [word_3FB18], 0x50
     mov     word ptr [word_3FB1C], 0x0
     mov     word ptr [word_3FB26], 0x50
     mov     word ptr [word_3FB2A], 0x0
     retf
-sub_307B4 endp
+sub_307B4_asm_ endp
 
 ; byte __cdecl16far sub_307D2(uint param_1)
-sub_307D2 proc far
+sub_307D2_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -4341,10 +4042,10 @@ sub_307D2 proc far
     xor     ah, ah
     pop     bp
     retf
-sub_307D2 endp
+sub_307D2_asm_ endp
 
 ; int __cdecl16far sub_307E3(void)
-sub_307E3 proc far
+sub_307E3_asm_ proc far
     mov     ax, word ptr [joyflag1]
     sub     ax, word ptr [word_3FB18]
     jge     LAB_2ea2_1dce
@@ -4355,10 +4056,10 @@ LAB_2ea2_1dce:
     mov     ah, dl
     sub     ax, 0x1f
     retf
-sub_307E3 endp
+sub_307E3_asm_ endp
 
 ; int __cdecl16far nopsub_307FA(void)
-nopsub_307FA proc far
+nopsub_307FA_asm_ proc far
     mov     ax, word ptr [joyflag2]
     sub     ax, word ptr [word_3FB26]
     jge     LAB_2ea2_1de5
@@ -4369,11 +4070,11 @@ LAB_2ea2_1de5:
     mov     ah, dl
     sub     ax, 0x1f
     retf
-nopsub_307FA endp
+nopsub_307FA_asm_ endp
     db 0
 
 ; void __cdecl16far kb_init_interrupt(void)
-kb_init_interrupt proc far
+kb_init_interrupt_asm_ proc far
     push    di
     in      al, 0x21                           ; Interrupt controller, 8259A.
     mov     ah, al
@@ -4412,10 +4113,10 @@ LAB_2ea2_1e41:
     add     sp, 0x4
     pop     di
     retf
-kb_init_interrupt endp
+kb_init_interrupt_asm_ endp
 
 ; byte __cdecl16far kb_exit_handler(void)
-kb_exit_handler proc far
+kb_exit_handler_asm_ proc far
     in      al, 0x21                           ; Interrupt controller, 8259A.
     mov     ah, al
     or      al, 0x3
@@ -4439,10 +4140,10 @@ LAB_2ea2_1ea1:
     mov     al, ah
     out     0x21, al                           ; Interrupt controller, 8259A.
     retf
-kb_exit_handler endp
+kb_exit_handler_asm_ endp
 
 ; void * __stdcall16near kb_int9_handler(void)
-kb_int9_handler proc near
+kb_int9_handler_asm_ proc near
     sti
     push    ax
     push    bx
@@ -4571,14 +4272,14 @@ LAB_2ea2_1f72:
 LAB_2ea2_1f7d:
     mov     byte ptr [bx+kbinput], 0x0
     jmp     near ptr LAB_2ea2_1eca
-kb_int9_handler endp
+kb_int9_handler_asm_ endp
 
 ; ******************************************************************************
 ; * Handles text input.
 ; ******************************************************************************
 
 ; void * __stdcall16far kb_int16_handler(void)
-kb_int16_handler proc far
+kb_int16_handler_asm_ proc far
     push    bx
     push    ds
 ; <REPLACE>
@@ -4628,10 +4329,10 @@ LAB_2ea2_1fe4:
     mov     al, byte ptr [(kbinput+42)]
     or      al, byte ptr [(kbinput+54)]
     jmp     LAB_2ea2_1f9d
-kb_int16_handler endp
+kb_int16_handler_asm_ endp
 
 ; uint __cdecl16far kb_get_key_state(uint keycode)
-kb_get_key_state proc far
+kb_get_key_state_asm_ proc far
     keycode    = word ptr    6
 
     push    bp
@@ -4641,17 +4342,17 @@ kb_get_key_state proc far
     xor     ah, ah
     pop     bp
     retf
-kb_get_key_state endp
+kb_get_key_state_asm_ endp
     db 0
 
 ; uint __cdecl16far kb_call_readchar_callback(void)
-kb_call_readchar_callback proc far
+kb_call_readchar_callback_asm_ proc far
     call    dword ptr [readchar_callback_ptr]
     retf
-kb_call_readchar_callback endp
+kb_call_readchar_callback_asm_ endp
 
 ; uint __cdecl16far kb_read_char(void)
-kb_read_char proc far
+kb_read_char_asm_ proc far
     mov     ah, 0x1
     int     0x16                               ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR
                                                ; Return: ZF clear if character in buffer
@@ -4669,10 +4370,10 @@ LAB_2ea2_200a:
     xor     ah, ah
 LAB_2ea2_2014:
     retf
-kb_read_char endp
+kb_read_char_asm_ endp
 
 ; uint __cdecl16far kb_checking(void)
-kb_checking proc far
+kb_checking_asm_ proc far
     mov     ah, 0x1
     int     0x16                               ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR
                                                ; Return: ZF clear if character in buffer
@@ -4686,10 +4387,10 @@ LAB_2ea2_201d:
     xor     ah, ah
 LAB_2ea2_2023:
     retf
-kb_checking endp
+kb_checking_asm_ endp
 
 ; void __cdecl16far nopsub_kb_set_readchar_callback(void * funcptr)
-nopsub_kb_set_readchar_callback proc far
+nopsub_kb_set_readchar_callback_asm_ proc far
     funcptr    = dword ptr   6
 
     push    bp
@@ -4700,25 +4401,25 @@ nopsub_kb_set_readchar_callback proc far
     mov     word ptr [readchar_callback_ptr+2], ax
     pop     bp
     retf
-nopsub_kb_set_readchar_callback endp
+nopsub_kb_set_readchar_callback_asm_ endp
 
 ; undefined * __cdecl16far nopsub_kb_get_readchar_callback(void)
-nopsub_kb_get_readchar_callback proc far
+nopsub_kb_get_readchar_callback_asm_ proc far
     mov     ax, word ptr [readchar_callback_ptr]
     mov     dx, word ptr [readchar_callback_ptr+2]
     retf
-nopsub_kb_get_readchar_callback endp
+nopsub_kb_get_readchar_callback_asm_ endp
 
 ; void __cdecl16far flush_stdin(void)
-flush_stdin proc far
+flush_stdin_asm_ proc far
     call    far ptr kb_call_readchar_callback
     cmp     ax, 0x0
     jz      flush_stdin
     retf
-flush_stdin endp
+flush_stdin_asm_ endp
 
 ; uint __cdecl16far kb_check(void)
-kb_check proc far
+kb_check_asm_ proc far
     mov     ah, 0x1
     int     0x16                               ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR
                                                ; Return: ZF clear if character in buffer
@@ -4732,10 +4433,10 @@ LAB_2ea2_2051:
     int     0x16                               ; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY
                                                ; Return: AH = scan code, AL = character
     jmp     kb_check
-kb_check endp
+kb_check_asm_ endp
 
 ; int __cdecl16far nopsub_30A77(void)
-nopsub_30A77 proc far
+nopsub_30A77_asm_ proc far
     call    far ptr kb_call_readchar_callback
     cmp     ax, 0x0
     jnz     LAB_2ea2_2076
@@ -4749,10 +4450,10 @@ LAB_2ea2_2074:
     xor     ax, ax
 LAB_2ea2_2076:
     retf
-nopsub_30A77 endp
+nopsub_30A77_asm_ endp
 
 ; int __cdecl16far nopsub_30A97(uint param_1, int param_2)
-nopsub_30A97 proc far
+nopsub_30A97_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -4782,11 +4483,11 @@ LAB_2ea2_20ab:
     mov     sp, bp
     pop     bp
     retf
-nopsub_30A97 endp
+nopsub_30A97_asm_ endp
     db 0
 
 ; void * __stdcall16near file_read(char * filename, void * dst, int is_fatal)
-file_read proc near
+file_read_asm_ proc near
     var_fatal  = word ptr   -8
     filename   = word ptr    4
     dst        = dword ptr   8
@@ -4799,11 +4500,11 @@ file_read proc near
     mov     ax, word ptr [bp+is_fatal]
     mov     word ptr [bp+var_fatal], ax
     jmp     _file_read
-file_read endp
+file_read_asm_ endp
     db 0x90
 
 ; void * __stdcall16near file_read_nofatal(char * filename, void * dst)
-file_read_nofatal proc near
+file_read_nofatal_asm_ proc near
     var_fatal  = word ptr   -8
     filename   = word ptr    4
     dst        = dword ptr   8
@@ -4814,11 +4515,11 @@ file_read_nofatal proc near
     push    ds
     mov     word ptr [bp+var_fatal], 0x0
     jmp     _file_read
-file_read_nofatal endp
+file_read_nofatal_asm_ endp
     db 0x90
 
 ; void * __cdecl16far file_read_fatal(char * filename, void * dst)
-file_read_fatal proc far
+file_read_fatal_asm_ proc far
     var_fatal  = word ptr   -8
     var_curseg = word ptr   -6
     var_curoff = word ptr   -4
@@ -4884,10 +4585,10 @@ fatal:
     push    word ptr [bp+filename]
     push    ax
     call    far ptr fatal_error
-file_read_fatal endp
+file_read_fatal_asm_ endp
 
 ; ulong __cdecl16far file_decomp_rle(void * src, void * dst, uint decomp_paras)
-file_decomp_rle proc far
+file_decomp_rle_asm_ proc far
     var_lenlo  = word ptr  -26
     var_lenhi  = word ptr  -24
     var_16     = word ptr  -22
@@ -4962,10 +4663,10 @@ skip_seq_pass:
     pop     ds
     pop     bp
     retf
-file_decomp_rle endp
+file_decomp_rle_asm_ endp
 
 ; ulong __cdecl16near file_decomp_rle_single(void)
-file_decomp_rle_single proc near
+file_decomp_rle_single_asm_ proc near
     mov     cx, 0x80
     lea     di, [bp+0xfee4]
     mov     ax, ss
@@ -5070,10 +4771,10 @@ LAB_2ea2_22a1:
     add     ax, 0x800
     mov     es, ax
     jmp     near ptr LAB_2ea2_2228
-file_decomp_rle_single endp
+file_decomp_rle_single_asm_ endp
 
 ; ulong __cdecl16near file_decomp_rle_seq(void)
-file_decomp_rle_seq proc near
+file_decomp_rle_seq_asm_ proc near
     cmp     byte ptr [bp-0x12], 0x1            ; file_decomp_rle::var_esclen
     jnz     has_codes
     ret
@@ -5163,10 +4864,10 @@ LAB_2ea2_233a:
     or      dx, bx
     jz      LAB_2ea2_2309
     jmp     near ptr LAB_2ea2_22cd
-file_decomp_rle_seq endp
+file_decomp_rle_seq_asm_ endp
 
 ; void * __cdecl16far file_load_binary(char * filename, int is_fatal)
-file_load_binary proc far
+file_load_binary_asm_ proc far
     var_fatal  = word ptr   -2
     filename   = word ptr    8
     is_fatal   = word ptr   10
@@ -5177,11 +4878,11 @@ file_load_binary proc far
     mov     ax, word ptr [bp+filename]
     mov     word ptr [bp+var_fatal], ax
     jmp     _file_load_binary
-file_load_binary endp
+file_load_binary_asm_ endp
     db 0x90
 
 ; void * __cdecl16far file_load_binary_nofatal(char * filename)
-file_load_binary_nofatal proc far
+file_load_binary_nofatal_asm_ proc far
     var_fatal  = word ptr   -2
     filename   = word ptr    6
 
@@ -5224,10 +4925,10 @@ LAB_2ea2_23be:
 emptyfile:
     xor     dx, dx
     jmp     LAB_2ea2_23be
-file_load_binary_nofatal endp
+file_load_binary_nofatal_asm_ endp
 
 ; void * __stdcall16near file_decomp(char * filename, int is_fatal)
-file_decomp proc near
+file_decomp_asm_ proc near
     var_fatal  = word ptr  -12
     filename   = word ptr    4
     is_fatal   = word ptr    6
@@ -5240,11 +4941,11 @@ file_decomp proc near
     mov     ax, word ptr [bp+0x8]
     mov     word ptr [bp+var_fatal], ax
     jmp     _file_decomp
-file_decomp endp
+file_decomp_asm_ endp
     db 0x90
 
 ; void * __stdcall16near file_decomp_nofatal(char * filename)
-file_decomp_nofatal proc near
+file_decomp_nofatal_asm_ proc near
     var_fatal  = word ptr  -12
     filename   = word ptr    4
 
@@ -5255,11 +4956,11 @@ file_decomp_nofatal proc near
     push    di
     mov     word ptr [bp+var_fatal], 0x0
     jmp     _file_decomp
-file_decomp_nofatal endp
+file_decomp_nofatal_asm_ endp
     db 0x90
 
 ; void * __cdecl16far file_decomp_fatal(char * filename)
-file_decomp_fatal proc far
+file_decomp_fatal_asm_ proc far
     var_fatal  = word ptr  -12
     var_nextsrcseg = word ptr  -10
     var_passes = word ptr   -8
@@ -5413,7 +5114,7 @@ fd_done:
     mov     sp, bp
     pop     bp
     retf
-file_decomp_fatal endp
+file_decomp_fatal_asm_ endp
     push    bp
     mov     bp, sp
     sub     sp, 0xc
@@ -5450,7 +5151,7 @@ LAB_2ea2_255e:
     retf
 
 ; void * __stdcall16near locate_shape_nofatal(void * data, char * name_)
-locate_shape_nofatal proc near
+locate_shape_nofatal_asm_ proc near
     data       = dword ptr   4
     name_      = word ptr    8
 
@@ -5461,11 +5162,11 @@ locate_shape_nofatal proc near
     push    di
     xor     dx, dx
     jmp     _alt_locate_resource
-locate_shape_nofatal endp
+locate_shape_nofatal_asm_ endp
     db 0x90
 
 ; void * __stdcall16near locate_shape_fatal(void * data, char * name_)
-locate_shape_fatal proc near
+locate_shape_fatal_asm_ proc near
     data       = dword ptr   4
     name_      = word ptr    8
 
@@ -5476,11 +5177,11 @@ locate_shape_fatal proc near
     push    di
     mov     dx, 0x1
     jmp     _alt_locate_resource
-locate_shape_fatal endp
+locate_shape_fatal_asm_ endp
     db 0x90
 
 ; void * __cdecl16far locate_sound_fatal(void * data, char * name_)
-locate_sound_fatal proc far
+locate_sound_fatal_asm_ proc far
     data       = dword ptr   6
     name_      = word ptr   10
 
@@ -5602,10 +5303,10 @@ LAB_2ea2_2655:
     pop     ds
     pop     bp
     retf
-locate_sound_fatal endp
+locate_sound_fatal_asm_ endp
 
 ; void __cdecl16far mmgr_alloc_resmem(uint size_)
-mmgr_alloc_resmem proc far
+mmgr_alloc_resmem_asm_ proc far
     size_      = word ptr    6
 
     push    bp
@@ -5664,19 +5365,19 @@ LAB_2ea2_26cd:
     pop     si
     pop     bp
     retf
-mmgr_alloc_resmem endp
+mmgr_alloc_resmem_asm_ endp
 
 ; void __cdecl16far mmgr_alloc_a000(void)
-mmgr_alloc_a000 proc far
+mmgr_alloc_a000_asm_ proc far
     mov     ax, 0xa000
     push    ax
     call    far ptr mmgr_alloc_resmem
     add     sp, 0x2
     retf
-mmgr_alloc_a000 endp
+mmgr_alloc_a000_asm_ endp
 
 ; undefined __cdecl16far nopsub_310FE(int param_1)
-nopsub_310FE proc far
+nopsub_310FE_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -5691,10 +5392,10 @@ nopsub_310FE proc far
     sub     word ptr [mem_last_para], ax
     pop     bp
     retf
-nopsub_310FE endp
+nopsub_310FE_asm_ endp
 
 ; undefined __stdcall16near nopsub_3111D(undefined2 param_1, int param_2)
-nopsub_3111D proc near
+nopsub_3111D_asm_ proc near
     param_1    = word ptr    4
     param_2    = word ptr    6
 
@@ -5723,40 +5424,40 @@ LAB_2ea2_271e:
     mov     word ptr [si+0xe], ax
     mov     word ptr [mem_last_para], ax
     jmp     near ptr LAB_2ea2_26ad
-nopsub_3111D endp
+nopsub_3111D_asm_ endp
 
 ; int __cdecl16far nopsub_31157(void)
-nopsub_31157 proc far
+nopsub_31157_asm_ proc far
     mov     bx, word ptr [resendptr1]
     mov     ax, word ptr [bx+0xe]
     mov     bx, word ptr [resptr2]
     sub     ax, word ptr [bx+0xe]
     sub     ax, word ptr [bx+0xc]
     retf
-nopsub_31157 endp
+nopsub_31157_asm_ endp
 
 ; int __cdecl16far nopsub_31169(void)
-nopsub_31169 proc far
+nopsub_31169_asm_ proc far
     mov     bx, word ptr [resptr2]
     mov     ax, word ptr [bx+0xe]
     add     ax, word ptr [bx+0xc]
     mov     bx, word ptr [resptr1]
     sub     ax, word ptr [bx+0xe]
     retf
-nopsub_31169 endp
+nopsub_31169_asm_ endp
 
 ; uint __cdecl16far mmgr_get_ofs_diff(void)
-mmgr_get_ofs_diff proc far
+mmgr_get_ofs_diff_asm_ proc far
     mov     bx, word ptr [resendptr2]
     mov     ax, word ptr [bx+0xe]
     mov     bx, word ptr [resptr2]
     sub     ax, word ptr [bx+0xe]
     sub     ax, word ptr [bx+0xc]
     retf
-mmgr_get_ofs_diff endp
+mmgr_get_ofs_diff_asm_ endp
 
 ; void __cdecl16far mmgr_copy_paras(ushort src_seg, ushort dst_seg, uint paras)
-mmgr_copy_paras proc far
+mmgr_copy_paras_asm_ proc far
     src_seg    = word ptr    6
     dst_seg    = word ptr    8
     paras      = word ptr   10
@@ -5800,10 +5501,10 @@ LAB_2ea2_27b0:
     pop     ds
     pop     bp
     retf
-mmgr_copy_paras endp
+mmgr_copy_paras_asm_ endp
 
 ; void __cdecl16far copy_paras_reverse(ushort src_seg, ushort dst_seg, ushort paras)
-copy_paras_reverse proc far
+copy_paras_reverse_asm_ proc far
     src_seg    = word ptr    6
     dst_seg    = word ptr    8
     paras      = word ptr   10
@@ -5855,10 +5556,10 @@ LAB_2ea2_2802:
     pop     ds
     pop     bp
     retf
-copy_paras_reverse endp
+copy_paras_reverse_asm_ endp
 
 ; char * __cdecl16far mmgr_path_to_name(char * filename)
-mmgr_path_to_name proc far
+mmgr_path_to_name_asm_ proc far
     filename   = word ptr    6
 
     push    bp
@@ -5883,10 +5584,10 @@ LAB_2ea2_2823:
     pop     si
     pop     bp
     retf
-mmgr_path_to_name endp
+mmgr_path_to_name_asm_ endp
 
 ; void * __cdecl16far mmgr_alloc_pages(char * name_, int pages)
-mmgr_alloc_pages proc far
+mmgr_alloc_pages_asm_ proc far
     name_      = word ptr    6
     pages      = word ptr    8
 
@@ -5965,10 +5666,10 @@ LAB_2ea2_28c9:
     mov     ax, offset aReservememoryOutOfMemory
     push    ax
     call    far ptr fatal_error
-mmgr_alloc_pages endp
+mmgr_alloc_pages_asm_ endp
 
 ; void __cdecl16far mmgr_find_free(void)
-mmgr_find_free proc far
+mmgr_find_free_asm_ proc far
     push    si
     push    di
     push    dx
@@ -6020,10 +5721,10 @@ LAB_2ea2_2939:
     call    far ptr copy_paras_reverse
     add     sp, 0x6
     jmp     LAB_2ea2_28f9
-mmgr_find_free endp
+mmgr_find_free_asm_ endp
 
 ; void * __cdecl16far mmgr_get_chunk_by_name(char * name_)
-mmgr_get_chunk_by_name proc far
+mmgr_get_chunk_by_name_asm_ proc far
     name_      = word ptr    6
 
     push    bp
@@ -6109,10 +5810,10 @@ LAB_2ea2_29ff:
     call    far ptr mmgr_find_free
     mov     dx, word ptr [di+0xe]
     jmp     LAB_2ea2_2990
-mmgr_get_chunk_by_name endp
+mmgr_get_chunk_by_name_asm_ endp
 
 ; undefined2 __cdecl16far nopsub_31429(char * param_1)
-nopsub_31429 proc far
+nopsub_31429_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -6161,10 +5862,10 @@ LAB_2ea2_2a55:
     pop     si
     pop     bp
     retf
-nopsub_31429 endp
+nopsub_31429_asm_ endp
 
 ; void * __cdecl16far mmgr_free(void * data)
-mmgr_free proc far
+mmgr_free_asm_ proc far
     data       = dword ptr   6
 
     push    bp
@@ -6237,10 +5938,10 @@ LAB_2ea2_2afb:
     pop     si
     pop     bp
     retf
-mmgr_free endp
+mmgr_free_asm_ endp
 
 ; undefined2 __cdecl16far nopsub_31525(undefined2 param_1, int param_2)
-nopsub_31525 proc far
+nopsub_31525_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -6362,10 +6063,10 @@ LAB_2ea2_2c15:
     mov     sp, bp
     pop     bp
     retf
-nopsub_31525 endp
+nopsub_31525_asm_ endp
 
 ; void __cdecl16far mmgr_release(void * data)
-mmgr_release proc far
+mmgr_release_asm_ proc far
     data       = dword ptr   6
 
     push    bp
@@ -6397,10 +6098,10 @@ LAB_2ea2_2c58:
     pop     si
     pop     bp
     retf
-mmgr_release endp
+mmgr_release_asm_ endp
 
 ; uint __cdecl16far mmgr_get_chunk_size(void * data)
-mmgr_get_chunk_size proc far
+mmgr_get_chunk_size_asm_ proc far
     data       = dword ptr   6
 
     push    bp
@@ -6424,10 +6125,10 @@ LAB_2ea2_2c7b:
     pop     si
     pop     bp
     retf
-mmgr_get_chunk_size endp
+mmgr_get_chunk_size_asm_ endp
 
 ; uint __cdecl16far mmgr_resize_memory(void * data, uint size_)
-mmgr_resize_memory proc far
+mmgr_resize_memory_asm_ proc far
     data       = dword ptr   6
     size_      = word ptr   10
 
@@ -6497,10 +6198,10 @@ LAB_2ea2_2d04:
     mov     ax, offset aResizememoryNo
     push    ax
     call    far ptr fatal_error
-mmgr_resize_memory endp
+mmgr_resize_memory_asm_ endp
 
 ; void * __cdecl16far mmgr_op_unk(void * data)
-mmgr_op_unk proc far
+mmgr_op_unk_asm_ proc far
     data       = dword ptr   6
 
     push    bp
@@ -6561,11 +6262,11 @@ LAB_2ea2_2d84:
 LAB_2ea2_2d8d:
     mov     di, si
     jmp     LAB_2ea2_2d84
-mmgr_op_unk endp
+mmgr_op_unk_asm_ endp
     db 0
 
 ; void __cdecl16far preRender_default(uint colour, uint vertlinecount, POINT2D * vertlines)
-preRender_default proc far
+preRender_default_asm_ proc far
     var_A      = byte ptr  -10
     colour     = word ptr    6
     vertlinecount = word ptr    8
@@ -6578,10 +6279,10 @@ preRender_default proc far
     push    di
     mov     byte ptr [bp+var_A], 0x1
     jmp     LAB_2ea2_2dae
-preRender_default endp
+preRender_default_asm_ endp
 
 ; void __cdecl16far preRender_default_alt(uint colour, uint vertlinecount, POINT2D * vertlines)
-preRender_default_alt proc far
+preRender_default_alt_asm_ proc far
     var_A      = byte ptr  -10
     colour     = word ptr    6
     vertlinecount = word ptr    8
@@ -6600,10 +6301,10 @@ LAB_2ea2_2dae:
     mov     word ptr [imagefunc], ax
     mov     si, word ptr [bp+vertlines]
     jmp     loc_3180A
-preRender_default_alt endp
+preRender_default_alt_asm_ endp
 
 ; undefined __cdecl16far skybox_op_helper(uint color, uint vertlinecount, POINT2D * vertlines)
-skybox_op_helper proc far
+skybox_op_helper_asm_ proc far
     var_A      = byte ptr  -10
     color      = word ptr    6
     vertlinecount = word ptr    8
@@ -6616,10 +6317,10 @@ skybox_op_helper proc far
     push    di
     mov     byte ptr [bp+var_A], 0x1
     jmp     LAB_2ea2_2ddb
-skybox_op_helper endp
+skybox_op_helper_asm_ endp
 
 ; void __cdecl16far preRender_wheel_helper4(uint color, uint vertlinecount, POINT2D * vertlines)
-preRender_wheel_helper4 proc far
+preRender_wheel_helper4_asm_ proc far
     var_7D0    = word ptr  -2000
     var_798    = word ptr  -1944
     var_3D8    = word ptr  -984
@@ -6857,10 +6558,10 @@ LAB_2ea2_2fa7:
     mov     sp, bp
     pop     bp
     retf
-preRender_wheel_helper4 endp
+preRender_wheel_helper4_asm_ endp
 
 ; void __stdcall16near preRender_helper(void)
-preRender_helper proc near
+preRender_helper_asm_ proc near
     var_18     = word ptr  -24
 
     mov     cx, word ptr [si+0x14]
@@ -6936,10 +6637,10 @@ LAB_2ea2_3026:
     add     di, 0x3c0
     dec     ax
     rep stosw
-preRender_helper endp
+preRender_helper_asm_ endp
 
 ; void __cdecl16near preRender_helper2(void)
-preRender_helper2 proc near
+preRender_helper2_asm_ proc near
     var_18     = word ptr  -22
 
     mov     cx, word ptr [si+0xe]
@@ -7067,10 +6768,10 @@ LAB_2ea2_3135:
     dec     ax
     mov     word ptr [di+0x3c0], ax
     ret
-preRender_helper2 endp
+preRender_helper2_asm_ endp
 
 ; void __cdecl16near preRender_helper3(void)
-preRender_helper3 proc near
+preRender_helper3_asm_ proc near
     var_18     = word ptr  -22
     var_C      = byte ptr  -10
     var_A      = byte ptr   -8
@@ -7569,10 +7270,10 @@ LAB_2ea2_34fd:
     rep stosw
 LAB_2ea2_3518:
     ret
-preRender_helper3 endp
+preRender_helper3_asm_ endp
 
 ; undefined __cdecl16far nopsub_31F39(undefined2 param_1, int param_2, int param_3)
-nopsub_31F39 proc far
+nopsub_31F39_asm_ proc far
     var_7D0    = word ptr  -2000
     var_798    = byte ptr  -1944
     var_3D8    = byte ptr  -984
@@ -7604,10 +7305,10 @@ nopsub_31F39 proc far
     mov     word ptr [imagefunc], ax
     jmp     LAB_2ea2_354e
     db 0x90
-nopsub_31F39 endp
+nopsub_31F39_asm_ endp
 
 ; undefined __stdcall16near nopsub_31F55(undefined2 param_1, undefined2 param_2, int param_3, int param_4)
-nopsub_31F55 proc near
+nopsub_31F55_asm_ proc near
     var_A      = byte ptr  -10
     param_1    = word ptr    4
     param_2    = word ptr    6
@@ -7624,7 +7325,7 @@ nopsub_31F55 proc near
     mov     word ptr [spritefunc], ax
     mov     ax, 0x49a0
     mov     word ptr [imagefunc], ax
-nopsub_31F55 endp
+nopsub_31F55_asm_ endp
 LAB_2ea2_354e:
     lea     si, [bp+0xa]
     mov     word ptr [bp+var_6], si
@@ -7846,7 +7547,7 @@ LAB_2ea2_3733:
     db 0
 
 ; undefined __cdecl16far nopsub_3215A(void)
-nopsub_3215A proc far
+nopsub_3215A_asm_ proc far
     push    di
     mov     ax, 0xb000
     mov     es, ax
@@ -7857,10 +7558,10 @@ nopsub_3215A proc far
     rep stosw
     pop     di
     retf
-nopsub_3215A endp
+nopsub_3215A_asm_ endp
 
 ; undefined __cdecl16far nopsub_3216C(void)
-nopsub_3216C proc far
+nopsub_3216C_asm_ proc far
     push    si
     push    di
     push    ds
@@ -7886,10 +7587,10 @@ nopsub_3216C proc far
     pop     di
     pop     si
     retf
-nopsub_3216C endp
+nopsub_3216C_asm_ endp
 
 ; undefined __cdecl16far nopsub_debug_print(char * fmt, ...)
-nopsub_debug_print proc far
+nopsub_debug_print_asm_ proc far
     fmt        = word ptr    6
 
     pop     ax
@@ -8005,10 +7706,10 @@ LAB_2ea2_388f:
     mov     byte ptr [byte_4032A], al
     pop     bp
     retf
-nopsub_debug_print endp
+nopsub_debug_print_asm_ endp
 
 ; undefined __cdecl16far nopsub_322B4(byte param_1)
-nopsub_322B4 proc far
+nopsub_322B4_asm_ proc far
     param_1    = byte ptr    6
 
     push    bp
@@ -8017,11 +7718,11 @@ nopsub_322B4 proc far
     mov     byte ptr [byte_4032C], al
     pop     bp
     retf
-nopsub_322B4 endp
+nopsub_322B4_asm_ endp
     db 0
 
 ; undefined __cdecl16far nopsub_322C0(word param_1, word param_2)
-nopsub_322C0 proc far
+nopsub_322C0_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
 
@@ -8037,10 +7738,10 @@ nopsub_322C0 proc far
     mov     word ptr [projectiondata8], ax
     pop     bp
     retf
-nopsub_322C0 endp
+nopsub_322C0_asm_ endp
 
 ; undefined __stdcall16near nopsub_322DF(undefined2 param_1, word param_2, word param_3, uint param_4, uint param_5)
-nopsub_322DF proc near
+nopsub_322DF_asm_ proc near
     param_1    = word ptr    4
     param_2    = word ptr    6
     param_3    = word ptr    8
@@ -8056,11 +7757,11 @@ nopsub_322DF proc near
     mov     ax, word ptr [bp+param_3]
     mov     word ptr [projectiondata2], ax
     jmp     LAB_2ea2_3914
-nopsub_322DF endp
+nopsub_322DF_asm_ endp
     db 0x90
 
 ; void __cdecl16far set_projection(int i1, int i2, int i3, int i4)
-set_projection proc far
+set_projection_asm_ proc far
     i1         = word ptr    6
     i2         = word ptr    8
     i3         = word ptr   10
@@ -8164,11 +7865,11 @@ LAB_2ea2_3994:
     pop     si
     pop     bp
     retf
-set_projection endp
+set_projection_asm_ endp
 ; returns something like x/z, y/z  
 
 ; void __cdecl16far vector_to_point(VECTOR * invec, POINT2D * outpt)
-vector_to_point proc far
+vector_to_point_asm_ proc far
     invec      = word ptr    6
     outpt      = word ptr    8
 
@@ -8284,10 +7985,10 @@ LAB_2ea2_3a82:
     mov     ax, 0x7d00
     mov     word ptr [di+0x2], ax
     jmp     LAB_2ea2_3a52
-vector_to_point endp
+vector_to_point_asm_ endp
 
 ; void __cdecl16far sprite_free_wnd(SPRITE * wndsprite_)
-sprite_free_wnd proc far
+sprite_free_wnd_asm_ proc far
     wndsprite_ = dword ptr   6
 
     push    bp
@@ -8326,10 +8027,10 @@ LAB_2ea2_3acc:
     lea     ax, [aWindowReleased]
     push    ax
     call    far ptr fatal_error
-sprite_free_wnd endp
+sprite_free_wnd_asm_ endp
 
 ; uint __cdecl16far file_write_nofatal(char * filename, void * src, ulong length_)
-file_write_nofatal proc far
+file_write_nofatal_asm_ proc far
     var_fatal  = word ptr   -4
     filename   = word ptr    6
     src        = dword ptr  10
@@ -8343,11 +8044,11 @@ file_write_nofatal proc far
     push    di
     mov     word ptr [bp+var_fatal], 0x0
     jmp     _file_write
-file_write_nofatal endp
+file_write_nofatal_asm_ endp
     db 0x90
 
 ; uint __cdecl16far file_write_fatal(char * filename, void * src, ulong length_)
-file_write_fatal proc far
+file_write_fatal_asm_ proc far
     var_errno  = word ptr   -6
     var_fatal  = word ptr   -4
     var_filehandle = word ptr   -2
@@ -8434,10 +8135,10 @@ LAB_2ea2_3b87:
     mov     sp, bp
     pop     bp
     retf
-file_write_fatal endp
+file_write_fatal_asm_ endp
 
 ; void __cdecl16far video_add_exithandler(void)
-video_add_exithandler proc far
+video_add_exithandler_asm_ proc far
     cmp     byte ptr [currentvideomode], 0x0
     jnz     LAB_2ea2_3bb5
     mov     ah, 0xf
@@ -8457,10 +8158,10 @@ video_add_exithandler proc far
     add     sp, 0x4
 LAB_2ea2_3bb5:
     retf
-video_add_exithandler endp
+video_add_exithandler_asm_ endp
 
 ; void __cdecl16far video_on_exit(void)
-video_on_exit proc far
+video_on_exit_asm_ proc far
     mov     ax, 0x40
     mov     es, ax
     mov     al, byte ptr [byte_403F3]
@@ -8485,10 +8186,10 @@ LAB_2ea2_3be6:
     mov     bx, 0x0
     int     0x10                               ; - VIDEO -
     retf
-video_on_exit endp
+video_on_exit_asm_ endp
 
 ; void __cdecl16far sprite_copy_both_to_arg(SPRITE * dst)
-sprite_copy_both_to_arg proc far
+sprite_copy_both_to_arg_asm_ proc far
     dst        = word ptr    6
 
     push    bp
@@ -8510,10 +8211,10 @@ sprite_copy_both_to_arg proc far
     pop     ds
     pop     bp
     retf
-sprite_copy_both_to_arg endp
+sprite_copy_both_to_arg_asm_ endp
 
 ; void __cdecl16far sprite_copy_arg_to_both(SPRITE * src)
-sprite_copy_arg_to_both proc far
+sprite_copy_arg_to_both_asm_ proc far
     src        = word ptr    6
 
     push    bp
@@ -8534,10 +8235,10 @@ caseD_3:
     pop     ds
     pop     bp
     retf
-sprite_copy_arg_to_both endp
+sprite_copy_arg_to_both_asm_ endp
 
 ; ushort __cdecl16far file_get_res_shape_count(void * memchunk_)
-file_get_res_shape_count proc far
+file_get_res_shape_count_asm_ proc far
     memchunk_  = dword ptr   6
 
     push    bp
@@ -8549,10 +8250,10 @@ file_get_res_shape_count proc far
     pop     si
     pop     bp
     retf
-file_get_res_shape_count endp
+file_get_res_shape_count_asm_ endp
 
 ; SHAPE2D * __cdecl16far file_get_shape2d(void * memchunk_, int idx)
-file_get_shape2d proc far
+file_get_shape2d_asm_ proc far
     memchunk_  = dword ptr   6
     idx        = word ptr   10
 
@@ -8600,10 +8301,10 @@ file_get_shape2d proc far
     pop     si
     pop     bp
     retf
-file_get_shape2d endp
+file_get_shape2d_asm_ endp
 
 ; undefined __cdecl16far nopsub_326BA(int param_1, undefined2 param_2, int param_3, undefined2 * param_4)
-nopsub_326BA proc far
+nopsub_326BA_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
     param_3    = word ptr   10
@@ -8625,7 +8326,7 @@ nopsub_326BA proc far
     pop     si
     pop     bp
     retf
-nopsub_326BA endp
+nopsub_326BA_asm_ endp
 
 ; ******************************************************************************
 ; * Returns a sine from a given angle. 
@@ -8634,7 +8335,7 @@ nopsub_326BA endp
 ; ******************************************************************************
 
 ; short __cdecl16far sin_fast(ushort s)
-sin_fast proc far
+sin_fast_asm_ proc far
     s          = word ptr    6
 
     push    bp
@@ -8679,10 +8380,10 @@ LAB_2ea2_3cfd:
     neg     ax
     pop     bp
     retf
-sin_fast endp
+sin_fast_asm_ endp
 
 ; short __cdecl16far cos_fast(ushort s)
-cos_fast proc far
+cos_fast_asm_ proc far
     s          = word ptr    6
 
     push    bp
@@ -8690,11 +8391,11 @@ cos_fast proc far
     mov     ax, word ptr [bp+s]
     add     ax, 0x100
     jmp     code_sin_fast_main
-cos_fast endp
+cos_fast_asm_ endp
     db 0
 
 ; undefined2 __cdecl16far nopsub_32738(undefined2 param_1, undefined2 param_2, uint param_3)
-nopsub_32738 proc far
+nopsub_32738_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
     param_3    = word ptr   10
@@ -8706,10 +8407,10 @@ nopsub_32738 proc far
     div     word ptr [bp+param_3]
     pop     bp
     retf
-nopsub_32738 endp
+nopsub_32738_asm_ endp
 
 ; int __cdecl16far nopsub_32746(int param_1)
-nopsub_32746 proc far
+nopsub_32746_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -8718,10 +8419,10 @@ nopsub_32746 proc far
     mul     word ptr [bp+param_1]
     pop     bp
     retf
-nopsub_32746 endp
+nopsub_32746_asm_ endp
 
 ; int __cdecl16far nopsub_32751(int param_1)
-nopsub_32751 proc far
+nopsub_32751_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -8730,11 +8431,11 @@ nopsub_32751 proc far
     mul     word ptr [bp+param_1]
     pop     bp
     retf
-nopsub_32751 endp
+nopsub_32751_asm_ endp
 ; Formerly transformed_shape_op_helper2
 
 ; uint __cdecl16far projectiondata9_times_ratio(uint param_1, uint param_2)
-projectiondata9_times_ratio proc far
+projectiondata9_times_ratio_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
 
@@ -8745,10 +8446,10 @@ projectiondata9_times_ratio proc far
     div     word ptr [bp+param_2]
     pop     bp
     retf
-projectiondata9_times_ratio endp
+projectiondata9_times_ratio_asm_ endp
 
 ; undefined2 __cdecl16far nopsub_3276A(uint param_1, uint param_2)
-nopsub_3276A proc far
+nopsub_3276A_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
 
@@ -8759,19 +8460,19 @@ nopsub_3276A proc far
     div     word ptr [bp+param_2]
     pop     bp
     retf
-nopsub_3276A endp
+nopsub_3276A_asm_ endp
 
 ; ulong __cdecl16far timer_get_counter(void)
-timer_get_counter proc far
+timer_get_counter_asm_ proc far
     cli
     mov     ax, word ptr [timer_callback_counter]
     mov     dx, word ptr [timer_callback_counter+2]
     sti
     retf
-timer_get_counter endp
+timer_get_counter_asm_ endp
 
 ; ulong __cdecl16far timer_custom_delta(ulong ticks)
-timer_custom_delta proc far
+timer_custom_delta_asm_ proc far
     ticks      = dword ptr   8
 
     push    bp
@@ -8786,10 +8487,10 @@ timer_custom_delta proc far
     sbb     dx, cx
     pop     bp
     retf
-timer_custom_delta endp
+timer_custom_delta_asm_ endp
 
 ; ulong __cdecl16far timer_get_delta(void)
-timer_get_delta proc far
+timer_get_delta_asm_ proc far
     mov     bx, word ptr [last_timer_callback_counter]
     mov     cx, word ptr [last_timer_callback_counter+2]
     cli
@@ -8801,18 +8502,18 @@ timer_get_delta proc far
     sub     ax, bx
     sbb     dx, cx
     retf
-timer_get_delta endp
+timer_get_delta_asm_ endp
 
 ; void __cdecl16far timer_reset(void)
-timer_reset proc far
+timer_reset_asm_ proc far
     xor     ax, ax
     mov     word ptr [timer_callback_counter], ax
     mov     word ptr [timer_callback_counter+2], ax
     retf
-timer_reset endp
+timer_reset_asm_ endp
 
 ; ulong __cdecl16far timer_copy_counter(ulong ticks)
-timer_copy_counter proc far
+timer_copy_counter_asm_ proc far
     ticks      = dword ptr   6
 
     push    bp                                 ; Stores a copy of the timer counter with the given ticks added.
@@ -8824,10 +8525,10 @@ timer_copy_counter proc far
     mov     word ptr [timer_copy_unk+2], dx
     pop     bp
     retf
-timer_copy_counter endp
+timer_copy_counter_asm_ endp
 
 ; ulong __cdecl16far timer_wait_for_dx(void)
-timer_wait_for_dx proc far
+timer_wait_for_dx_asm_ proc far
     call    far ptr timer_get_counter
     cmp     dx, word ptr [timer_copy_unk+2]
     jc      timer_wait_for_dx
@@ -8836,10 +8537,10 @@ timer_wait_for_dx proc far
     jc      timer_wait_for_dx
 LAB_2ea2_3dca:
     retf
-timer_wait_for_dx endp
+timer_wait_for_dx_asm_ endp
 
 ; bool __cdecl16far timer_compare_dx(void)
-timer_compare_dx proc far
+timer_compare_dx_asm_ proc far
     call    far ptr timer_get_counter
     cmp     dx, word ptr [timer_copy_unk+2]
     jc      LAB_2ea2_3de2
@@ -8852,10 +8553,10 @@ LAB_2ea2_3dde:
 LAB_2ea2_3de2:
     xor     ax, ax
     retf
-timer_compare_dx endp
+timer_compare_dx_asm_ endp
 
 ; ulong __cdecl16far timer_get_counter_unk(ulong ticks)
-timer_get_counter_unk proc far
+timer_get_counter_unk_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     ticks      = dword ptr   6
@@ -8879,11 +8580,11 @@ LAB_2ea2_3e0d:
     mov     sp, bp
     pop     bp
     retf
-timer_get_counter_unk endp
+timer_get_counter_unk_asm_ endp
     db 0
 
 ; int __cdecl16far font_op(char * str_)
-font_op proc far
+font_op_asm_ proc far
     str_       = dword ptr   6
 
     push    bp
@@ -8895,11 +8596,11 @@ font_op proc far
     jnz     LAB_2ea2_3e2a
     xor     ax, ax
     jmp     SUB_2ea2_3e62
-font_op endp
+font_op_asm_ endp
     db 0x90
 
 ; int __cdecl16far font_op2(char * str_)
-font_op2 proc far
+font_op2_asm_ proc far
     str_       = word ptr    6
 
     push    bp
@@ -8933,7 +8634,7 @@ LAB_2ea2_3e5b:
     dec     dx
     jz      SUB_2ea2_3e62
     jmp     LAB_2ea2_3e3d
-font_op2 endp
+font_op2_asm_ endp
 SUB_2ea2_3e62:
     pop     di
     pop     si
@@ -8941,7 +8642,7 @@ SUB_2ea2_3e62:
     retf
 
 ; void __cdecl16far preRender_patterned(uint unk, uint colour, uint vertlinecount, POINT2D * vertlines, int * param_5)
-preRender_patterned proc far
+preRender_patterned_asm_ proc far
     var_A      = byte ptr  -10
     unk        = word ptr    6
     colour     = word ptr    8
@@ -8976,10 +8677,10 @@ LAB_2ea2_3e88:
     mov     ax, offset preRender_line
     mov     word ptr [imagefunc], ax
     jmp     near ptr loc_3180A
-preRender_patterned endp
+preRender_patterned_asm_ endp
 
 ; undefined __cdecl16far nopsub_328C9(undefined2 param_1, word param_2, undefined2 param_3, int param_4, int param_5, int param_6)
-nopsub_328C9 proc far
+nopsub_328C9_asm_ proc far
     var_A      = byte ptr  -10
     param_1    = word ptr    6
     param_2    = word ptr    8
@@ -8996,10 +8697,10 @@ nopsub_328C9 proc far
     lea     si, [bp+param_4]
     mov     byte ptr [bp+var_A], 0x1
     jmp     LAB_2ea2_3e88
-nopsub_328C9 endp
+nopsub_328C9_asm_ endp
 
 ; undefined __cdecl16far nopsub_328DB(undefined2 param_1, word param_2, undefined2 param_3, int param_4, int param_5, int param_6)
-nopsub_328DB proc far
+nopsub_328DB_asm_ proc far
     var_A      = byte ptr  -10
     param_1    = word ptr    6
     param_2    = word ptr    8
@@ -9016,11 +8717,11 @@ nopsub_328DB proc far
     lea     si, [bp+param_4]
     mov     byte ptr [bp+var_A], 0x0
     jmp     LAB_2ea2_3e88
-nopsub_328DB endp
+nopsub_328DB_asm_ endp
     db 0
 
 ; int __cdecl16far mat_mul_vector(VECTOR * invec, MATRIX * mat, VECTOR * outvec)
-mat_mul_vector proc far
+mat_mul_vector_asm_ proc far
     invec      = word ptr    6
     mat        = word ptr    8
     outvec     = word ptr   10
@@ -9156,10 +8857,10 @@ LAB_2ea2_3fce:
     pop     si
     pop     bp
     retf
-mat_mul_vector endp
+mat_mul_vector_asm_ endp
 
 ; int __cdecl16far mat_multiply(MATRIX * rmat, MATRIX * lmat, MATRIX * outmat)
-mat_multiply proc far
+mat_multiply_asm_ proc far
     rmat       = word ptr    6
     lmat       = word ptr    8
     outmat     = word ptr   10
@@ -9229,11 +8930,11 @@ LAB_2ea2_4046:
     pop     si
     pop     bp
     retf
-mat_multiply endp
+mat_multiply_asm_ endp
 ; Creates inverted 3x3 matrix  
 
 ; void __cdecl16far mat_invert(MATRIX * inmat, MATRIX * outmat)
-mat_invert proc far
+mat_invert_asm_ proc far
     inmat      = word ptr    6
     outmat     = word ptr    8
 
@@ -9282,7 +8983,7 @@ LAB_2ea2_4083:
     pop     si
     pop     bp
     retf
-mat_invert endp
+mat_invert_asm_ endp
     db 0
 fliphandlers:
     dw fliptype0
@@ -9292,7 +8993,7 @@ fliphandlers:
 ; and flips x/y/interlaced depending on shape flags  
 
 ; void __cdecl16far file_unflip_shape2d(void * memchunk_, void * mempages)
-file_unflip_shape2d proc far
+file_unflip_shape2d_asm_ proc far
     var_height = word ptr  -14
     var_width  = word ptr  -12
     var_A      = word ptr  -10
@@ -9375,7 +9076,7 @@ LAB_2ea2_413f:
     shl     bx, 0x1
 switchD:
     jmp     word ptr cs:[bx+fliphandlers]      ; jump to flip type handler
-file_unflip_shape2d endp
+file_unflip_shape2d_asm_ endp
 fliptype0:
     mov     bx, si
     add     bx, 0x10
@@ -9483,7 +9184,7 @@ BYTE_ARRAY_2ea2_425c:
     db 256 dup (0x00)
 
 ; ulong __cdecl16far file_decomp_vle(void * src, void * dst)
-file_decomp_vle proc far
+file_decomp_vle_asm_ proc far
     var_lengths = byte ptr  -528
     var_symbols = byte ptr  -272
     var_codoff = word ptr  -14
@@ -9802,11 +9503,11 @@ LAB_2ea2_45c1:
     mov     ds, si
     xor     si, si
     jmp     LAB_2ea2_45bd
-file_decomp_vle endp
+file_decomp_vle_asm_ endp
     db 0
 
 ; undefined __cdecl16far nopsub_32FEE(void)
-nopsub_32FEE proc far
+nopsub_32FEE_asm_ proc far
     mov     dx, 0x3da
 LAB_2ea2_45d1:
     in      al, dx                             ; Video status bits:
@@ -9825,10 +9526,10 @@ LAB_2ea2_45d6:
     test    al, 0x8
     jz      LAB_2ea2_45d6
     retf
-nopsub_32FEE endp
+nopsub_32FEE_asm_ endp
 
 ; byte __cdecl16far video_get_status(void)
-video_get_status proc far
+video_get_status_asm_ proc far
     mov     dx, 0x3da
     in      al, dx                             ; Video status bits:
                                                ; 0: retrace.  1=display is in vert or horiz retrace.
@@ -9838,11 +9539,11 @@ video_get_status proc far
     and     al, 0x8
     xor     ah, ah
     retf
-video_get_status endp
+video_get_status_asm_ endp
     db 0
 
 ; undefined __stdcall16near nopsub_33006(undefined2 param_1, int * param_2, int * param_3, int * param_4)
-nopsub_33006 proc near
+nopsub_33006_asm_ proc near
     param_1    = word ptr    4
     param_2    = word ptr    6
     param_3    = word ptr    8
@@ -9855,11 +9556,11 @@ nopsub_33006 proc near
     push    di
     mov     ax, word ptr [word_404E92]
     jmp     LAB_2ea2_45ff
-nopsub_33006 endp
+nopsub_33006_asm_ endp
     db 0x90
 
 ; void __cdecl16far vector_op_unk(VECTOR * vec1, VECTOR * vec2, VECTOR * outvec, int i)
-vector_op_unk proc far
+vector_op_unk_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     vec1       = word ptr    6
@@ -9907,14 +9608,14 @@ LAB_2ea2_4620:
     mov     sp, bp
     pop     bp
     retf
-vector_op_unk endp
+vector_op_unk_asm_ endp
     push    bp
     mov     bp, sp
     mov     ax, word ptr [bp+0x6]
     mov     word ptr [word_404E92], ax
 
 ; undefined __cdecl16far preRender_sphere(word param_1, word param_2, uint param_3, uint colour)
-preRender_sphere proc far
+preRender_sphere_asm_ proc far
     var_79A    = byte ptr  -1946
     var_3DA    = byte ptr  -986
     var_1A     = word ptr  -26
@@ -10115,10 +9816,10 @@ LAB_2ea2_47c9:
     mov     sp, bp
     pop     bp
     retf
-preRender_sphere endp
+preRender_sphere_asm_ endp
 
 ; undefined __cdecl16far nopsub_3320E(int param_1, undefined2 param_2, undefined2 param_3, undefined2 param_4, undefined2 param_5, undefined2 param_6)
-nopsub_3320E proc far
+nopsub_3320E_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
     param_3    = word ptr   10
@@ -10170,10 +9871,10 @@ LAB_2ea2_483d:
     pop     ds
     pop     bp
     retf
-nopsub_3320E endp
+nopsub_3320E_asm_ endp
 
 ; void __cdecl16far sprite_set_1_size(uint left, uint right, uint top, uint bottom)
-sprite_set_1_size proc far
+sprite_set_1_size_asm_ proc far
     left       = word ptr    6
     right      = word ptr    8
     top        = word ptr   10
@@ -10193,10 +9894,10 @@ sprite_set_1_size proc far
     mov     word ptr cs:[sprite1.sprite_height], ax
     pop     bp
     retf
-sprite_set_1_size endp
+sprite_set_1_size_asm_ endp
 
 ; void __cdecl16far video_clear_color(undefined2 param_1)
-video_clear_color proc far
+video_clear_color_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -10211,11 +9912,11 @@ video_clear_color proc far
     pop     di
     pop     bp
     retf
-video_clear_color endp
+video_clear_color_asm_ endp
     db 0
 
 ; void __cdecl16far sprite_clear_1_color(uchar color)
-sprite_clear_1_color proc far
+sprite_clear_1_color_asm_ proc far
     color      = byte ptr    6
 
     push    bp
@@ -10272,11 +9973,11 @@ LAB_2ea2_4905:
     dec     dx
     jg      LAB_2ea2_4905
     jmp     LAB_2ea2_48ed
-sprite_clear_1_color endp
+sprite_clear_1_color_asm_ endp
     db 0
 
 ; undefined __stdcall16near nopsub_33330(undefined2 param_1, int * param_2, int * param_3, uint param_4, int param_5, byte param_6, undefined1 param_7, word param_8)
-nopsub_33330 proc near
+nopsub_33330_asm_ proc near
     param_1    = word ptr    4
     param_2    = word ptr    6
     param_3    = word ptr    8
@@ -10295,11 +9996,11 @@ nopsub_33330 proc near
     mov     ax, word ptr [bp+param_7]
     mov     byte ptr [word_40320], al
     jmp     LAB_2ea2_4929
-nopsub_33330 endp
+nopsub_33330_asm_ endp
     db 0x90
 
 ; undefined __cdecl16far draw_unknown_lines(int * param_1, int * param_2, int param_3, int param_4, uint color)
-draw_unknown_lines proc far
+draw_unknown_lines_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
     param_3    = word ptr   10
@@ -10364,10 +10065,10 @@ LAB_2ea2_4998:
     inc     di
     loop    LAB_2ea2_4973
     jmp     LAB_2ea2_497a
-draw_unknown_lines endp
+draw_unknown_lines_asm_ endp
 
 ; void __cdecl16far putpixel_line1_maybe(int param_1)
-putpixel_line1_maybe proc far
+putpixel_line1_maybe_asm_ proc far
     var_E      = byte ptr  -14
     var_A      = word ptr  -10
     var_8      = word ptr   -8
@@ -10574,10 +10275,10 @@ LAB_2ea2_4b38:
     mov     sp, bp
     pop     bp
     retf
-putpixel_line1_maybe endp
+putpixel_line1_maybe_asm_ endp
 
 ; void __cdecl16far sprite_1_unk2(int x_, int y_, int width_, int height_, uint colour)
-sprite_1_unk2 proc far
+sprite_1_unk2_asm_ proc far
     x_         = word ptr    6
     y_         = word ptr    8
     width_     = word ptr   10
@@ -10622,11 +10323,11 @@ LAB_2ea2_4b98:
     db 0x90
 LAB_2ea2_4baf:
     jmp     LAB_2ea2_4c02
-sprite_1_unk2 endp
+sprite_1_unk2_asm_ endp
     db 0x90
 
 ; void __cdecl16far sprite_1_fill_rect(int x1_, int y1_, uint x2_, int y2_, uint colour)
-sprite_1_fill_rect proc far
+sprite_1_fill_rect_asm_ proc far
     x1_        = word ptr    6
     y1_        = word ptr    8
     x2_        = word ptr   10
@@ -10691,7 +10392,7 @@ LAB_2ea2_4c1b:
     dec     si
     jg      LAB_2ea2_4c1b
     jmp     LAB_2ea2_4c02
-sprite_1_fill_rect endp
+sprite_1_fill_rect_asm_ endp
     db 0
 BYTE_2ea2_4c26:
     db 0x0B
@@ -10732,7 +10433,7 @@ BYTE_2ea2_4c36:
     db 0x90
 
 ; void __cdecl16far sprite_1_unk3(int * param_1, undefined2 param_2, word param_3)
-sprite_1_unk3 proc far
+sprite_1_unk3_asm_ proc far
     var_16     = word ptr  -22
     var_14     = word ptr  -20
     var_12     = word ptr  -18
@@ -10830,10 +10531,10 @@ LAB_2ea2_4d13:
     mov     sp, bp
     pop     bp
     retf
-sprite_1_unk3 endp
+sprite_1_unk3_asm_ endp
 
 ; void __cdecl16far font_draw_text(char * str_, int x_, int y_)
-font_draw_text proc far
+font_draw_text_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     str_       = word ptr    6
@@ -10945,10 +10646,10 @@ LAB_2ea2_4ddd:
     mov     ax, word ptr [(aMsRunTimeLibraryCop+8)]
     add     word ptr [aMsRunTimeLibraryCop], ax
     jmp     near ptr LAB_2ea2_4d51
-font_draw_text endp
+font_draw_text_asm_ endp
 
 ; void __cdecl16far video_set_mode_13h(void)
-video_set_mode_13h proc far
+video_set_mode_13h_asm_ proc far
     call    far ptr video_add_exithandler
     mov     ax, 0x40
     mov     es, ax
@@ -10971,63 +10672,63 @@ video_set_mode_13h proc far
     call    far ptr video_clear_color
     add     sp, 0x4
     retf
-video_set_mode_13h endp
+video_set_mode_13h_asm_ endp
 
 ; void * __cdecl16far file_load_shape2d_res_fatal_thunk(char * filename)
-file_load_shape2d_res_fatal_thunk proc far
+file_load_shape2d_res_fatal_thunk_asm_ proc far
     filename   = word ptr    6
 
     jmp     far ptr file_load_shape2d_res_fatal
-file_load_shape2d_res_fatal_thunk endp
+file_load_shape2d_res_fatal_thunk_asm_ endp
 
 ; void * __cdecl16far file_load_shape2d_res_nofatal_thunk(char * filename)
-file_load_shape2d_res_nofatal_thunk proc far
+file_load_shape2d_res_nofatal_thunk_asm_ proc far
     filename   = word ptr    6
 
     jmp     far ptr file_load_shape2d_res_nofatal
-file_load_shape2d_res_nofatal_thunk endp
+file_load_shape2d_res_nofatal_thunk_asm_ endp
 
 ; void * __cdecl16far file_load_shape2d_res_thunk(char * filename, int is_fatal)
-file_load_shape2d_res_thunk proc far
+file_load_shape2d_res_thunk_asm_ proc far
     filename   = word ptr    6
     is_fatal   = word ptr    8
 
     jmp     far ptr file_load_shape2d_res
-file_load_shape2d_res_thunk endp
+file_load_shape2d_res_thunk_asm_ endp
 
 ; void __cdecl16far parse_shape2d_thunk(void * memchunk_, void * mempages)
-parse_shape2d_thunk proc far
+parse_shape2d_thunk_asm_ proc far
     memchunk_  = dword ptr   6
     mempages   = dword ptr  10
 
     jmp     far ptr parse_shape2d
-parse_shape2d_thunk endp
+parse_shape2d_thunk_asm_ endp
 
 ; void * __cdecl16far file_load_shape2d_fatal_thunk(char * filename)
-file_load_shape2d_fatal_thunk proc far
+file_load_shape2d_fatal_thunk_asm_ proc far
     filename   = word ptr    6
 
     jmp     far ptr file_load_shape2d_fatal
-file_load_shape2d_fatal_thunk endp
+file_load_shape2d_fatal_thunk_asm_ endp
 
 ; void * __cdecl16far file_load_shape2d_nofatal_thunk(char * filename)
-file_load_shape2d_nofatal_thunk proc far
+file_load_shape2d_nofatal_thunk_asm_ proc far
     filename   = word ptr    6
 
     jmp     far ptr file_load_shape2d_nofatal
-file_load_shape2d_nofatal_thunk endp
+file_load_shape2d_nofatal_thunk_asm_ endp
 
 ; void * __cdecl16far file_load_shape2d_thunk(char * filename, int is_fatal)
-file_load_shape2d_thunk proc far
+file_load_shape2d_thunk_asm_ proc far
     filename   = word ptr    6
     is_fatal   = word ptr    8
 
     jmp     far ptr file_load_shape2d
-file_load_shape2d_thunk endp
+file_load_shape2d_thunk_asm_ endp
     db 0
 
 ; void __cdecl16far sprite_putimage_and_alt2(SHAPE2D * shape, int param_2, int param_3, int param_4)
-sprite_putimage_and_alt2 proc far
+sprite_putimage_and_alt2_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     shape      = dword ptr   6
@@ -11050,11 +10751,11 @@ sprite_putimage_and_alt2 proc far
     sub     ax, word ptr [si+0x6]
     mov     word ptr [bp+var_4], ax
     jmp     LAB_2ea2_4ea9
-sprite_putimage_and_alt2 endp
+sprite_putimage_and_alt2_asm_ endp
     db 0x90
 
 ; void __cdecl16far sprite_putimage_and(SHAPE2D * shape, int a, int b)
-sprite_putimage_and proc far
+sprite_putimage_and_asm_ proc far
     var_E      = word ptr  -14
     var_C      = word ptr  -12
     var_A      = word ptr  -10
@@ -11239,11 +10940,11 @@ LAB_2ea2_4fcc:
     dec     dx
     jg      LAB_2ea2_4fcc
     jmp     near ptr LAB_2ea2_4ec8
-sprite_putimage_and endp
+sprite_putimage_and_asm_ endp
     db 0
 
 ; undefined __cdecl16far nopsub_339FA(undefined2 param_1, uint * param_2, undefined2 param_3, int param_4, int param_5)
-nopsub_339FA proc far
+nopsub_339FA_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -11267,11 +10968,11 @@ nopsub_339FA proc far
     sub     ax, word ptr [si+0x6]
     mov     word ptr [bp+var_4], ax
     jmp     LAB_2ea2_5037
-nopsub_339FA endp
+nopsub_339FA_asm_ endp
     db 0x90
 
 ; void __cdecl16far putpixel_iconMask(uint * param_1, undefined2 param_2, int param_3, int param_4)
-putpixel_iconMask proc far
+putpixel_iconMask_asm_ proc far
     var_6      = word ptr   -6
     var_4      = word ptr   -4
     var_2      = word ptr   -2
@@ -11365,11 +11066,11 @@ LAB_2ea2_5094:
     dec     dx
     jg      LAB_2ea2_5094
     jmp     LAB_2ea2_507a
-putpixel_iconMask endp
+putpixel_iconMask_asm_ endp
     db 0
 
 ; undefined __cdecl16far nopsub_33AC0(undefined2 param_1, int * param_2, undefined2 param_3, int param_4, int param_5)
-nopsub_33AC0 proc far
+nopsub_33AC0_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -11393,11 +11094,11 @@ nopsub_33AC0 proc far
     sub     ax, word ptr [si+0x6]
     mov     word ptr [bp+var_4], ax
     jmp     LAB_2ea2_50fd
-nopsub_33AC0 endp
+nopsub_33AC0_asm_ endp
     db 0x90
 
 ; undefined __cdecl16far nopsub_33AE4(undefined2 param_1, int * param_2, undefined2 param_3, int param_4, int param_5)
-nopsub_33AE4 proc far
+nopsub_33AE4_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -11419,11 +11120,11 @@ nopsub_33AE4 proc far
     mov     ax, word ptr [bp+param_4]
     mov     word ptr [bp+var_4], ax
     jmp     LAB_2ea2_50fd
-nopsub_33AE4 endp
+nopsub_33AE4_asm_ endp
     db 0x90
 
 ; void __cdecl16far shape2d_render_bmp_as_mask(void * data)
-shape2d_render_bmp_as_mask proc far
+shape2d_render_bmp_as_mask_asm_ proc far
     var_10     = word ptr  -16
     var_E      = word ptr  -14
     var_6      = word ptr   -6
@@ -11505,10 +11206,10 @@ LAB_2ea2_515c:
 LAB_2ea2_5174:
     loop    LAB_2ea2_515c
     jmp     LAB_2ea2_5128
-shape2d_render_bmp_as_mask endp
+shape2d_render_bmp_as_mask_asm_ endp
 
 ; undefined __cdecl16far nopsub_33B98(undefined2 param_1, int * param_2, undefined2 param_3, int param_4, int param_5)
-nopsub_33B98 proc far
+nopsub_33B98_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -11532,11 +11233,11 @@ nopsub_33B98 proc far
     sub     ax, word ptr [si+0x6]
     mov     word ptr [bp+var_4], ax
     jmp     LAB_2ea2_51d5
-nopsub_33B98 endp
+nopsub_33B98_asm_ endp
     db 0x90
 
 ; void __cdecl16far sprite_putimage_and_alt(SHAPE2D * param_1, undefined2 param_2, int param_3, int param_4)
-sprite_putimage_and_alt proc far
+sprite_putimage_and_alt_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = dword ptr   6
@@ -11557,11 +11258,11 @@ sprite_putimage_and_alt proc far
     mov     ax, word ptr [bp+param_3]
     mov     word ptr [bp+var_4], ax
     jmp     LAB_2ea2_51d5
-sprite_putimage_and_alt endp
+sprite_putimage_and_alt_asm_ endp
     db 0x90
 
 ; void __cdecl16far sprite_putimage(SHAPE2D * shape)
-sprite_putimage proc far
+sprite_putimage_asm_ proc far
     var_E      = word ptr  -14
     var_bitmap = word ptr  -12
     var_A      = word ptr  -10
@@ -11711,10 +11412,10 @@ LAB_2ea2_52e2:
     dec     dx
     jg      LAB_2ea2_52e2
     jmp     near ptr LAB_2ea2_51f4
-sprite_putimage endp
+sprite_putimage_asm_ endp
 
 ; undefined __cdecl16far nopsub_33D0C(undefined2 param_1, uint * param_2, undefined2 param_3, int param_4, int param_5)
-nopsub_33D0C proc far
+nopsub_33D0C_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -11738,11 +11439,11 @@ nopsub_33D0C proc far
     sub     ax, word ptr [si+0x6]
     mov     word ptr [bp+var_4], ax
     jmp     LAB_2ea2_5349
-nopsub_33D0C endp
+nopsub_33D0C_asm_ endp
     db 0x90
 
 ; void __stdcall16near sprite_shape_to_1(SHAPE2D * shape, undefined2 param_2, int param_3, int param_4)
-sprite_shape_to_1 proc near
+sprite_shape_to_1_asm_ proc near
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     shape      = dword ptr   4
@@ -11763,11 +11464,11 @@ sprite_shape_to_1 proc near
     mov     ax, word ptr [bp+param_4]
     mov     word ptr [bp+var_4], ax
     jmp     LAB_2ea2_5349
-sprite_shape_to_1 endp
+sprite_shape_to_1_asm_ endp
     db 0x90
 
 ; void __cdecl16far sprite_shape_to_1_alt(SHAPE2D * shape)
-sprite_shape_to_1_alt proc far
+sprite_shape_to_1_alt_asm_ proc far
     var_6      = word ptr   -6
     var_4      = word ptr   -4
     var_2      = word ptr   -2
@@ -11829,11 +11530,11 @@ LAB_2ea2_5395:
     dec     dx
     jg      LAB_2ea2_5395
     jmp     LAB_2ea2_5382
-sprite_shape_to_1_alt endp
+sprite_shape_to_1_alt_asm_ endp
     db 0
 
 ; undefined __cdecl16far nopsub_33DBE(undefined2 param_1, int * param_2, undefined2 param_3, int param_4, int param_5)
-nopsub_33DBE proc far
+nopsub_33DBE_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -11857,11 +11558,11 @@ nopsub_33DBE proc far
     sub     ax, word ptr [si+0x6]
     mov     word ptr [bp+var_4], ax
     jmp     LAB_2ea2_53fb
-nopsub_33DBE endp
+nopsub_33DBE_asm_ endp
     db 0x90
 
 ; void __cdecl16far shape2d_op_unk5(undefined2 param_1, int * param_2, undefined2 param_3, int param_4, int param_5)
-shape2d_op_unk5 proc far
+shape2d_op_unk5_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -11883,11 +11584,11 @@ shape2d_op_unk5 proc far
     mov     ax, word ptr [bp+param_4]
     mov     word ptr [bp+var_4], ax
     jmp     LAB_2ea2_53fb                      ; goto shape2d_op_unk3
-shape2d_op_unk5 endp
+shape2d_op_unk5_asm_ endp
     db 0x90
 
 ; void __cdecl16far shape2d_op_unk(SHAPE2D * shape)
-shape2d_op_unk proc far
+shape2d_op_unk_asm_ proc far
     var_10     = word ptr  -16
     var_E      = word ptr  -14
     var_6      = word ptr   -6
@@ -11967,11 +11668,11 @@ LAB_2ea2_5457:
 LAB_2ea2_546b:
     loop    LAB_2ea2_5457
     jmp     LAB_2ea2_5426
-shape2d_op_unk endp
+shape2d_op_unk_asm_ endp
     db 0
 
 ; undefined __cdecl16far nopsub_33E90(undefined2 param_1, int * param_2, undefined2 param_3, int param_4, int param_5)
-nopsub_33E90 proc far
+nopsub_33E90_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -11995,11 +11696,11 @@ nopsub_33E90 proc far
     sub     ax, word ptr [si+0x6]
     mov     word ptr [bp+var_4], ax
     jmp     LAB_2ea2_54cd
-nopsub_33E90 endp
+nopsub_33E90_asm_ endp
     db 0x90
 
 ; void __cdecl16far shape2d_op_unk2(undefined2 param_1, int * param_2, undefined2 param_3, int param_4, int param_5)
-shape2d_op_unk2 proc far
+shape2d_op_unk2_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -12021,11 +11722,11 @@ shape2d_op_unk2 proc far
     mov     ax, word ptr [bp+param_4]
     mov     word ptr [bp+var_4], ax
     jmp     LAB_2ea2_54cd                      ; goto somewhere inside shape2d_op_unk3
-shape2d_op_unk2 endp
+shape2d_op_unk2_asm_ endp
     db 0x90
 
 ; void __cdecl16far shape2d_op_unk3(int * param_1, undefined2 param_2)
-shape2d_op_unk3 proc far
+shape2d_op_unk3_asm_ proc far
     var_10     = word ptr  -16
     var_E      = word ptr  -14
     var_C      = word ptr  -12
@@ -12239,11 +11940,11 @@ LAB_2ea2_5637:
     mov     cl, al
     xor     ch, ch
     jmp     LAB_2ea2_560f
-shape2d_op_unk3 endp
+shape2d_op_unk3_asm_ endp
     db 0
 
 ; void __cdecl16far sprite_putimage_or_alt(SHAPE2D * shape, undefined2 param_2, int param_3, int param_4)
-sprite_putimage_or_alt proc far
+sprite_putimage_or_alt_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     shape      = dword ptr   6
@@ -12266,11 +11967,11 @@ sprite_putimage_or_alt proc far
     sub     ax, word ptr [si+0x6]
     mov     word ptr [bp+var_4], ax
     jmp     LAB_2ea2_569d                      ; goto sprite_putimage_or
-sprite_putimage_or_alt endp
+sprite_putimage_or_alt_asm_ endp
     db 0x90
 
 ; void __cdecl16far sprite_putimage_or(SHAPE2D * shape, uint a, uint b)
-sprite_putimage_or proc far
+sprite_putimage_or_asm_ proc far
     var_E      = word ptr  -14
     var_C      = word ptr  -12
     var_A      = word ptr  -10
@@ -12455,7 +12156,7 @@ LAB_2ea2_57c0:
     dec     dx
     jg      LAB_2ea2_57c0
     jmp     near ptr LAB_2ea2_56bc
-sprite_putimage_or endp
+sprite_putimage_or_asm_ endp
     db 0
     push    bp
     mov     bp, sp
@@ -12475,7 +12176,7 @@ sprite_putimage_or endp
     db 0x90
 
 ; void __cdecl16far putpixel_iconFillings(uint * param_1, undefined2 param_2, int param_3, int param_4)
-putpixel_iconFillings proc far
+putpixel_iconFillings_asm_ proc far
     var_6      = word ptr   -6
     var_4      = word ptr   -4
     var_2      = word ptr   -2
@@ -12569,7 +12270,7 @@ LAB_2ea2_5888:
     dec     dx
     jg      LAB_2ea2_5888
     jmp     LAB_2ea2_586e
-putpixel_iconFillings endp
+putpixel_iconFillings_asm_ endp
     db 0
     push    bp
     mov     bp, sp
@@ -12603,7 +12304,7 @@ putpixel_iconFillings endp
     db 0x90
 
 ; void __cdecl16far shape2d_op_unk4(SHAPE2D * shape)
-shape2d_op_unk4 proc far
+shape2d_op_unk4_asm_ proc far
     var_10     = word ptr  -16
     var_E      = word ptr  -14
     var_6      = word ptr   -6
@@ -12685,7 +12386,7 @@ LAB_2ea2_5950:
 LAB_2ea2_5968:
     loop    LAB_2ea2_5950
     jmp     LAB_2ea2_591c
-shape2d_op_unk4 endp
+shape2d_op_unk4_asm_ endp
     push    bp
     mov     bp, sp
     sub     sp, 0x10
@@ -12704,7 +12405,7 @@ shape2d_op_unk4 endp
     db 0x90
 
 ; void __cdecl16far sprite_putimage_transparent(SHAPE2D * shape, int param_2, int param_3)
-sprite_putimage_transparent proc far
+sprite_putimage_transparent_asm_ proc far
     var_bmpptr = word ptr  -12
     var_A      = word ptr  -10
     var_8      = word ptr   -8
@@ -12859,7 +12560,7 @@ LAB_2ea2_5abc:
     mov     sp, bp
     pop     bp
     retf
-sprite_putimage_transparent endp
+sprite_putimage_transparent_asm_ endp
     db 0
     push    bp
     mov     bp, sp
@@ -12893,7 +12594,7 @@ sprite_putimage_transparent endp
     db 0x90
 
 ; undefined __cdecl16far sub_34526(int * param_1, undefined2 param_2)
-sub_34526 proc far
+sub_34526_asm_ proc far
     var_8      = word ptr   -8
     var_6      = word ptr   -6
     var_4      = word ptr   -4
@@ -12954,7 +12655,7 @@ LAB_2ea2_5b66:
     mov     sp, bp
     pop     bp
     retf
-sub_34526 endp
+sub_34526_asm_ endp
     push    bp
     mov     bp, sp
     sub     sp, 0x4
@@ -12974,7 +12675,7 @@ sub_34526 endp
     db 0x90
 
 ; void __cdecl16far sub_345BC(byte * param_1, undefined2 param_2, undefined2 param_3)
-sub_345BC proc far
+sub_345BC_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -13090,7 +12791,7 @@ LAB_2ea2_5c6c:
     dec     dh
     jg      LAB_2ea2_5c4a
     jmp     LAB_2ea2_5c5b
-sub_345BC endp
+sub_345BC_asm_ endp
     db 0
     push    bp
     mov     bp, sp
@@ -13099,7 +12800,7 @@ sub_345BC endp
     db 0x90
 
 ; void __cdecl16far video_set_palette(word starting_reg, ushort reg_count, word table_ofs)
-video_set_palette proc far
+video_set_palette_asm_ proc far
     starting_reg = word ptr    6
     reg_count  = word ptr    8
     table_ofs  = word ptr   10
@@ -13120,12 +12821,12 @@ LAB_2ea2_5c88:
                                                ; byte each of red, green and blue (0-63)
     pop     bp
     retf
-video_set_palette endp
+video_set_palette_asm_ endp
     db 0
 ; draws multiple sequential variable length horizontal lines + various optimizations  
 
 ; void __cdecl16far draw_filled_lines(int * x1_arr, int * x2_arr, int y_, int numlines, uint color)
-draw_filled_lines proc far
+draw_filled_lines_asm_ proc far
     x1_arr     = word ptr    6
     x2_arr     = word ptr    8
     y_         = word ptr   10
@@ -13197,11 +12898,11 @@ LAB_2ea2_5d10:
     stosb
     rep stosw
     jmp     LAB_2ea2_5cdc
-draw_filled_lines endp
+draw_filled_lines_asm_ endp
     db 0
 
 ; undefined __cdecl16far nopsub_34736(undefined2 param_1, int * param_2, undefined2 param_3, int param_4, int param_5)
-nopsub_34736 proc far
+nopsub_34736_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     param_1    = word ptr    6
@@ -13225,11 +12926,11 @@ nopsub_34736 proc far
     sub     ax, word ptr [di+0x6]
     mov     word ptr [bp+var_4], ax
     jmp     LAB_2ea2_5d79
-nopsub_34736 endp
+nopsub_34736_asm_ endp
     db 0x90
 
 ; void __cdecl16far sprite_clear_shape_alt(SHAPE2D * shape, undefined2 param_2, int param_3, int param_4)
-sprite_clear_shape_alt proc far
+sprite_clear_shape_alt_asm_ proc far
     var_4      = word ptr   -4
     var_2      = word ptr   -2
     shape      = dword ptr   6
@@ -13252,11 +12953,11 @@ sprite_clear_shape_alt proc far
     mov     word ptr [bp+var_4], ax
     mov     word ptr [di+0xa], ax
     jmp     LAB_2ea2_5d79
-sprite_clear_shape_alt endp
+sprite_clear_shape_alt_asm_ endp
     db 0x90
 
 ; void __cdecl16far sprite_clear_shape(SHAPE2D * shape)
-sprite_clear_shape proc far
+sprite_clear_shape_asm_ proc far
     var_A      = word ptr  -10
     var_8      = word ptr   -8
     var_6      = word ptr   -6
@@ -13305,10 +13006,10 @@ LAB_2ea2_5da0:
     mov     sp, bp
     pop     bp
     retf
-sprite_clear_shape endp
+sprite_clear_shape_asm_ endp
 
 ; void __cdecl16far shape_op_explosion(uint counter, SHAPE3D * shape, int x_, int y_)
-shape_op_explosion proc far
+shape_op_explosion_asm_ proc far
     var_14     = word ptr  -20
     var_12     = word ptr  -18
     var_10     = word ptr  -16
@@ -13542,10 +13243,10 @@ lineoffsets:
     dw 0xF000, 0xF140, 0xF280, 0xF3C0
     dw 0xF500, 0xF640, 0xF780, 0xF8C0
 ; Formerly font_set_unk
-shape_op_explosion endp
+shape_op_explosion_asm_ endp
 
 ; void __cdecl16far font_set_colour(uint fg, uint bg)
-font_set_colour proc far
+font_set_colour_asm_ proc far
     fg         = word ptr    6
     bg         = word ptr    8
 
@@ -13560,10 +13261,10 @@ font_set_colour proc far
     mov     es:[0x0], ax
     pop     bp
     retf
-font_set_colour endp
+font_set_colour_asm_ endp
 
 ; void __cdecl16far nopsub_2ea2_6107(undefined2 param_1, undefined2 param_2)
-nopsub_2ea2_6107 proc far
+nopsub_2ea2_6107_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
 
@@ -13576,10 +13277,10 @@ nopsub_2ea2_6107 proc far
     mov     es:[0xa], ax
     pop     bp
     retf
-nopsub_2ea2_6107 endp
+nopsub_2ea2_6107_asm_ endp
 
 ; void __cdecl16far nopsub_2ea2_611e(undefined2 * param_1)
-nopsub_2ea2_611e proc far
+nopsub_2ea2_611e_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -13601,10 +13302,10 @@ nopsub_2ea2_611e proc far
     pop     ds
     pop     bp
     retf
-nopsub_2ea2_611e endp
+nopsub_2ea2_611e_asm_ endp
 
 ; void __cdecl16far nopsub_2ea2_6140(undefined2 * param_1)
-nopsub_2ea2_6140 proc far
+nopsub_2ea2_6140_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -13623,10 +13324,10 @@ nopsub_2ea2_6140 proc far
     pop     di
     pop     bp
     retf
-nopsub_2ea2_6140 endp
+nopsub_2ea2_6140_asm_ endp
 
 ; void __cdecl16far set_fontdefseg(void * data)
-set_fontdefseg proc far
+set_fontdefseg_asm_ proc far
     data       = dword ptr   6
 
     push    bp
@@ -13635,7 +13336,7 @@ set_fontdefseg proc far
     mov     word ptr [fontdefptr2+2], ax
     pop     bp
     retf
-set_fontdefseg endp
+set_fontdefseg_asm_ endp
     db 0
     push    bp
     mov     bp, sp
@@ -13647,7 +13348,7 @@ set_fontdefseg endp
     db 0x90
 
 ; void __cdecl16far draw_patterned_lines(int * param_1, int * param_2, uint param_3, int param_4, byte param_5)
-draw_patterned_lines proc far
+draw_patterned_lines_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
     param_3    = word ptr   10
@@ -13710,11 +13411,11 @@ LAB_2ea2_61e6:
     inc     di
     loop    LAB_2ea2_61c1
     jmp     LAB_2ea2_61c8
-draw_patterned_lines endp
+draw_patterned_lines_asm_ endp
     db 0
 
 ; SPRITE * __cdecl16far sprite_make_wnd(uint width_, uint height_, uint unk)
-sprite_make_wnd proc far
+sprite_make_wnd_asm_ proc far
     var_8      = word ptr   -8
     var_6      = word ptr   -6
     var_4      = word ptr   -4
@@ -13801,7 +13502,7 @@ LAB_2ea2_62b6:
     mov     ax, offset aWindowdefOutOfRowTableSpa
     push    ax
     call    far ptr fatal_error
-sprite_make_wnd endp
+sprite_make_wnd_asm_ endp
     db 0x90
 next_wnd_def:
     dw wnd_defs
@@ -13809,7 +13510,7 @@ wnd_defs:
     db 3600 dup (0x00)
 
 ; void __cdecl16far sprite_set_1_from_argptr(SPRITE * sprite_)
-sprite_set_1_from_argptr proc far
+sprite_set_1_from_argptr_asm_ proc far
     sprite_    = dword ptr   6
 
     push    bp
@@ -13830,10 +13531,10 @@ sprite_set_1_from_argptr proc far
     pop     ds
     pop     bp
     retf
-sprite_set_1_from_argptr endp
+sprite_set_1_from_argptr_asm_ endp
 
 ; void __cdecl16far sprite_copy_2_to_1(void)
-sprite_copy_2_to_1 proc far
+sprite_copy_2_to_1_asm_ proc far
 ; <REPLACE>
     mov     ax, seg seg012
 ; </REPLACE>
@@ -13844,11 +13545,11 @@ sprite_copy_2_to_1 proc far
     call    far ptr sprite_set_1_from_argptr
     add     sp, 0x4
     retf
-sprite_copy_2_to_1 endp
+sprite_copy_2_to_1_asm_ endp
     db 0
 
 ; undefined __cdecl16far putpixel_single_maybe(int param_1, int param_2, undefined1 param_3)
-putpixel_single_maybe proc far
+putpixel_single_maybe_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
     param_3    = byte ptr   10
@@ -13889,11 +13590,11 @@ LAB_2ea2_7136:
     pop     si
     pop     bp
     retf
-putpixel_single_maybe endp
+putpixel_single_maybe_asm_ endp
     db 0
 
 ; void __cdecl16far sub_35B76(int param_1, int param_2, uint param_3, int param_4, byte param_5)
-sub_35B76 proc far
+sub_35B76_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
     param_3    = word ptr   10
@@ -14005,11 +13706,11 @@ LAB_2ea2_7223:
     dec     si
     jg      LAB_2ea2_7223
     jmp     LAB_2ea2_7205
-sub_35B76 endp
+sub_35B76_asm_ endp
     db 0
 
 ; void __cdecl16far sub_35C4E(int x_, int y_, int width_, int height_, int unk)
-sub_35C4E proc far
+sub_35C4E_asm_ proc far
     var_14     = word ptr  -20
     var_12     = word ptr  -18
     var_10     = word ptr  -16
@@ -14076,7 +13777,7 @@ LAB_2ea2_727f:
     mov     sp, bp
     pop     bp
     retf
-sub_35C4E endp
+sub_35C4E_asm_ endp
 incnums:
     db 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
     db 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F
@@ -14112,7 +13813,7 @@ incnums:
     db 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF
 
 ; void __cdecl16far sub_35DC8(undefined1 * param_1, undefined2 param_2)
-sub_35DC8 proc far
+sub_35DC8_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
 
@@ -14134,10 +13835,10 @@ sub_35DC8 proc far
     pop     ds
     pop     bp
     retf
-sub_35DC8 endp
+sub_35DC8_asm_ endp
 
 ; void __cdecl16far sub_35DE6(int param_1, int param_2, undefined1 * param_3, undefined2 param_4)
-sub_35DE6 proc far
+sub_35DE6_asm_ proc far
     param_1    = word ptr    6
     param_2    = word ptr    8
     param_3    = word ptr   10
@@ -14162,10 +13863,10 @@ sub_35DE6 proc far
     pop     ds
     pop     bp
     retf
-sub_35DE6 endp
+sub_35DE6_asm_ endp
 
 ; void __cdecl16far sub_35E08(uint param_1, uint * param_2, undefined2 param_3, undefined2 param_4, undefined2 param_5)
-sub_35E08 proc far
+sub_35E08_asm_ proc far
     var_14     = word ptr  -20
     var_12     = word ptr  -18
     var_10     = word ptr  -16
@@ -14279,7 +13980,7 @@ LAB_2ea2_74ae:
 LAB_2ea2_74b3:
     mov     word ptr [bp+var_E], si
     mov     word ptr [bp+var_10], dx
-sub_35E08 endp
+sub_35E08_asm_ endp
 shape_op_explosion_cont:
     mov     ax, word ptr cs:[sprite1.sprite_bitmapptr+2]
     mov     es, ax
@@ -14332,7 +14033,7 @@ LAB_2ea2_7520:
     db 0
 
 ; void __cdecl16far file_load_shape2d_palmap_apply(void * memchunk_, uchar * palmap_)
-file_load_shape2d_palmap_apply proc far
+file_load_shape2d_palmap_apply_asm_ proc far
     shapecounter = word ptr   -4
     var_shapecount = word ptr   -2
     memchunk_  = dword ptr   6
@@ -14379,11 +14080,11 @@ LAB_2ea2_7574:
     loop    LAB_2ea2_7574
     inc     word ptr [bp+shapecounter]
     jmp     LAB_2ea2_7545
-file_load_shape2d_palmap_apply endp
+file_load_shape2d_palmap_apply_asm_ endp
     db 0
 
 ; void __cdecl16far file_load_shape2d_expand(void * memchunk_, void * mempages)
-file_load_shape2d_expand proc far
+file_load_shape2d_expand_asm_ proc far
     var_dstshapeoff = word ptr  -16
     var_length = word ptr  -14
     var_srcshapeoff = word ptr  -12
@@ -14541,11 +14242,11 @@ LAB_2ea2_76be:
 LAB_2ea2_76cf:
     inc     word ptr [bp+var_shapecounter]
     jmp     near ptr LAB_2ea2_75b9
-file_load_shape2d_expand endp
+file_load_shape2d_expand_asm_ endp
     db 0
 
 ; void __cdecl16far file_unflip_shape2d_pes(void * memchunk_, void * mempages)
-file_unflip_shape2d_pes proc far
+file_unflip_shape2d_pes_asm_ proc far
     var_val    = byte ptr  -20
     var_iterations = byte ptr  -18
     var_dataptr = word ptr  -16
@@ -14650,7 +14351,7 @@ LAB_2ea2_778f:
     dec     byte ptr [bp+var_iterations]
     jnz     LAB_2ea2_7757
     jmp     LAB_2ea2_772e
-file_unflip_shape2d_pes endp
+file_unflip_shape2d_pes_asm_ endp
 
 seg012 ends
 end

@@ -1,8 +1,22 @@
-DEBUG ?= 1
+include ../common.mk
+
+# Possible targets:
+# port = Ported C code overrides original code.
+# orig = Only original code is used.
+TARGET ?= port
 
 AS := wasm
 ASFLAGS := -bt=dos -d$(DEBUG) -zq
-MKDIR := mkdir -p
+
+ifneq ($(TARGET),port)
+	ASFLAGS += -dRESTUNTS_ORIGINAL
+endif
+
+define BUILD_INFO
+TARGET   $(TARGET)
+AS       $(AS)
+ASFLAGS  $(ASFLAGS)
+endef
 
 INCLUDES := structs.inc
 
@@ -26,8 +40,8 @@ SEG_SIZES := \
 
 get_seg_size = $(lastword $(subst :, ,$(filter $1:%,$(SEG_SIZES))))
 
-OBJ_DIR := ../../build/asm
-OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.asm=.obj))
+OBJ_DIR := ../../build/asm/$(TARGET)
+OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.asm=.o))
 
 .PHONY: all clean
 all: $(OBJS)
@@ -35,8 +49,9 @@ all: $(OBJS)
 $(OBJ_DIR):
 	@$(MKDIR) $@
 
-$(OBJ_DIR)/%.obj: %.asm $(INCLUDES) | $(OBJ_DIR)
-	@echo $(AS) $<
+$(OBJ_DIR)/%.o: %.asm $(INCLUDES) | $(OBJ_DIR)
+	$(call INFO_BOX, $(BUILD_INFO))
+	$(info $(AS) $<)
 	@$(AS) $(ASFLAGS) -fr=$(OBJ_DIR)/$*.err -fl=$(OBJ_DIR)/$*.lst -fo=$@ $<
 # Disassemble.
 #	@wdis $@ > $(OBJ_DIR)/$*.dis
@@ -46,4 +61,4 @@ $(OBJ_DIR)/%.obj: %.asm $(INCLUDES) | $(OBJ_DIR)
 	[ "$$compiled_size" = "$$target_size" ] || { printf "\033[1;31merror:\033[0m %s size %s does not match target size %s\n" "$*" "$$compiled_size" "$$target_size"; exit 1; }; \
 
 clean:
-	$(RM) $(OBJ_DIR)/*.obj $(OBJ_DIR)/*.lst $(OBJ_DIR)/*.err $(OBJ_DIR)/*.dis
+	$(RM) $(OBJ_DIR)/*.o $(OBJ_DIR)/*.lst $(OBJ_DIR)/*.err $(OBJ_DIR)/*.dis

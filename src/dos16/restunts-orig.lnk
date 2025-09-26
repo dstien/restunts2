@@ -1,27 +1,27 @@
-FORMAT DOS
-OPTION PACKCODE = 0,   # Don't combine code segments.
-       PACKDATA = 0,   # Don't combine data segments.
-       NOFARCALLS,     # Don't optimise far calls that could be near.
-       NOCASEEXACT,    # Ignore symbol case.
-       MAP = ../../build/dos16/restunto.map,
-       QUIET
-NAME   ../../build/dos16/restunto.exe
-PATH   ../../build/asm
-FILE   seg000.obj, seg001.obj, seg002.obj, seg003.obj, seg004.obj, seg005.obj, seg006.obj,
-       seg007.obj, seg008.obj, seg009.obj, seg010.obj, seg011.obj, seg012.obj, seg013.obj,
-       seg014.obj, seg015.obj, seg016.obj, seg017.obj, seg018.obj, seg019.obj, seg020.obj,
-       seg021.obj, seg022.obj, seg023.obj, seg024.obj, seg025.obj, seg026.obj, seg027.obj,
-       seg028.obj, seg029.obj, seg030.obj, seg031.obj, seg032.obj, seg033.obj, seg034.obj,
-       seg035.obj, seg036.obj, seg037.obj, seg038.obj, seg039.obj,
-       dseg.obj, dsegu.obj, custom.obj
-ORDER  CLNAME STUNTSC
-           SEGMENT seg000 SEGMENT seg001 SEGMENT seg002 SEGMENT seg003 SEGMENT seg004 SEGMENT seg005
-           SEGMENT seg006 SEGMENT seg007 SEGMENT seg008 SEGMENT seg009 SEGMENT seg010 SEGMENT seg011
-           SEGMENT seg012 SEGMENT seg013 SEGMENT seg014 SEGMENT seg015 SEGMENT seg016 SEGMENT seg017
-           SEGMENT seg018 SEGMENT seg019 SEGMENT seg020 SEGMENT seg021 SEGMENT seg022 SEGMENT seg023
-           SEGMENT seg024 SEGMENT seg025 SEGMENT seg026 SEGMENT seg027 SEGMENT seg028 SEGMENT seg029
-           SEGMENT seg030 SEGMENT seg031 SEGMENT seg032 SEGMENT seg033 SEGMENT seg034 SEGMENT seg035
-           SEGMENT seg036 SEGMENT seg037
-       CLNAME STUNTSD SEGMENT seg038 SEGMENT seg039 SEGMENT dseg SEGMENT dsegu
-       CLNAME STACK SEGMENT dsegs
-       CLNAME ENDSEG SEGMENT endseg
+SYSTEM  DOS
+OPTION  PACKCODE = 0,   # Don't combine code segments.
+        PACKDATA = 0,   # Don't combine data segments.
+        NOFARCALLS,     # Don't optimise far calls that could be near.
+        NOCASEEXACT,    # Ignore symbol case.
+        MAP = ../../build/dos16/restunto.map,
+        QUIET
+NAME    ../../build/dos16/restunto.exe
+PATH    ../../build/asm/orig
+FILE    seg000.o, seg001.o, seg002.o, seg003.o, seg004.o, seg005.o, seg006.o,
+        seg007.o, seg008.o, seg009.o, seg010.o, seg011.o, seg012.o, seg013.o,
+        seg014.o, seg015.o, seg016.o, seg017.o, seg018.o, seg019.o, seg020.o,
+        seg021.o, seg022.o, seg023.o, seg024.o, seg025.o, seg026.o, seg027.o,
+        seg028.o, seg029.o, seg030.o, seg031.o, seg032.o, seg033.o, seg034.o,
+        seg035.o, seg036.o, seg037.o, seg038.o, seg039.o,
+        dseg.o, dsegu.o, custom.o
+ORDER   CLNAME STUNTSC
+            SEGMENT seg000 SEGMENT seg001 SEGMENT seg002 SEGMENT seg003 SEGMENT seg004 SEGMENT seg005
+            SEGMENT seg006 SEGMENT seg007 SEGMENT seg008 SEGMENT seg009 SEGMENT seg010 SEGMENT seg011
+            SEGMENT seg012 SEGMENT seg013 SEGMENT seg014 SEGMENT seg015 SEGMENT seg016 SEGMENT seg017
+            SEGMENT seg018 SEGMENT seg019 SEGMENT seg020 SEGMENT seg021 SEGMENT seg022 SEGMENT seg023
+            SEGMENT seg024 SEGMENT seg025 SEGMENT seg026 SEGMENT seg027 SEGMENT seg028 SEGMENT seg029
+            SEGMENT seg030 SEGMENT seg031 SEGMENT seg032 SEGMENT seg033 SEGMENT seg034 SEGMENT seg035
+            SEGMENT seg036 SEGMENT seg037
+        CLNAME STUNTSD SEGMENT seg038 SEGMENT seg039 SEGMENT dseg SEGMENT dsegu
+        CLNAME STACK SEGMENT dsegs
+        CLNAME ENDSEG SEGMENT endseg

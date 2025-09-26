@@ -2,61 +2,13 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg009.inc
 
 seg009 segment byte public use16 'STUNTSC'
     assume cs:seg009, es:nothing, ss:nothing, ds:dseg
 
-    public load_tracks_menu_shapes
-    public preRender_icons
-    public draw_2DtrackMap
-    public sub_2C81C
-    public sub_2C9B4
-
 ; undefined __cdecl16far load_tracks_menu_shapes(void)
-load_tracks_menu_shapes proc far
+load_tracks_menu_shapes_asm_ proc far
     var_198    = word ptr  -408
     var_196    = word ptr  -406
     var_194    = word ptr  -404
@@ -2871,10 +2823,10 @@ LAB_2a2b_1b94:
     mov     sp, bp
     pop     bp
     retf
-load_tracks_menu_shapes endp
+load_tracks_menu_shapes_asm_ endp
 
 ; void __cdecl16far preRender_icons(byte param_1)
-preRender_icons proc far
+preRender_icons_asm_ proc far
     var_6      = byte ptr   -6
     var_4      = byte ptr   -4
     var_2      = byte ptr   -2
@@ -3093,11 +3045,11 @@ LAB_2a2b_1df2:
     mov     sp, bp
     pop     bp
     retf
-preRender_icons endp
+preRender_icons_asm_ endp
     db 0x90
 
 ; void __cdecl16far draw_2DtrackMap(byte param_1, byte param_2, int param_3, int param_4)
-draw_2DtrackMap proc far
+draw_2DtrackMap_asm_ proc far
     var_E      = word ptr  -14
     var_C      = byte ptr  -12
     var_A      = byte ptr  -10
@@ -3907,10 +3859,10 @@ LAB_2a2b_2566:
     mov     sp, bp
     pop     bp
     retf
-draw_2DtrackMap endp
+draw_2DtrackMap_asm_ endp
 
 ; byte __cdecl16far sub_2C81C(void)
-sub_2C81C proc far
+sub_2C81C_asm_ proc far
     var_A      = byte ptr  -10
     var_8      = byte ptr   -8
     var_6      = byte ptr   -6
@@ -4090,10 +4042,10 @@ LAB_2a2b_26fa:
     mov     sp, bp
     pop     bp
     retf
-sub_2C81C endp
+sub_2C81C_asm_ endp
 
 ; undefined __cdecl16far sub_2C9B4(void)
-sub_2C9B4 proc far
+sub_2C9B4_asm_ proc far
     var_392    = dword ptr -914
     var_38E    = word ptr  -910
     var_38C    = byte ptr  -908
@@ -4355,7 +4307,7 @@ LAB_2a2b_299c:
     mov     sp, bp
     pop     bp
     retf
-sub_2C9B4 endp
+sub_2C9B4_asm_ endp
 
 seg009 ends
 end

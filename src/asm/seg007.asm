@@ -2,76 +2,15 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg007.inc
 
 seg007 segment byte public use16 'STUNTSC'
     assume cs:seg007, es:nothing, ss:nothing, ds:dseg
 
-    public audio_add_driver_timer
-    public audio_remove_driver_timer
-    public pad_id
-    public audio_init_engine
-    public audio_op_unk
-    public audio_function2
-    public audio_driver_timer
-    public audio_op_unk2
-    public nopsub_27220
-    public nopsub_2726C
-    public nopsub_272B0
-    public audio_function2_wrap
-    public audio_op_unk3
-    public audio_op_unk4
-    public audio_op_unk5
-    public audio_op_unk6
-    public audio_op_unk7
-    public nopsub_27489
-
     db 0x90
 
 ; void __cdecl16far audio_add_driver_timer(void)
-audio_add_driver_timer proc far
+audio_add_driver_timer_asm_ proc far
     mov     bx, offset audiotimers
     jmp     LAB_26ba_0019
 LAB_26ba_0013:
@@ -92,10 +31,10 @@ LAB_26ba_0019:
     pop     bx
     pop     bx
     retf
-audio_add_driver_timer endp
+audio_add_driver_timer_asm_ endp
 
 ; void __cdecl16far audio_remove_driver_timer(void)
-audio_remove_driver_timer proc far
+audio_remove_driver_timer_asm_ proc far
     push    si
     mov     si, offset audiotimers
     jmp     LAB_26ba_004f
@@ -123,10 +62,10 @@ LAB_26ba_004f:
     pop     bx
     pop     si
     retf
-audio_remove_driver_timer endp
+audio_remove_driver_timer_asm_ endp
 
 ; word * __cdecl16far pad_id(word * param_1)
-pad_id proc far
+pad_id_asm_ proc far
     param_1    = dword ptr   6
 
     push    bp
@@ -152,10 +91,10 @@ LAB_26ba_008e:
     mov     sp, bp
     pop     bp
     retf
-pad_id endp
+pad_id_asm_ endp
 
 ; int __cdecl16far audio_init_engine(int unk_flags, char * res_id, void * res1, void * res0)
-audio_init_engine proc far
+audio_init_engine_asm_ proc far
     var_18     = dword ptr -24
     var_14     = word ptr  -20
     var_12     = word ptr  -18
@@ -434,10 +373,10 @@ LAB_26ba_034e:
     mov     sp, bp
     pop     bp
     retf
-audio_init_engine endp
+audio_init_engine_asm_ endp
 
 ; void __cdecl16far audio_op_unk(int param_1)
-audio_op_unk proc far
+audio_op_unk_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -492,10 +431,10 @@ LAB_26ba_03c7:
     mov     sp, bp
     pop     bp
     retf
-audio_op_unk endp
+audio_op_unk_asm_ endp
 
 ; void __cdecl16far audio_function2(int param_1)
-audio_function2 proc far
+audio_function2_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -520,10 +459,10 @@ LAB_26ba_03fe:
     mov     sp, bp
     pop     bp
     retf
-audio_function2 endp
+audio_function2_asm_ endp
 
 ; void __cdecl16far audio_driver_timer(void)
-audio_driver_timer proc far
+audio_driver_timer_asm_ proc far
     var_4      = word ptr   -4
     var_1      = byte ptr   -1
 
@@ -696,11 +635,11 @@ LAB_26ba_0587:
     mov     sp, bp
     pop     bp
     retf
-audio_driver_timer endp
+audio_driver_timer_asm_ endp
     db 0x90
 
 ; void __cdecl16far audio_op_unk2(int param_1, uint param_2, uint param_3, uint param_4, uint param_5, uint param_6, uint param_7, uint param_8, uint param_9)
-audio_op_unk2 proc far
+audio_op_unk2_asm_ proc far
     var_16     = word ptr  -22
     var_14     = word ptr  -20
     var_10     = word ptr  -16
@@ -810,10 +749,10 @@ LAB_26ba_0673:
     mov     sp, bp
     pop     bp
     retf
-audio_op_unk2 endp
+audio_op_unk2_asm_ endp
 
 ; void __cdecl16far nopsub_27220(int param_1)
-nopsub_27220 proc far
+nopsub_27220_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -850,10 +789,10 @@ nopsub_27220 proc far
     mov     sp, bp
     pop     bp
     retf
-nopsub_27220 endp
+nopsub_27220_asm_ endp
 
 ; void __cdecl16far nopsub_2726C(int param_1)
-nopsub_2726C proc far
+nopsub_2726C_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -886,10 +825,10 @@ nopsub_2726C proc far
     mov     sp, bp
     pop     bp
     retf
-nopsub_2726C endp
+nopsub_2726C_asm_ endp
 
 ; void __cdecl16far nopsub_272B0(int param_1)
-nopsub_272B0 proc far
+nopsub_272B0_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -922,10 +861,10 @@ nopsub_272B0 proc far
     mov     sp, bp
     pop     bp
     retf
-nopsub_272B0 endp
+nopsub_272B0_asm_ endp
 
 ; void __cdecl16far audio_function2_wrap(int param_1)
-audio_function2_wrap proc far
+audio_function2_wrap_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -958,10 +897,10 @@ audio_function2_wrap proc far
     mov     sp, bp
     pop     bp
     retf
-audio_function2_wrap endp
+audio_function2_wrap_asm_ endp
 
 ; void __cdecl16far audio_op_unk3(int param_1)
-audio_op_unk3 proc far
+audio_op_unk3_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -990,10 +929,10 @@ audio_op_unk3 proc far
     mov     sp, bp
     pop     bp
     retf
-audio_op_unk3 endp
+audio_op_unk3_asm_ endp
 
 ; void __cdecl16far audio_op_unk4(int param_1)
-audio_op_unk4 proc far
+audio_op_unk4_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -1022,10 +961,10 @@ audio_op_unk4 proc far
     mov     sp, bp
     pop     bp
     retf
-audio_op_unk4 endp
+audio_op_unk4_asm_ endp
 
 ; void __cdecl16far audio_op_unk5(int param_1)
-audio_op_unk5 proc far
+audio_op_unk5_asm_ proc far
     var_2      = word ptr   -2
     param_1    = word ptr    6
 
@@ -1067,10 +1006,10 @@ LAB_26ba_083b:
     mov     sp, bp
     pop     bp
     retf
-audio_op_unk5 endp
+audio_op_unk5_asm_ endp
 
 ; void __cdecl16far audio_op_unk6(int param_1)
-audio_op_unk6 proc far
+audio_op_unk6_asm_ proc far
     var_2      = word ptr   -2
     param_1    = word ptr    6
 
@@ -1112,10 +1051,10 @@ LAB_26ba_0896:
     mov     sp, bp
     pop     bp
     retf
-audio_op_unk6 endp
+audio_op_unk6_asm_ endp
 
 ; void __cdecl16far audio_op_unk7(int param_1)
-audio_op_unk7 proc far
+audio_op_unk7_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -1133,10 +1072,10 @@ audio_op_unk7 proc far
     mov     sp, bp
     pop     bp
     retf
-audio_op_unk7 endp
+audio_op_unk7_asm_ endp
 
 ; void __cdecl16far nopsub_27489(int param_1)
-nopsub_27489 proc far
+nopsub_27489_asm_ proc far
     param_1    = word ptr    6
 
     push    bp
@@ -1159,7 +1098,7 @@ LAB_26ba_090a:
     mov     sp, bp
     pop     bp
     retf
-nopsub_27489 endp
+nopsub_27489_asm_ endp
     db 0
 seg007 ends
 end

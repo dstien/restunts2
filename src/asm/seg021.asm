@@ -2,57 +2,13 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg033.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg021.inc
 
 seg021 segment byte public use16 'STUNTSC'
     assume cs:seg021, es:nothing, ss:nothing, ds:dseg
 
-    public heapsort_by_order
-
 ; void __cdecl16far heapsort_by_order(int n, int * heap, int * data)
-heapsort_by_order proc far
+heapsort_by_order_asm_ proc far
     var_index  = word ptr   -8
     var_counter = word ptr   -6
     var_halfindex = word ptr   -4
@@ -134,7 +90,7 @@ LAB_36be_0098:
     mov     sp, bp
     pop     bp
     retf
-heapsort_by_order endp
+heapsort_by_order_asm_ endp
 
 seg021 ends
 end

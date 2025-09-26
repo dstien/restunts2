@@ -2,58 +2,13 @@
 .8086
 .model medium
 
-include custom.inc
-include structs.inc
-include seg000.inc
-include seg001.inc
-include seg002.inc
-include seg003.inc
-include seg004.inc
-include seg005.inc
-include seg006.inc
-include seg007.inc
-include seg008.inc
-include seg009.inc
-include seg010.inc
-include seg011.inc
-include seg012.inc
-include seg013.inc
-include seg014.inc
-include seg015.inc
-include seg016.inc
-include seg017.inc
-include seg018.inc
-include seg019.inc
-include seg020.inc
-include seg021.inc
-include seg022.inc
-include seg023.inc
-include seg024.inc
-include seg025.inc
-include seg026.inc
-include seg027.inc
-include seg028.inc
-include seg029.inc
-include seg030.inc
-include seg031.inc
-include seg032.inc
-include seg034.inc
-include seg035.inc
-include seg036.inc
-include seg037.inc
-include seg038.inc
-include seg039.inc
-include dseg.inc
-include dsegu.inc
+include seg033.inc
 
 seg033 segment byte public use16 'STUNTSC'
     assume cs:seg033, es:nothing, ss:nothing, ds:dseg
 
-    public setup_mcgawnd1
-    public setup_mcgawnd2
-
 ; void __cdecl16far setup_mcgawnd1(void)
-setup_mcgawnd1 proc far
+setup_mcgawnd1_asm_ proc far
     mov     ax, word ptr [mcgawndsprite]
     or      ax, word ptr [mcgawndsprite+2]
     jnz     LAB_3a95_002c
@@ -83,10 +38,10 @@ LAB_3a95_002c:
     call    far ptr sprite_putimage
     add     sp, 0x4
     retf
-setup_mcgawnd1 endp
+setup_mcgawnd1_asm_ endp
 
 ; void __cdecl16far setup_mcgawnd2(void)
-setup_mcgawnd2 proc far
+setup_mcgawnd2_asm_ proc far
     mov     ax, word ptr [mcgawndsprite]
     or      ax, word ptr [mcgawndsprite+2]
     jnz     LAB_3a95_0074
@@ -106,7 +61,7 @@ LAB_3a95_0074:
     call    far ptr sprite_set_1_from_argptr
     add     sp, 0x4
     retf
-setup_mcgawnd2 endp
+setup_mcgawnd2_asm_ endp
 
 seg033 ends
 end
