@@ -1,0 +1,4 @@
+# GitHub file type overrides.
+*.def linguist-language=Assembly
+*.inc linguist-language=Assembly
+*.lnk linguist-language=Linker-Script
