@@ -1,4 +1,4 @@
-# restunts2
+![restunts](assets/logo.svg)
 
 An attempt to refurbish the [Stunts reverse engineering project](https://github.com/4d-stunts/restunts) with free, contemporary tooling and measures to improve correctness of the ported code.
 
