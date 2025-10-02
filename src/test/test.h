@@ -26,7 +26,8 @@
 #define DIM   "\033[2m"
 #define RESET "\033[0m"
 
-#define PRINT_COLOR(color, format, ...) printf(color format RESET, ##__VA_ARGS__)
+#define PRINT_COLOR(color, format, ...) \
+    printf(color format RESET, ##__VA_ARGS__)
 
 typedef struct {
     int pass;

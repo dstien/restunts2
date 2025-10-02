@@ -10,7 +10,7 @@ An attempt to refurbish the [Stunts reverse engineering project](https://github.
 - [X] Recreate working, debuggable game executable with Watcom Linker.
 - [X] Build-time override functions ported to C.
 - [ ] Import C functions from the original [restunts](https://github.com/4d-stunts/restunts) project, switch to [fixed-width integers](https://en.wikipedia.org/wiki/C_data_types#Fixed-width_integer_types) and add [unit tests](https://en.wikipedia.org/wiki/Unit_testing).
-- [ ] Enforce consistent coding style with *clang-format*.
+- [X] Enforce consistent coding style with *clang-format*.
 - [ ] Continuous integration for all targets.
 - [ ] Find a clean solution for improving the game and adding modern platforms while preserving original behaviour with minimal code duplication or `#ifdef` spaghetti.
 - [ ] Find a lossless, text-based format for backing up the Ghidra analysis database in git.
@@ -22,11 +22,19 @@ A recreation of the original Stunts 1.1 executable can be built using GNU Make a
 ```
 $ make
 ```
-This produces two 16-bit real-mode DOS executables in `build/dos16`:
-* `restunts.exe`, which combines our ported C functions with the original code.
-* `restunto.exe`, which uses solely the original code. It is functionally identical to the retail version, but not binary identical.
+This produces four 16-bit real-mode DOS executables in `build/dos16`:
+* `restunts.exe`: Combines our ported C functions with the original code.
+* `restunto.exe`: Uses solely the original code. It is functionally identical to the retail version, but not binary identical.
+* `test.exe`: Runs unit tests for the ported C code.
+* `testo.exe`: Runs unit tests on the original code. If these tests fails, the tests are wrong.
 
 Builds are debug-enabled by default. Release builds can be made with `make DEBUG=0` or running `wstrip` on the executable.
+
+The ported code can also be compiled for x86_64 with *clang*:
+```
+$ make linux64
+```
+This produces the unit test executable `build/linux64/test-linux64`, which ensures that the code is portable and preserves the original code's behaviour.
 
 ## Debugging
 
@@ -87,7 +95,8 @@ To account for issues we can't handle properly in Ghidra, we use four *patch tag
 1. Implement the function in a file in `src/c`. When adding a new file, include it in `SRC` in `src/Makefile`.
 2. Add the function name to `PORTED_FUNCS_BY_FILE` in `ghidra/resunts-export.py` and run the export from Ghidra.
 3. Write unit tests in `src/test` to ensure the code is portable and the behaviour is consistent across platforms.
-3. Rebuild and test.
+4. Rebuild and test.
+5. Run `make check-fmt` and apply automatic formatting with `clang-format -i FILENAME`.
 
 ## Troubleshooting
 

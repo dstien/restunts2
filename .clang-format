@@ -1,0 +1,37 @@
+BasedOnStyle: Mozilla
+
+AlignAfterOpenBracket: BlockIndent
+AlignConsecutiveMacros:
+  Enabled:               true
+AlignEscapedNewlines: Left
+AllowShortFunctionsOnASingleLine: None
+BinPackArguments: true
+BinPackParameters: true
+BreakAfterReturnType: Automatic
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel:        false
+  AfterClass:            true
+  AfterControlStatement: Never
+  AfterEnum:             false
+  AfterExternBlock:      true
+  AfterFunction:         true
+  AfterNamespace:        false
+  AfterObjCDeclaration:  false
+  AfterStruct:           false
+  AfterUnion:            true
+  BeforeCatch:           false
+  BeforeElse:            true
+  BeforeLambdaBody:      false
+  BeforeWhile:           false
+  IndentBraces:          false
+  SplitEmptyFunction:    true
+  SplitEmptyRecord:      false
+  SplitEmptyNamespace:   true
+ColumnLimit: 80
+ContinuationIndentWidth: 8
+IndentPPDirectives: BeforeHash
+IndentWidth: 4
+InsertNewlineAtEOF: true
+PenaltyExcessCharacter: 3
+PPIndentWidth: 4
