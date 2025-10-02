@@ -1,10 +1,11 @@
 PLATFORM := dos16
 
-CC := owcc
-CFLAGS := -march=i86 -mcmodel=m -mabi=cdecl -fnostdlib -O2 -c -std=c99 -Wall
-
-LD := wlink
-LDFLAGS :=
+CC        := owcc
+CFLAGS    := -march=i86 -mcmodel=m -mabi=cdecl -fnostdlib -O2 -c -std=c99 -Wall
+LD        := wlink
+LDFLAGS   :=
+AR        := wlib
+ARFLAGS   := -fa -n -q
 
 ifeq ($(DEBUG),1)
 	CFLAGS += -g2

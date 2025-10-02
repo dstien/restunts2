@@ -11,8 +11,8 @@ An attempt to refurbish the [Stunts reverse engineering project](https://github.
 - [X] Build-time override functions ported to C.
 - [ ] Import C functions from the original [restunts](https://github.com/4d-stunts/restunts) project, switch to [fixed-width integers](https://en.wikipedia.org/wiki/C_data_types#Fixed-width_integer_types) and add [unit tests](https://en.wikipedia.org/wiki/Unit_testing).
 - [ ] Enforce consistent coding style with *clang-format*.
-- [ ] Continous integration for all targets.
-- [ ] Find a clean solution for improving the game while preserving original behaviour with minimal code duplication.
+- [ ] Continuous integration for all targets.
+- [ ] Find a clean solution for improving the game and adding modern platforms while preserving original behaviour with minimal code duplication or `#ifdef` spaghetti.
 - [ ] Find a lossless, text-based format for backing up the Ghidra analysis database in git.
 - [ ] Synchronise analysis with other versions of Stunts and 4D [Sports] Driving.
 
@@ -57,7 +57,7 @@ Analysis of the original machine code is done with [Ghidra](https://www.nsa.gov/
     * If you want to participate in the analysis, open an issue or contact [@dstien](https://github.com/dstien) by other means to have an account created. Provide a username and an e-mail address where the password can be sent.
     * If the username field is not editable, see the [Troubleshooting](#troubleshooting) section.
 5. Choose the existing repository `restunts` and continue.
-6. Select the `ghidra` folder of your cloned *restunts* repository as the *Project Directory*. This ensures our custom Ghidra script knows where to output generated files.
+6. You can use the `ghidra` folder of your cloned *restunts* repository as the *Project Directory*.
 7. In the project window, double-click `bb11_mcga.exe` to open it in the default tool, *CodeBrowser*.
 
 The `restunts` project can be now be opened like local projects. `bb11_mcga.exe` is the main analaysis target.
@@ -84,8 +84,9 @@ To account for issues we can't handle properly in Ghidra, we use four *patch tag
 
 ## Porting code to C
 
-1. Implement the function in a file in `src/c`. When adding a new file, include it in `SRC` in `src/Makefile` and add the object file to the `FILE` directive in `src/dos16/restunts-port.lnk`.
+1. Implement the function in a file in `src/c`. When adding a new file, include it in `SRC` in `src/Makefile`.
 2. Add the function name to `PORTED_FUNCS_BY_FILE` in `ghidra/resunts-export.py` and run the export from Ghidra.
+3. Write unit tests in `src/test` to ensure the code is portable and the behaviour is consistent across platforms.
 3. Rebuild and test.
 
 ## Troubleshooting

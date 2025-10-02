@@ -1,5 +1,7 @@
-include ../common.mk
 include ../$(PLATFORM)/platform.mk
+include ../common.mk
+
+CFLAGS += -I../c
 
 define BUILD_INFO
 PLATFORM $(PLATFORM)
@@ -13,10 +15,10 @@ ARFLAGS  $(ARFLAGS)
 DEBUG    $(DEBUG)
 endef
 
-SRCS := math.c
-OUT_DIR := ../../build/c/$(PLATFORM)
+SRCS := test.c test_math.c
+OUT_DIR := ../../build/test/$(PLATFORM)
 OBJS := $(addprefix $(OUT_DIR)/, $(SRCS:.c=.o))
-LIB := $(OUT_DIR)/librestunts.a
+LIB := $(OUT_DIR)/libtest.a
 
 .PHONY: all clean
 all: $(LIB)
@@ -24,7 +26,7 @@ all: $(LIB)
 $(OUT_DIR):
 	@$(MKDIR) $@
 
-$(OUT_DIR)/%.o: %.c $(INCLUDES) | $(OUT_DIR)
+$(OUT_DIR)/%.o: %.c | $(OUT_DIR)
 	$(call INFO_BOX, $(BUILD_INFO))
 	$(info $(CC) $<)
 	@$(CC) $(CFLAGS) $(DEFINES) -o $@ $<

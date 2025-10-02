@@ -1,5 +1,8 @@
+PLATFORM ?= dos16
 DEBUG ?= 1
 MKDIR := mkdir -p
+
+DEFINES := -DPLATFORM_$(shell echo $(PLATFORM) | tr a-z A-Z) -DPLATFORM_STR='"$(PLATFORM)"' -DDATE='"$(shell date -u +"%Y-%m-%d %H:%M:%S UTC")"'
 
 # Instead of filling the screen with compiler arguments, we just print the
 # input filenames and show the important details in a dandy info box that is

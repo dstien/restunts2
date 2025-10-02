@@ -2,9 +2,9 @@ SYSTEM  DOS
 OPTION  PACKCODE = 0,     # Don't combine code segments.
         PACKDATA = 0,     # Don't combine data segments.
         NOFARCALLS,       # Don't optimise far calls that could be near.
-        MAP = ../../build/dos16/restunto.map,
+        MAP = ../../build/dos16/testo.map,
         QUIET
-NAME    ../../build/dos16/restunto.exe
+NAME    ../../build/dos16/testo.exe
 PATH    ../../build/asm/orig
 FILE    seg000.o, seg001.o, seg002.o, seg003.o, seg004.o, seg005.o, seg006.o,
         seg007.o, seg008.o, seg009.o, seg010.o, seg011.o, seg012.o, seg013.o,
@@ -13,7 +13,8 @@ FILE    seg000.o, seg001.o, seg002.o, seg003.o, seg004.o, seg005.o, seg006.o,
         seg028.o, seg029.o, seg030.o, seg031.o, seg032.o, seg033.o, seg034.o,
         seg035.o, seg036.o, seg037.o, seg038.o, seg039.o,
         dseg.o, dsegu.o, custom.o
-ALIAS   stuntsmain = stuntsmain_asm_
+LIBRARY ../../build/test/dos16/libtest.a
+ALIAS   stuntsmain = _testmain
 ORDER   CLNAME STUNTSC
             SEGMENT seg000 SEGMENT seg001 SEGMENT seg002 SEGMENT seg003 SEGMENT seg004 SEGMENT seg005
             SEGMENT seg006 SEGMENT seg007 SEGMENT seg008 SEGMENT seg009 SEGMENT seg010 SEGMENT seg011
@@ -24,4 +25,6 @@ ORDER   CLNAME STUNTSC
             SEGMENT seg036 SEGMENT seg037
         CLNAME STUNTSD SEGMENT seg038 SEGMENT seg039 SEGMENT dseg SEGMENT dsegu
         CLNAME STACK SEGMENT dsegs
+        CLNAME CODE
+        CLNAME DATA
         CLNAME ENDSEG SEGMENT endseg

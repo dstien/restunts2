@@ -1,5 +1,13 @@
 #include "math.h"
 
+// Quarter-wave lookup table for sin_fast() in 0x100 steps + the peak endpoint.
+// The value for a given angle is obtained by getting the index from the lower
+// 8 bits, the quadrant from the next 2 bits, and the remaining bits can be
+// discarded as the sine wraps around every 0x400 steps. The values are scaled
+// by 0x4000.
+#define SIN_STEPS           0x100
+#define GET_SIN_STEPS(a)    (a & 0xFF)
+#define GET_SIN_QUADRANT(a) ((a >> 8) & 3)
 static int16_t sintab[] = {
     0,     101,   201,   302,   402,   503,   603,   704,   804,   904,   1005,
     1105,  1205,  1306,  1406,  1506,  1606,  1706,  1806,  1906,  2006,  2105,
@@ -27,24 +35,25 @@ static int16_t sintab[] = {
     16381, 16383, 16384, 16384
 };
 
+// Integer sin() scaled by 0x4000 using LUT.
 int16_t __cdecl sin_fast(uint16_t angle)
 {
-    uint8_t idx = angle & 0xFF;
-    uint8_t quadrant = (angle >> 8) & 3;
-    switch (quadrant) {
+    uint8_t step = GET_SIN_STEPS(angle);
+    switch (GET_SIN_QUADRANT(angle)) {
         case 0:
-            return sintab[idx];
+            return sintab[step];
         case 1:
-            return sintab[0x100 - idx];
+            return sintab[SIN_STEPS - step];
         case 2:
-            return -sintab[idx];
+            return -sintab[step];
         case 3:
         default:
-            return -sintab[0x100 - idx];
+            return -sintab[SIN_STEPS - step];
     }
 }
 
+// Integer cos() scaled by 0x4000 using LUT.
 int16_t __cdecl cos_fast(uint16_t angle)
 {
-    return sin_fast(angle + 0x100);
+    return sin_fast(angle + SIN_STEPS);
 }
