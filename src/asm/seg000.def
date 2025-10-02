@@ -21,7 +21,7 @@ seg000 segment byte public use16 'STUNTSC'
 
     ifdef RESTUNTS_ORIGINAL
         ; Alias all functions to the original asm implementation.
-        stuntsmain = stuntsmain_asm_
+        extrn stuntsmain:proc
         run_intro_looped = run_intro_looped_asm_
         run_intro_title = run_intro_title_asm_
         load_intro_resources = load_intro_resources_asm_
@@ -40,7 +40,7 @@ seg000 segment byte public use16 'STUNTSC'
         set_default_car = set_default_car_asm_
     else
         ; Alias unported functions to the original asm implementation.
-        stuntsmain = stuntsmain_asm_
+        extrn stuntsmain:proc
         run_intro_looped = run_intro_looped_asm_
         run_intro_title = run_intro_title_asm_
         load_intro_resources = load_intro_resources_asm_

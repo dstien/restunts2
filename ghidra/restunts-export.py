@@ -37,6 +37,10 @@ PORTED_FUNCS = dict(
 # The original Microsoft CRT that we will not be porting.
 CRT_SEG = "seg010"
 
+# The main function is not aliased by default, as we want to set our own main()
+# when running unit tests on original functions.
+MAIN_FUNC = "stuntsmain"
+
 # Bytes safe to emit inside string literals.
 STRING_CHARS = " !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
 
@@ -74,18 +78,26 @@ refman = prog.getReferenceManager()
 dtman = prog.getDataTypeManager()
 bkman = prog.getBookmarkManager()
 listing = prog.getListing()
-memory = prog.getMemory()
 symtab = prog.getSymbolTable()
 
 # restunts repo root.
 proj_dir = PROJECT_DIR_OVERRIDE if PROJECT_DIR_OVERRIDE else os.path.normpath(os.path.join(os.path.dirname(script_path), ".."))
 # restunts src/ folder.
 asm_dir = os.path.normpath(os.path.join(proj_dir, "src/asm"))
-dos_dir = os.path.normpath(os.path.join(proj_dir, "src/dos"))
+dos_dir = os.path.normpath(os.path.join(proj_dir, "src/dos16"))
 
 # Pre-compile utility regexes.
 regex_array_mem_operand = re.compile(r'^(.+\.)?([A-Za-z0-9_]+)\[(\d+)\]([\.\+\-\[].+)?$')
 regex_nested_array_mem_operand = re.compile(r"([A-Za-z0-9_]+)\[(\d+)\]")
+
+# Add the "_asm_" suffix to function names that can be ported. When building,
+# defining the RESTUNTS_ORIGINAL macro will decide whether to map functions
+# to their ASM or C implementations.
+def func_name_decoration(seg_name, func_name):
+    if seg_name != CRT_SEG:
+        return func_name + "_asm_"
+    else:
+        return func_name
 
 ###
 ### Assembly export
@@ -566,15 +578,6 @@ def write_asm():
                 comment = pattern.sub("", comment)
         return comment, content
 
-    # Add the "_asm_" suffix to function names that can be ported. When building,
-    # defining the RESTUNTS_ORIGINAL macro will decide whether to map functions
-    # to their ASM or C implementations.
-    def func_name_decoration(seg_name, func_name):
-        if seg_name != CRT_SEG:
-            return func_name + "_asm_"
-        else:
-            return func_name
-
     # Check if given function is far.
     def func_is_far(func):
         return "far" in func.getCallingConventionName()
@@ -660,16 +663,24 @@ def write_asm():
             f.write("    ifdef RESTUNTS_ORIGINAL\n")
             f.write("        ; Alias all functions to the original asm implementation.\n")
             for func_name in funcs:
-                f.write("        {} = {}\n".format(func_name, func_name_decoration(seg_name, func_name)))
+                # Except stuntsmain()...
+                if func_name == MAIN_FUNC:
+                    f.write("        extrn {}:proc\n".format(func_name))
+                else:
+                    f.write("        {} = {}\n".format(func_name, func_name_decoration(seg_name, func_name)))
             f.write("    else\n")
             if funcs_orig:
                 f.write("        ; Alias unported functions to the original asm implementation.\n")
             for func_name in funcs_orig:
-                f.write("        {} = {}\n".format(func_name, func_name_decoration(seg_name, func_name)))
+                if func_name == MAIN_FUNC:
+                    f.write("        extrn {}:proc\n".format(func_name))
+                else:
+                    f.write("        {} = {}\n".format(func_name, func_name_decoration(seg_name, func_name)))
             if funcs_port:
                 f.write("        ; Functions ported to C are external.\n")
             for func_name in funcs_port:
-                f.write("        extrn {}:proc\n".format(func_name))
+                if func_name != MAIN_FUNC:
+                    f.write("        extrn {}:proc\n".format(func_name))
             f.write("    endif\n")
 
     # Segment declaration in asm and inc files.
@@ -1002,5 +1013,42 @@ def write_asm():
     for block in mem.getBlocks():
         write_segment(block)
 
+###
+### Link file aliases
+###
+def write_lnk():
+    # We can't have public function equates, so we make link aliases instead
+    # to make the unported assembly functions callable from C.
+    def write_aliases(filename, aliases):
+        with open(os.path.join(dos_dir, filename), "w") as f:
+            f.write(banner.replace(";", "#") + "\n")
+            f.write("ALIAS ")
+            f.write(",\n      ".join(aliases))
+            f.write("\n")
+
+    print("Writing lnk files to {}...".format(dos_dir))
+    funcs_orig = []
+    funcs_port = []
+
+    for func in funman.getFunctions(True):
+        seg_name = mem.getBlock(func.getEntryPoint()).getName()
+        if seg_name == CRT_SEG:
+            continue
+
+        func_name = func.getName()
+        alias = "{} = {}".format(func_name, func_name_decoration(seg_name, func_name))
+
+        # Don't include stuntsmain for original builds, we set it at link-time
+        # instead, that way we can test original functions with our own main().
+        if func_name != MAIN_FUNC:
+            funcs_orig.append(alias)
+
+            if func_name not in PORTED_FUNCS:
+                funcs_port.append(alias)
+
+    write_aliases("aliases-orig.lnk", funcs_orig)
+    write_aliases("aliases-port.lnk", funcs_port)
+
 write_asm()
+write_lnk()
 print("Anders rules!") # The real MVP.
