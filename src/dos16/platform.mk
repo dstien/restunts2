@@ -1,4 +1,5 @@
-PLATFORM := dos16
+PLATFORM  := dos16
+DEBUG     ?= 1
 
 CC        := owcc
 CFLAGS    := -march=i86 -mcmodel=m -mabi=cdecl -fnostdlib -O2 -c -std=c99 -Wall

@@ -41,7 +41,7 @@ int testmain(int argc, char** argv)
     printf("\n");
     printf("Total functions: ");
     print_result(&g_total_groups, "");
-    printf("Total test     : ");
+    printf("Total tests    : ");
     print_result(&g_total_tests, "");
 
     return g_total_tests.fail;

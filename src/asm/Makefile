@@ -4,6 +4,7 @@ include ../common.mk
 # port = Ported C code overrides original code.
 # orig = Only original code is used.
 TARGET ?= port
+DEBUG  ?= 1
 
 AS := wasm
 ASFLAGS := -bt=dos -d$(DEBUG) -zq

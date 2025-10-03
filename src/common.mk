@@ -1,5 +1,4 @@
 PLATFORM ?= dos16
-DEBUG ?= 1
 MKDIR := mkdir -p
 
 DEFINES := -DPLATFORM_$(shell echo $(PLATFORM) | tr a-z A-Z) -DPLATFORM_STR='"$(PLATFORM)"' -DDATE='"$(shell date -u +"%Y-%m-%d %H:%M:%S UTC")"'
