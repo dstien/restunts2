@@ -1,4 +1,10 @@
-![restunts](assets/logo.svg)
+<div align="center">
+
+   ![restunts](assets/logo.svg)
+
+   [![Build](https://img.shields.io/github/check-runs/dstien/restunts2/main?nameFilter=Build&label=Build)](https://github.com/dstien/restunts2/actions)
+   [![Tests](https://img.shields.io/github/check-runs/dstien/restunts2/main?nameFilter=Test&label=Tests)](https://github.com/dstien/restunts2/actions)
+</div>
 
 An attempt to refurbish the [Stunts reverse engineering project](https://github.com/4d-stunts/restunts) with free, contemporary tooling and measures to improve correctness of the ported code.
 
@@ -11,7 +17,7 @@ An attempt to refurbish the [Stunts reverse engineering project](https://github.
 - [X] Build-time override functions ported to C.
 - [ ] Import C functions from the original [restunts](https://github.com/4d-stunts/restunts) project, switch to [fixed-width integers](https://en.wikipedia.org/wiki/C_data_types#Fixed-width_integer_types) and add [unit tests](https://en.wikipedia.org/wiki/Unit_testing).
 - [X] Enforce consistent coding style with *clang-format*.
-- [ ] Continuous integration for all targets.
+- [X] Continuous integration for all targets.
 - [ ] Find a clean solution for improving the game and adding modern platforms while preserving original behaviour with minimal code duplication or `#ifdef` spaghetti.
 - [ ] Find a lossless, text-based format for backing up the Ghidra analysis database in git.
 - [ ] Synchronise analysis with other versions of Stunts and 4D [Sports] Driving.
@@ -109,6 +115,12 @@ $ env JAVA_TOOL_OPTIONS='-Duser.name=<USERNAME>' ghidra
 ```
 This workaround will prevent you from opening other Ghidra projects because they are tied to your local system account name. Either start Ghidra as normal to work on other projects, or edit the owner in each project's `<PROJECT>.rep/project.prp` file.
 * NationalSecurityAgency/ghidra#7454
+</details>
+
+<details>
+<summary><b>DOS builds fail or succeed with warnings and broken EXE files</b></summary>
+
+Ensure that you are including Watcom's DOS headers with `INCLUDE=$WATCOM/h` and not the Linux headers (`$WATCOM/lh`).
 </details>
 
 <details>
