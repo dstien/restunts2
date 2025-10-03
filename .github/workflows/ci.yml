@@ -1,0 +1,171 @@
+name: CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Open Watcom
+        uses: open-watcom/setup-watcom@v0
+        with:
+          version: "2.0-64"
+          target: "dos"
+
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      # Try building all targets.
+      - id: build_restunts_dos16_orig
+        name: Build restunts (dos16, orig)
+        continue-on-error: true
+        run: make -C src/platform/dos16 restunts-orig
+
+      - id: build_restunts_dos16_port
+        name: Build restunts (dos16, port)
+        continue-on-error: true
+        run: make -C src/platform/dos16 restunts-port
+
+      - id: build_test_dos16_orig
+        name: Build test (dos16, orig)
+        continue-on-error: true
+        run: make -C src/platform/dos16 test-orig
+
+      - id: build_test_dos16_port
+        name: Build test (dos16, port)
+        continue-on-error: true
+        run: make -C src/platform/dos16 test-port
+
+      - id: build_test_linux64
+        name: Build test (linux64)
+        continue-on-error: true
+        run: make -C src/platform/linux64
+
+      # Artifacts.
+      - name: Uppercase DOS artifacts
+        run: |
+          pushd build/platform/dos16 > /dev/null
+          for file in *; do mv "${file}" "${file^^}"; done
+          popd > /dev/null
+
+      - name: Prepare artifact restunts (dos16, orig, debug)
+        if: steps.build_restunts_dos16_orig.outcome == 'success'
+        run: |
+          rm -drf artifact
+          mkdir -p artifact/restunts-dos16-orig-debug
+          cp build/platform/dos16/RESTUNTO.* artifact/restunts-dos16-orig-debug/
+      - uses: actions/upload-artifact@v4
+        if: steps.build_restunts_dos16_orig.outcome == 'success'
+        with:
+          name: restunts-dos16-orig-debug
+          path: artifact
+
+      - name: Prepare artifact restunts (dos16, orig, release)
+        if: steps.build_restunts_dos16_orig.outcome == 'success'
+        run: |
+          rm -drf artifact
+          mkdir -p artifact/restunts-dos16-orig
+          cp build/platform/dos16/RESTUNTO.EXE artifact/restunts-dos16-orig/
+          wstrip -q artifact/restunts-dos16-orig/RESTUNTO.EXE
+      - uses: actions/upload-artifact@v4
+        if: steps.build_restunts_dos16_orig.outcome == 'success'
+        with:
+          name: restunts-dos16-orig
+          path: artifact
+
+      - name: Prepare artifact restunts (dos16, port, debug)
+        if: steps.build_restunts_dos16_port.outcome == 'success'
+        run: |
+          rm -drf artifact
+          mkdir -p artifact/restunts-dos16-debug
+          cp build/platform/dos16/RESTUNTS.* artifact/restunts-dos16-debug/
+      - uses: actions/upload-artifact@v4
+        if: steps.build_restunts_dos16_port.outcome == 'success'
+        with:
+          name: restunts-dos16-debug
+          path: artifact
+
+      - name: Prepare artifact restunts (dos16, port, release)
+        if: steps.build_restunts_dos16_port.outcome == 'success'
+        run: |
+          rm -drf artifact
+          mkdir -p artifact/restunts-dos16
+          cp build/platform/dos16/RESTUNTS.EXE artifact/restunts-dos16/
+          wstrip -q artifact/restunts-dos16/RESTUNTS.EXE
+      - uses: actions/upload-artifact@v4
+        if: steps.build_restunts_dos16_port.outcome == 'success'
+        with:
+          name: restunts-dos16
+          path: artifact
+
+      # Fail job if any target failed.
+      - name: Failed to build all targets
+        if: |
+          steps.build_restunts_dos16_orig.outcome == 'failure' ||
+          steps.build_restunts_dos16_port.outcome == 'failure' ||
+          steps.build_test_dos16_orig.outcome     == 'failure' ||
+          steps.build_test_dos16_port.outcome     == 'failure' ||
+          steps.build_test_linux64.outcome        == 'failure'
+        run: exit 1
+
+      - name: Prepare artifact tests
+        run: |
+          rm -drf artifact
+          mkdir artifact
+          cp build/platform/dos16/TEST.EXE artifact/
+          wstrip -q artifact/TEST.EXE
+          cp build/platform/dos16/TESTO.EXE artifact/
+          wstrip -q artifact/TESTO.EXE
+          cp build/platform/linux64/test-linux64 artifact/
+          strip artifact/test-linux64
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tests
+          path: artifact
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Setup dosemu2
+        run: |
+          # mandb wastes a LOT of time during install. Why is it even included in an environment like this? Madness.
+          sudo cp /bin/true /usr/bin/mandb
+          sudo add-apt-repository -y ppa:dosemu2/ppa
+          sudo apt install -y --no-install-recommends dosemu2
+
+      - name: Download tests
+        uses: actions/download-artifact@v5
+        with:
+          name: tests
+          path: .
+
+      # Run platform tests.
+      - id: test_dos16_orig
+        name: Test dos16 (orig)
+        continue-on-error: true
+        run: dosemu -n -quiet -K . -E "TESTO.EXE -v"
+
+      - id: test_dos16_port
+        name: Test dos16 (port)
+        continue-on-error: true
+        run: dosemu -n -quiet -K . -E "TEST.EXE -v"
+
+      - id: test_linux64
+        name: Test linux64
+        continue-on-error: true
+        run: |
+          chmod +x test-linux64
+          ./test-linux64 -v
+
+      # Fail job if any tests failed.
+      - name: Failed to pass all targets
+        if: |
+          steps.test_dos16_orig.outcome == 'failure' ||
+          steps.test_dos16_port.outcome == 'failure' ||
+          steps.test_linux64.outcome    == 'failure'
+        run: exit 1
