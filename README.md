@@ -22,7 +22,7 @@ A recreation of the original Stunts 1.1 executable can be built using GNU Make a
 ```
 $ make
 ```
-This produces four 16-bit real-mode DOS executables in `build/dos16`:
+This produces four 16-bit real-mode DOS executables in `build/platform/dos16`:
 * `restunts.exe`: Combines our ported C functions with the original code.
 * `restunto.exe`: Uses solely the original code. It is functionally identical to the retail version, but not binary identical.
 * `test.exe`: Runs unit tests for the ported C code.
@@ -34,7 +34,7 @@ The ported code can also be compiled for x86_64 with *clang*:
 ```
 $ make linux64
 ```
-This produces the unit test executable `build/linux64/test-linux64`, which ensures that the code is portable and preserves the original code's behaviour.
+This produces the unit test executable `build/platform/linux64/test-linux64`, which ensures that the code is portable and preserves the original code's behaviour.
 
 ## Debugging
 
@@ -96,7 +96,7 @@ To account for issues we can't handle properly in Ghidra, we use four *patch tag
 2. Add the function name to `PORTED_FUNCS_BY_FILE` in `ghidra/resunts-export.py` and run the export from Ghidra.
 3. Write unit tests in `src/test` to ensure the code is portable and the behaviour is consistent across platforms.
 4. Rebuild and test.
-5. Run `make check-fmt` and apply automatic formatting with `clang-format -i FILENAME`.
+5. Run `make check-format` and resolve the discrepancies or apply automatic formatting with `clang-format -i FILENAME`.
 
 ## Troubleshooting
 

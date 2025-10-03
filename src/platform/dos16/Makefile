@@ -1,7 +1,7 @@
 include platform.mk
-include ../common.mk
+include ../../common.mk
 
-OUT_DIR := ../../build/$(PLATFORM)
+OUT_DIR := ../../../build/platform/$(PLATFORM)
 RESTUNTS_PORT := $(OUT_DIR)/restunts.exe
 RESTUNTS_ORIG := $(OUT_DIR)/restunto.exe
 RESTUNTS_PORT_LNK := restunts-port.lnk
@@ -14,11 +14,11 @@ TEST_ORIG := $(OUT_DIR)/testo.exe
 TEST_PORT_LNK := test-port.lnk
 TEST_ORIG_LNK := test-orig.lnk
 
-ASM_PORT_OBJS := $(patsubst ../asm/%.asm,../../build/asm/port/%.o,$(wildcard ../asm/*.asm))
-ASM_ORIG_OBJS := $(patsubst ../asm/%.asm,../../build/asm/orig/%.o,$(wildcard ../asm/*.asm))
+ASM_PORT_OBJS := $(patsubst ../../asm/%.asm,../../../build/asm/port/%.o,$(wildcard ../../asm/*.asm))
+ASM_ORIG_OBJS := $(patsubst ../../asm/%.asm,../../../build/asm/orig/%.o,$(wildcard ../../asm/*.asm))
 
-RESTUNTS_LIB := ../../build/c/$(PLATFORM)/librestunts.a
-TEST_LIB := ../../build/test/$(PLATFORM)/libtest.a
+RESTUNTS_LIB := ../../../build/c/$(PLATFORM)/librestunts.a
+TEST_LIB := ../../../build/test/$(PLATFORM)/libtest.a
 
 .PHONY: all clean
 all: restunts-port restunts-orig test-port test-orig
@@ -31,16 +31,16 @@ $(OUT_DIR):
 	@$(MKDIR) $@
 
 $(ASM_PORT_OBJS):
-	@$(MAKE) -C ../asm TARGET=port
+	@$(MAKE) -C ../../asm TARGET=port
 
 $(ASM_ORIG_OBJS):
-	@$(MAKE) -C ../asm TARGET=orig
+	@$(MAKE) -C ../../asm TARGET=orig
 
 $(RESTUNTS_LIB):
-	@$(MAKE) -C ../c PLATFORM=$(PLATFORM)
+	@$(MAKE) -C ../../c PLATFORM=$(PLATFORM)
 
 $(TEST_LIB):
-	@$(MAKE) -C ../test PLATFORM=$(PLATFORM)
+	@$(MAKE) -C ../../test PLATFORM=$(PLATFORM)
 
 $(RESTUNTS_PORT): $(ASM_PORT_OBJS) $(RESTUNTS_LIB) $(RESTUNTS_PORT_LNK) $(ALIASES_PORT_LNK) | $(OUT_DIR)
 	$(LD) $(LDFLAGS) @$(RESTUNTS_PORT_LNK) @$(ALIASES_PORT_LNK)

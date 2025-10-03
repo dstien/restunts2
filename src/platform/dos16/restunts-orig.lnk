@@ -2,10 +2,10 @@ SYSTEM  DOS
 OPTION  PACKCODE = 0,     # Don't combine code segments.
         PACKDATA = 0,     # Don't combine data segments.
         NOFARCALLS,       # Don't optimise far calls that could be near.
-        MAP = ../../build/dos16/restunto.map,
+        MAP = ../../../build/platform/dos16/restunto.map,
         QUIET
-NAME    ../../build/dos16/restunto.exe
-PATH    ../../build/asm/orig
+NAME    ../../../build/platform/dos16/restunto.exe
+PATH    ../../../build/asm/orig
 FILE    seg000.o, seg001.o, seg002.o, seg003.o, seg004.o, seg005.o, seg006.o,
         seg007.o, seg008.o, seg009.o, seg010.o, seg011.o, seg012.o, seg013.o,
         seg014.o, seg015.o, seg016.o, seg017.o, seg018.o, seg019.o, seg020.o,

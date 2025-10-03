@@ -1,5 +1,5 @@
 include ../common.mk
-include ../$(PLATFORM)/platform.mk
+include ../platform/$(PLATFORM)/platform.mk
 
 define BUILD_INFO
 PLATFORM $(PLATFORM)

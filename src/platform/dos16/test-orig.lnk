@@ -2,10 +2,10 @@ SYSTEM  DOS
 OPTION  PACKCODE = 0,     # Don't combine code segments.
         PACKDATA = 0,     # Don't combine data segments.
         NOFARCALLS,       # Don't optimise far calls that could be near.
-        MAP = ../../build/dos16/testo.map,
+        MAP = ../../../build/platform/dos16/testo.map,
         QUIET
-NAME    ../../build/dos16/testo.exe
-PATH    ../../build/asm/orig
+NAME    ../../../build/platform/dos16/testo.exe
+PATH    ../../../build/asm/orig
 FILE    seg000.o, seg001.o, seg002.o, seg003.o, seg004.o, seg005.o, seg006.o,
         seg007.o, seg008.o, seg009.o, seg010.o, seg011.o, seg012.o, seg013.o,
         seg014.o, seg015.o, seg016.o, seg017.o, seg018.o, seg019.o, seg020.o,
@@ -13,7 +13,7 @@ FILE    seg000.o, seg001.o, seg002.o, seg003.o, seg004.o, seg005.o, seg006.o,
         seg028.o, seg029.o, seg030.o, seg031.o, seg032.o, seg033.o, seg034.o,
         seg035.o, seg036.o, seg037.o, seg038.o, seg039.o,
         dseg.o, dsegu.o, custom.o
-LIBRARY ../../build/test/dos16/libtest.a
+LIBRARY ../../../build/test/dos16/libtest.a
 ALIAS   stuntsmain = _testmain
 ORDER   CLNAME STUNTSC
             SEGMENT seg000 SEGMENT seg001 SEGMENT seg002 SEGMENT seg003 SEGMENT seg004 SEGMENT seg005

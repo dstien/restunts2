@@ -84,7 +84,7 @@ symtab = prog.getSymbolTable()
 proj_dir = PROJECT_DIR_OVERRIDE if PROJECT_DIR_OVERRIDE else os.path.normpath(os.path.join(os.path.dirname(script_path), ".."))
 # restunts src/ folder.
 asm_dir = os.path.normpath(os.path.join(proj_dir, "src/asm"))
-dos_dir = os.path.normpath(os.path.join(proj_dir, "src/dos16"))
+dos_dir = os.path.normpath(os.path.join(proj_dir, "src/platform/dos16"))
 
 # Pre-compile utility regexes.
 regex_array_mem_operand = re.compile(r'^(.+\.)?([A-Za-z0-9_]+)\[(\d+)\]([\.\+\-\[].+)?$')
