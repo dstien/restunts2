@@ -461,16 +461,6 @@ def write_asm():
                 # Add implicit "offset" prefix.
                 if mnem != "LEA" and OperandType.isAddress(op_type) and OperandType.isScalar(op_type):
                     operand = "offset " + operand
-                # If size is not specified, it must be implicit from a register operand.
-                elif 1 == 2 and OperandType.isAddress(op_type) and (operand[0] == "[" or operand[2:4] == ":["):
-                    size = 0
-                    other_idx = 1 if op_idx == 0 else 0
-                    for other_op in instr.getOpObjects(other_idx):
-                        if isinstance(other_op, Register):
-                            size = other_op.getNumBytes()
-                            break
-
-                    operand = "{} ptr {}".format({ 1: "byte", 2: "word", 4: "dword" }.get(size, "?{}?".format(size)), operand)
 
             operands.append(operand)
 
@@ -627,7 +617,7 @@ def write_asm():
         else:
             return { 1: "db", 2: "dw", 4: "dd" }.get(type.getLength(), "??")
 
-    # Publics in asm and inc files.
+    # Publics in asm, def and inc files.
     def write_publics(f, block, seg_name, is_extern):
         prefix = "public" if not is_extern else "extrn"
         template = "{name}" if not is_extern else "{name}:{type}"

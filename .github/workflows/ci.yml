@@ -47,9 +47,8 @@ jobs:
       # Artifacts.
       - name: Uppercase DOS artifacts
         run: |
-          pushd build/platform/dos16 > /dev/null
+          cd build/platform/dos16
           for file in *; do mv "${file}" "${file^^}"; done
-          popd > /dev/null
 
       - name: Prepare artifact restunts (dos16, orig, debug)
         if: steps.build_restunts_dos16_orig.outcome == 'success'
