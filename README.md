@@ -74,7 +74,19 @@ Analysis of the original machine code is done with [Ghidra](https://www.nsa.gov/
 6. You can use the `ghidra` folder of your cloned *restunts* repository as the *Project Directory*.
 7. In the project window, double-click `bb11_mcga.exe` to open it in the default tool, *CodeBrowser*.
 
-The `restunts` project can be now be opened like local projects. `bb11_mcga.exe` is the main analaysis target.
+The `restunts` project can be now be opened like local projects.
+
+#### Binaries
+
+`bb11_mcga.exe` is the main analaysis target, but all game versions are of interest. Both for investigating differences between versions and getting a second opinion by seeing how the code is compiled on other platforms. The FM Towns executables are particularly valuable because they were shipped with debug symbols and they were built for i386, having a flat memory model that is easier to reverse, particularly for decompiler programs.
+
+| Executable    | Description          | Date       | Platform       | CPU          | Debug symbols |
+| ---           | ---                  | ---        | ---            | ---          | :---:         |
+| 4ddfmt.exp    | EA 4D Driving        | 1993-02-16 | FM Towns       | i386, 32-bit | X             |
+| 4ddfmtm.exp   | EA 4D Driving        | 1993-06-11 | FM Towns Marty | i386, 32-bit | X             |
+| bb11_mcga.exe | Brødebund Stunts 1.1 | 1991-03-13 | IBM PC Compat. | 8086, 16-bit |               |
+
+The date column is the timestamp of the executables, they differ from the version string shown in the option screen, which is stored in a text resource separate from the executable.
 
 ### Setting up the Ghidra script
 
