@@ -3678,7 +3678,7 @@ LAB_1000_241b:
 LAB_1000_2423:
     push    word ptr [carmenu_carpos.vz]
     push    word ptr [carmenu_carpos.vy]
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     mov     word ptr [bp+var_carpospolarangle], ax
     cmp     word ptr [slow_video_mgmt_copy], 0x0

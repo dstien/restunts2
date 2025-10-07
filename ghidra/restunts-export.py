@@ -23,8 +23,9 @@ DEBUG = False
 # code will use the C implementation instead.
 PORTED_FUNCS_BY_FILE = {
     "math.c": {
-        "sin_fast",
-        "cos_fast",
+        "int_sin",
+        "int_cos",
+        "int_atan2",
     },
 }
 # Source file by function for quick lookup of whether a function is ported.

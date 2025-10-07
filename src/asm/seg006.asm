@@ -155,7 +155,7 @@ select_cliprect_rotate_asm_ proc far
     add     sp, 0x6
     push    word ptr [bp+var_vec2+4]
     push    word ptr [bp+var_vec2]
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     and     ah, 0x3
     pop     si
@@ -2562,7 +2562,7 @@ LAB_24d6_1750:
     neg     ax
     push    ax
     push    word ptr [bx+0x4]
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     neg     ax
     mov     word ptr [bp+var_6], ax
@@ -2604,28 +2604,28 @@ vector_op_unk2_asm_ endp
 calc_sincos80_asm_ proc far
     mov     ax, 0x80
     push    ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     cwd
     mov     word ptr [sin80], ax
     mov     word ptr [sin80+2], dx
     mov     ax, 0x80
     push    ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     cwd
     mov     word ptr [cos80], ax
     mov     word ptr [cos80+2], dx
     mov     ax, 0x80
     push    ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     cwd
     mov     word ptr [sin80_2], ax
     mov     word ptr [sin80_2+2], dx
     mov     ax, 0x80
     push    ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     cwd
     mov     word ptr [cos80_2], ax

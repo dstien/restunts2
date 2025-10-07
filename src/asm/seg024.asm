@@ -20,11 +20,11 @@ mat_rot_x_asm_ proc far
     mov     bp, sp
     sub     sp, 0x4
     push    word ptr [bp+angle]
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     mov     word ptr [bp+var_2], ax
     push    word ptr [bp+angle]
-    call    far ptr sin_fast
+    call    far ptr int_sin
     mov     word ptr [bp+var_4], ax
     mov     bx, word ptr [bp+outmat]
     mov     word ptr [bx], 0x4000
@@ -63,11 +63,11 @@ mat_rot_y_asm_ proc far
     mov     bp, sp
     sub     sp, 0x4
     push    word ptr [bp+angle]
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     mov     word ptr [bp+var_2], ax
     push    word ptr [bp+angle]
-    call    far ptr sin_fast
+    call    far ptr int_sin
     mov     word ptr [bp+var_4], ax
     mov     bx, word ptr [bp+outmat]
     mov     ax, word ptr [bp+var_2]
@@ -100,11 +100,11 @@ mat_rot_z_asm_ proc far
     mov     bp, sp
     sub     sp, 0x4
     push    word ptr [bp+angle]
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     mov     word ptr [bp+var_2], ax
     push    word ptr [bp+angle]
-    call    far ptr sin_fast
+    call    far ptr int_sin
     mov     word ptr [bp+var_4], ax
     mov     bx, word ptr [bp+outmat]
     mov     ax, word ptr [bp+var_2]

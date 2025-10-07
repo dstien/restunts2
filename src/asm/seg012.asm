@@ -25,8 +25,12 @@ fatal_error_asm_ proc near
 fatal_error_asm_ endp
     db 0
 
-; int __cdecl16far polarAngle(int z_, int y_)
-polarAngle_asm_ proc far
+; ******************************************************************************
+; * dbg: intatan
+; ******************************************************************************
+
+; int __cdecl16far int_atan2(int z_, int y_)
+int_atan2_asm_ proc far
     z_         = word ptr    6
     y_         = word ptr    8
 
@@ -107,7 +111,7 @@ LAB_2ea2_00a8:
 LAB_2ea2_00af:
     sub     ah, 0x2
     jmp     LAB_2ea2_0090
-polarAngle_asm_ endp
+int_atan2_asm_ endp
 
 ; word __cdecl16far sub_2EAD4(void)
 sub_2EAD4_asm_ proc far
@@ -3074,7 +3078,7 @@ polarRadius2D_asm_ proc far
     mov     bp, sp
     push    word ptr [bp+y_]
     push    word ptr [bp+z_]
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     or      ax, ax
     jge     LAB_2ea2_16ad
@@ -3088,7 +3092,7 @@ LAB_2ea2_16b7:
     cmp     ax, 0x80
     jg      LAB_2ea2_16de
     push    ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     mov     bx, ax
     mov     dx, word ptr [bp+y_]
@@ -3112,7 +3116,7 @@ LAB_2ea2_16d0:
     retf
 LAB_2ea2_16de:
     push    ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     mov     bx, ax
     mov     dx, word ptr [bp+z_]
@@ -7811,13 +7815,13 @@ LAB_2ea2_3914:
     add     ax, word ptr [projectiondata7]
     mov     word ptr [projectiondata8], ax
     push    word ptr [projectiondata1]
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     mul     word ptr [projectiondata3]
     mov     si, ax
     mov     di, dx
     push    word ptr [projectiondata1]
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     mov     cx, ax
     mov     dx, di
@@ -7830,13 +7834,13 @@ LAB_2ea2_3914:
     or      bx, bx
     jz      LAB_2ea2_3994
     push    word ptr [projectiondata2]
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     mul     word ptr [projectiondata6]
     mov     si, ax
     mov     di, dx
     push    word ptr [projectiondata2]
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     mov     cx, ax
     mov     dx, di
@@ -7858,7 +7862,7 @@ LAB_2ea2_3994:
     mov     word ptr [projectiondata10], ax
     push    word ptr [projectiondata6]
     push    ax
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     mov     word ptr [projectiondata2], ax
     pop     di
@@ -8332,16 +8336,17 @@ nopsub_326BA_asm_ endp
 ; * Returns a sine from a given angle. 
 ; * Please note there is a 4000h factor 
 ; * included in the sine!!
+; * dbg: intsin
 ; ******************************************************************************
 
-; short __cdecl16far sin_fast(ushort s)
-sin_fast_asm_ proc far
+; short __cdecl16far int_sin(ushort s)
+int_sin_asm_ proc far
     s          = word ptr    6
 
     push    bp
     mov     bp, sp
     mov     ax, word ptr [bp+s]
-code_sin_fast_main:
+code_int_sin_main:
     mov     bl, ah
     xor     ah, ah
     and     bx, 0x3                            ; constrain angles to [0, 2pi]
@@ -8380,18 +8385,22 @@ LAB_2ea2_3cfd:
     neg     ax
     pop     bp
     retf
-sin_fast_asm_ endp
 
-; short __cdecl16far cos_fast(ushort s)
-cos_fast_asm_ proc far
+; ******************************************************************************
+; * dbg: intcos
+; ******************************************************************************
+int_sin_asm_ endp
+
+; short __cdecl16far int_cos(ushort s)
+int_cos_asm_ proc far
     s          = word ptr    6
 
     push    bp
     mov     bp, sp
     mov     ax, word ptr [bp+s]
     add     ax, 0x100
-    jmp     code_sin_fast_main
-cos_fast_asm_ endp
+    jmp     code_int_sin_main
+int_cos_asm_ endp
     db 0
 
 ; undefined2 __cdecl16far nopsub_32738(undefined2 param_1, undefined2 param_2, uint param_3)

@@ -128,7 +128,7 @@ LAB_21b7_0108:
     mov     ax, 0xff10
     push    ax
     push    word ptr [track_angle]
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -145,7 +145,7 @@ LAB_21b7_016c:
     mov     ax, 0xff10                         ; -240
     push    ax
     push    word ptr [track_angle]
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -1611,7 +1611,7 @@ LAB_21b7_0f26:
     mov     ax, word ptr [bp+var_6]
     sub     ax, word ptr [bx+state.game_vec1.vx]
     push    ax
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     mov     word ptr [bp+var_10], ax
     mov     ax, si
@@ -1645,7 +1645,7 @@ LAB_21b7_0f94:
     mov     di, 0xf0
 LAB_21b7_0f9d:
     push    word ptr [bp+var_10]
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     push    di
@@ -1658,7 +1658,7 @@ LAB_21b7_0f9d:
     shl     bx, 0x1
     add     word ptr [bx+state.game_vec1.vx], ax
     push    word ptr [bp+var_10]
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     push    di
@@ -3842,7 +3842,7 @@ LAB_21b7_2512:
     sar     cx, 0x1
     sub     ax, cx
     push    ax
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     add     ax, 0x80
     and     ah, 0x3

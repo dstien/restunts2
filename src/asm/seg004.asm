@@ -163,7 +163,7 @@ LAB_1e1a_010f:
     mov     word ptr [bp+var_posElemCrds+4], ax
     push    ax
     push    si
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -171,7 +171,7 @@ LAB_1e1a_010f:
     push    word ptr [bp+var_posElemCrds]
     push    si
     mov     di, ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -940,7 +940,7 @@ LAB_1e1a_0836:
     mov     ax, word ptr [bp-0x2c]
     add     ah, 0x4
     push    ax
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     sub     ah, ah
     mov     cx, 0x12
@@ -1059,7 +1059,7 @@ LAB_1e1a_095d:
     sub     ax, word ptr [bx+bkRdEntr_triang_zAdjust]
     push    ax
     push    si
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -1067,7 +1067,7 @@ LAB_1e1a_095d:
     push    word ptr [bp-0x2c]
     push    si
     mov     di, ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -1121,7 +1121,7 @@ LAB_1e1a_09f8:
     mov     ax, word ptr [bp-0x2c]
     add     ah, 0x4
     push    ax
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     sub     ah, ah
     mov     cx, 0x12
@@ -1568,7 +1568,7 @@ LAB_1e1a_0e32:
 LAB_1e1a_0e40:
     push    word ptr [bp-0x28]
     push    si
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -1578,7 +1578,7 @@ LAB_1e1a_0e40:
     push    cx
     push    si
     mov     di, ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -1965,7 +1965,7 @@ LAB_1e1a_1221:
 LAB_1e1a_1229:
     push    word ptr [bp-0x28]
     push    word ptr [bp-0x1e]
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     sub     ax, 0x100
     neg     ax
@@ -2496,7 +2496,7 @@ LAB_1e1a_175c:
     push    word ptr [bp+var_posElemCrds+4]
     mov     ax, 0xff80
     push    ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -2505,7 +2505,7 @@ LAB_1e1a_175c:
     mov     cx, 0xff80
     push    cx
     mov     di, ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -2522,7 +2522,7 @@ LAB_1e1a_17a0:
     push    word ptr [bp+var_posElemCrds+4]
     mov     ax, 0xff80
     push    ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -2531,7 +2531,7 @@ LAB_1e1a_17a0:
     mov     cx, 0xff80
     push    cx
     mov     di, ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -3785,13 +3785,13 @@ sub_204AE_asm_ proc far
 LAB_1e1a_2324:
     sar     ax, 0x1
     push    ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     mov     word ptr [bp+var_C], ax
     mov     ax, word ptr [bp+steering_angle]
     sar     ax, 0x1
     push    ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     mov     word ptr [bp+var_2], ax
     sub     si, si

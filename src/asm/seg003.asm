@@ -481,7 +481,7 @@ LAB_19f1_032e:
     add     sp, 0x6
     push    word ptr [bp+var_vec7+4]
     push    word ptr [bp+var_vec7]
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     mov     si, ax
     mov     word ptr [bp+var_vec6], 0x0
@@ -571,7 +571,7 @@ LAB_19f1_0483:
     mov     ax, word ptr [bp+var_vec5]
     sub     ax, word ptr [bp+var_vec4]
     push    ax
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     neg     ax
     and     ah, 0x3
@@ -590,7 +590,7 @@ LAB_19f1_0483:
     sub     ax, word ptr [bp+var_vec4+2]
     add     ax, 0x32
     push    ax
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     and     ah, 0x3
     mov     word ptr [bp+var_angX], ax
@@ -3021,7 +3021,7 @@ LAB_19f1_1da7:
     mov     ax, 0x24
     push    ax
     push    word ptr [word_44DCA]
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -3030,7 +3030,7 @@ LAB_19f1_1da7:
     mov     ax, 0x24
     push    ax
     push    word ptr [word_44DCA]
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -3075,7 +3075,7 @@ LAB_19f1_1da7:
     mov     ax, word ptr [track_angle]
     add     ah, 0x1
     push    ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -3086,7 +3086,7 @@ LAB_19f1_1da7:
     add     ch, 0x2
     push    cx
     mov     word ptr [bp+var_lastpos2lookup], ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -3114,7 +3114,7 @@ LAB_19f1_1da7:
     mov     ax, word ptr [track_angle]
     add     ah, 0x1
     push    ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -3125,7 +3125,7 @@ LAB_19f1_1da7:
     add     ch, 0x2
     push    cx
     mov     word ptr [bp+var_lastpos2lookup], ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -4245,7 +4245,7 @@ LAB_19f1_2942:
     mov     ax, word ptr [bp+var_point]
     sub     ax, word ptr [bp+var_point2]
     push    ax
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     mov     si, ax
     and     si, 0x3ff
@@ -4260,7 +4260,7 @@ LAB_19f1_2969:
     mov     ax, word ptr [bx+0x98c]
     add     ax, si
     push    ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     mov     ax, 0x3e80
@@ -4283,7 +4283,7 @@ LAB_19f1_2969:
     mov     ax, word ptr [bx+0x98c]
     add     ax, si
     push    ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     mov     ax, 0x3e80
@@ -4652,7 +4652,7 @@ draw_track_preview_asm_ proc far
     mov     ax, word ptr [word_3C110]
     sub     ax, word ptr [word_3C10A]
     push    ax
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     mov     word ptr [bp+var_34], ax
     mov     ax, 0x1
@@ -6447,7 +6447,7 @@ LAB_19f1_3d6d:
     mov     ax, word ptr [bp+var_6]
     sub     ax, word ptr [bp+var_3E]
     push    ax
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     neg     ax
     and     ah, 0x3
@@ -6465,7 +6465,7 @@ LAB_19f1_3d6d:
     mov     ax, word ptr [bp+var_4]
     sub     ax, word ptr [bp+var_3C]
     push    ax
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     and     ah, 0x3
     mov     word ptr [bp+var_2A4], ax

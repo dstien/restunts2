@@ -416,7 +416,7 @@ LAB_1471_0364:
     add     sp, 0x6
     push    word ptr [bp+var_38]
     push    word ptr [bp+var_3C]
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     mov     word ptr [bp+var_2C], ax
     cmp     byte ptr [state.opponentstate.car_slidingFlag], 0x0
@@ -653,7 +653,7 @@ LAB_1471_0577:
     mov     ax, word ptr [bp+var_3C]
     neg     ax
     push    ax
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     and     ah, 0x3
     mov     word ptr [state.opponentstate.field_48], ax
@@ -679,7 +679,7 @@ LAB_1471_05e9:
     sub     ax, dx
     push    ax
     push    word ptr [track_angle]
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -702,7 +702,7 @@ LAB_1471_0623:
     sub     ax, dx
     push    ax
     push    word ptr [track_angle]
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -2687,7 +2687,7 @@ LAB_1471_1947:
     neg     ax
     push    ax
     push    word ptr [bp+var_EE]
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     and     ah, 0x3
     mov     word ptr [pState_minusRotate_y_1], ax
@@ -2747,7 +2747,7 @@ LAB_1471_1a0c:
     mov     ax, word ptr [bp+var_F2]
     neg     ax
     push    ax
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     sub     ax, 0x100
     mov     word ptr [pState_minusRotate_x_1], ax
@@ -2821,7 +2821,7 @@ LAB_1471_1a9b:
 LAB_1471_1ace:
     push    word ptr [bp+var_F4]
     push    word ptr [bp+var_F2]
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     sub     ax, 0x100
     mov     word ptr [pState_minusRotate_z_1], ax
@@ -3398,7 +3398,7 @@ LAB_1471_201c:
     mov     ax, word ptr [track_angle]
     add     ah, 0x1
     push    ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -3419,7 +3419,7 @@ LAB_1471_201c:
     mov     ax, word ptr [track_angle]
     add     ah, 0x1
     push    ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -3452,7 +3452,7 @@ LAB_1471_201c:
     mov     ax, word ptr [track_angle]
     add     ah, 0x3
     push    ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -3469,7 +3469,7 @@ LAB_1471_201c:
     mov     ax, word ptr [track_angle]
     add     ah, 0x3
     push    ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -3883,7 +3883,7 @@ LAB_1471_24b5:
     mov     ax, word ptr [track_angle]
     add     ah, 0x3
     push    ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -3894,7 +3894,7 @@ LAB_1471_24b5:
     add     ch, 0x2
     push    cx
     mov     word ptr [bp+var_A], ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -3920,7 +3920,7 @@ LAB_1471_24b5:
     mov     ax, word ptr [track_angle]
     add     ah, 0x3
     push    ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -3931,7 +3931,7 @@ LAB_1471_24b5:
     add     ch, 0x2
     push    cx
     mov     word ptr [bp+var_A], ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -3990,7 +3990,7 @@ LAB_1471_24b5:
     mov     ax, word ptr [track_angle]
     add     ah, 0x2
     push    ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -4001,7 +4001,7 @@ LAB_1471_24b5:
     add     ch, 0x1
     push    cx
     mov     word ptr [bp+var_A], ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -4013,7 +4013,7 @@ LAB_1471_24b5:
     mov     ax, word ptr [track_angle]
     add     ah, 0x2
     push    ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -4024,7 +4024,7 @@ LAB_1471_24b5:
     add     ch, 0x1
     push    cx
     mov     word ptr [bp+var_A], ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -4122,7 +4122,7 @@ LAB_1471_26fa:
     mov     ax, word ptr [track_angle]
     add     ah, 0x2
     push    ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -4133,7 +4133,7 @@ LAB_1471_26fa:
     add     ch, 0x3
     push    cx
     mov     word ptr [bp+var_A], ax
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -4145,7 +4145,7 @@ LAB_1471_26fa:
     mov     ax, word ptr [track_angle]
     add     ah, 0x2
     push    ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -4156,7 +4156,7 @@ LAB_1471_26fa:
     add     ch, 0x3
     push    cx
     mov     word ptr [bp+var_A], ax
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -4503,7 +4503,7 @@ LAB_1471_2a40:
     sub     ax, dx
     push    ax
     push    word ptr [track_angle]
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -4526,7 +4526,7 @@ LAB_1471_2a7a:
     sub     ax, dx
     push    ax
     push    word ptr [track_angle]
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -5029,7 +5029,7 @@ LAB_1471_2ee0:
     mov     ax, word ptr [bp+var_52]
     sub     ax, word ptr [bp+var_1A]
     push    ax
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     mov     si, ax
     and     si, 0x3ff
@@ -5153,7 +5153,7 @@ LAB_1471_2fe9:
     mov     ax, word ptr [bp+var_38]
     neg     ax
     push    ax
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     and     ah, 0x3
     mov     word ptr [state.playerstate.field_48], ax
@@ -5203,7 +5203,7 @@ LAB_1471_309c:
     sub     ax, dx
     push    ax
     push    word ptr [track_angle]
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -5226,7 +5226,7 @@ LAB_1471_30ce:
     sub     ax, dx
     push    ax
     push    word ptr [track_angle]
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -6532,7 +6532,7 @@ LAB_1471_3be6:
     jnz     LAB_1471_3c7e
     push    word ptr [bx+0x2c]
     push    word ptr [bx+0x36]
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     call    far ptr multiply_and_scale
@@ -6541,7 +6541,7 @@ LAB_1471_3be6:
     mov     word ptr [bx+0x2c], ax
     mov     bx, word ptr [bp+carstate_]
     push    word ptr [bx+0x36]
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     or      ax, ax
     jge     LAB_1471_3c44
@@ -6700,7 +6700,7 @@ car_car_speed_adjust_maybe_asm_ proc far
     mov     ax, word ptr [bx+0x18]
     mov     word ptr [bp+var_4], ax
     push    word ptr [bp+var_2]
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     mov     ax, word ptr [bp+var_6]
@@ -6711,7 +6711,7 @@ car_car_speed_adjust_maybe_asm_ proc far
     add     sp, 0x4
     mov     word ptr [bp+var_10], ax
     push    word ptr [bp+var_4]
-    call    far ptr sin_fast
+    call    far ptr int_sin
     add     sp, 0x2
     push    ax
     mov     ax, word ptr [bp+var_C]
@@ -6722,7 +6722,7 @@ car_car_speed_adjust_maybe_asm_ proc far
     add     sp, 0x4
     mov     word ptr [bp+var_14], ax
     push    word ptr [bp+var_2]
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     mov     ax, word ptr [bp+var_6]
@@ -6733,7 +6733,7 @@ car_car_speed_adjust_maybe_asm_ proc far
     add     sp, 0x4
     mov     word ptr [bp+var_12], ax
     push    word ptr [bp+var_4]
-    call    far ptr cos_fast
+    call    far ptr int_cos
     add     sp, 0x2
     push    ax
     mov     ax, word ptr [bp+var_C]
@@ -8908,7 +8908,7 @@ LAB_1471_50c6:
     mov     ax, word ptr [bp+var_32]
     neg     ax
     push    ax
-    call    far ptr polarAngle
+    call    far ptr int_atan2
     add     sp, 0x4
     mov     si, ax
 ; Hey...pState_f36Mminf40sar2 is an angle!  

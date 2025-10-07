@@ -45,7 +45,7 @@ include dsegu.def
 
 seg012 segment byte public use16 'STUNTSC'
     public fatal_error_asm_
-    public polarAngle_asm_
+    public int_atan2_asm_
     public off_2EA9B
     public sub_2EAD4_asm_
     public set_add_value_asm_
@@ -190,9 +190,9 @@ seg012 segment byte public use16 'STUNTSC'
     public file_get_res_shape_count_asm_
     public file_get_shape2d_asm_
     public nopsub_326BA_asm_
-    public sin_fast_asm_
+    public int_sin_asm_
     public off_326F2
-    public cos_fast_asm_
+    public int_cos_asm_
     public nopsub_32738_asm_
     public nopsub_32746_asm_
     public nopsub_32751_asm_
@@ -304,7 +304,7 @@ seg012 segment byte public use16 'STUNTSC'
     ifdef RESTUNTS_ORIGINAL
         ; Alias all functions to the original asm implementation.
         fatal_error = fatal_error_asm_
-        polarAngle = polarAngle_asm_
+        int_atan2 = int_atan2_asm_
         sub_2EAD4 = sub_2EAD4_asm_
         set_add_value = set_add_value_asm_
         sub_2EB07 = sub_2EB07_asm_
@@ -431,8 +431,8 @@ seg012 segment byte public use16 'STUNTSC'
         file_get_res_shape_count = file_get_res_shape_count_asm_
         file_get_shape2d = file_get_shape2d_asm_
         nopsub_326BA = nopsub_326BA_asm_
-        sin_fast = sin_fast_asm_
-        cos_fast = cos_fast_asm_
+        int_sin = int_sin_asm_
+        int_cos = int_cos_asm_
         nopsub_32738 = nopsub_32738_asm_
         nopsub_32746 = nopsub_32746_asm_
         nopsub_32751 = nopsub_32751_asm_
@@ -533,7 +533,6 @@ seg012 segment byte public use16 'STUNTSC'
     else
         ; Alias unported functions to the original asm implementation.
         fatal_error = fatal_error_asm_
-        polarAngle = polarAngle_asm_
         sub_2EAD4 = sub_2EAD4_asm_
         set_add_value = set_add_value_asm_
         sub_2EB07 = sub_2EB07_asm_
@@ -758,7 +757,8 @@ seg012 segment byte public use16 'STUNTSC'
         file_load_shape2d_expand = file_load_shape2d_expand_asm_
         file_unflip_shape2d_pes = file_unflip_shape2d_pes_asm_
         ; Functions ported to C are external.
-        extrn sin_fast:proc
-        extrn cos_fast:proc
+        extrn int_atan2:proc
+        extrn int_sin:proc
+        extrn int_cos:proc
     endif
 seg012 ends

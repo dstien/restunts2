@@ -6,9 +6,9 @@
 // discarded as the sine wraps around every 0x400 steps. The values are scaled
 // by 0x4000.
 #define SIN_STEPS           0x100
-#define GET_SIN_STEPS(a)    (a & 0xFF)
-#define GET_SIN_QUADRANT(a) ((a >> 8) & 3)
-static int16_t sintab[] = {
+#define SIN_GET_STEP(a)     (a & 0xFF)
+#define SIN_GET_QUADRANT(a) ((a >> 8) & 3)
+static int16_t sine_table[] = {
     0,     101,   201,   302,   402,   503,   603,   704,   804,   904,   1005,
     1105,  1205,  1306,  1406,  1506,  1606,  1706,  1806,  1906,  2006,  2105,
     2205,  2305,  2404,  2503,  2603,  2702,  2801,  2900,  2999,  3098,  3196,
@@ -36,24 +36,118 @@ static int16_t sintab[] = {
 };
 
 // Integer sin() scaled by 0x4000 using LUT.
-int16_t __cdecl sin_fast(uint16_t angle)
+int16_t __cdecl int_sin(uint16_t angle)
 {
-    uint8_t step = GET_SIN_STEPS(angle);
-    switch (GET_SIN_QUADRANT(angle)) {
+    uint8_t step = SIN_GET_STEP(angle);
+    switch (SIN_GET_QUADRANT(angle)) {
         case 0:
-            return sintab[step];
+            return sine_table[step];
         case 1:
-            return sintab[SIN_STEPS - step];
+            return sine_table[SIN_STEPS - step];
         case 2:
-            return -sintab[step];
+            return -sine_table[step];
         case 3:
         default:
-            return -sintab[SIN_STEPS - step];
+            return -sine_table[SIN_STEPS - step];
     }
 }
 
 // Integer cos() scaled by 0x4000 using LUT.
-int16_t __cdecl cos_fast(uint16_t angle)
+int16_t __cdecl int_cos(uint16_t angle)
 {
-    return sin_fast(angle + SIN_STEPS);
+    return int_sin(angle + SIN_STEPS);
+}
+
+// One-octant (45°) lookup table of the arctangent in 0x100 steps + the peak
+// endpoint. The polar angle for a given coordinate is found by determining
+// the octant, normalise the coordinates to be in the first octant, get the
+// angle at index x/y and rotate it back to the actual octant.
+static uint8_t atan_table[] = {
+    0,   1,   1,   2,   3,   3,   4,   4,   5,   6,   6,   7,   8,   8,   9,
+    10,  10,  11,  11,  12,  13,  13,  14,  15,  15,  16,  16,  17,  18,  18,
+    19,  20,  20,  21,  22,  22,  23,  23,  24,  25,  25,  26,  27,  27,  28,
+    28,  29,  30,  30,  31,  31,  32,  33,  33,  34,  34,  35,  36,  36,  37,
+    38,  38,  39,  39,  40,  41,  41,  42,  42,  43,  44,  44,  45,  45,  46,
+    46,  47,  48,  48,  49,  49,  50,  51,  51,  52,  52,  53,  53,  54,  55,
+    55,  56,  56,  57,  57,  58,  58,  59,  60,  60,  61,  61,  62,  62,  63,
+    63,  64,  65,  65,  66,  66,  67,  67,  68,  68,  69,  69,  70,  70,  71,
+    71,  72,  72,  73,  74,  74,  75,  75,  76,  76,  77,  77,  78,  78,  79,
+    79,  80,  80,  81,  81,  82,  82,  83,  83,  84,  84,  84,  85,  85,  86,
+    86,  87,  87,  88,  88,  89,  89,  90,  90,  91,  91,  91,  92,  92,  93,
+    93,  94,  94,  95,  95,  96,  96,  96,  97,  97,  98,  98,  99,  99,  99,
+    100, 100, 101, 101, 102, 102, 102, 103, 103, 104, 104, 104, 105, 105, 106,
+    106, 106, 107, 107, 108, 108, 108, 109, 109, 110, 110, 110, 111, 111, 112,
+    112, 112, 113, 113, 113, 114, 114, 115, 115, 115, 116, 116, 116, 117, 117,
+    118, 118, 118, 119, 119, 119, 120, 120, 120, 121, 121, 121, 122, 122, 122,
+    123, 123, 123, 124, 124, 124, 125, 125, 125, 126, 126, 126, 127, 127, 127,
+    128, 128
+};
+
+// Integer atan2() in the range -0x1FF to 0x200 using LUT.
+int16_t __cdecl int_atan2(int16_t x, int16_t y)
+{
+    // The original code is handwritten assembly that picks the octant using a
+    // set of flags whose sum corresponds to an index in a jump table of word
+    // sized offsets. We just get the numeric octant to handle in a switch
+    // statement.
+    uint8_t octant = 0;
+    int16_t result;
+
+    // Normalise coordinates to first quadrant.
+    if (x < 0) {
+        octant += 4; // Flip Y-axis (4 octants, 180°).
+        x = -x;
+    }
+    if (y < 0) {
+        octant += 2; // Flip X-axis (2 octants, 90°).
+        y = -y;
+    }
+
+    // Skip division and lookup when coordinates are symmetric.
+    if (x == y) {
+        // atan(0/0) is undefined, and so is the original code's return value,
+        // although in practice it is always 0.
+        if (x == 0) {
+            return 0;
+        }
+        // atan(1/1) is π/4.
+        else {
+            result = 0x80; // 45° diagonal.
+        }
+    }
+    else {
+        // Normalise coordinates to first octant.
+        if (x > y) {
+            int16_t tmp = x;
+            x = y;
+            y = tmp;
+            octant += 1; // Flip diagonal (1 octant, 45°).
+        }
+        uint32_t quotient = ((uint32_t)x << 16) / y;
+        // To ensure the step index is 0..0x80, round up the quotient by
+        // adding the max vale and shifting down into a single byte.
+        uint8_t step = (quotient + 0x80) >> 8;
+        result = atan_table[step];
+    }
+
+    // Retun angle adjusted to the octant.
+    switch (octant) {
+        case 0:
+            return result;
+        case 1:
+            return -result + 0x100;
+        case 2:
+            return -result + 0x200;
+        case 3:
+            return result + 0x100;
+        case 4:
+            return -result;
+        case 5:
+            return result - 0x100;
+        case 6:
+            return result - 0x200;
+        case 7:
+        default:
+            return -(result + 0x100);
+    }
 }
