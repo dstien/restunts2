@@ -7,7 +7,7 @@ bool g_verbose = false;
 void print_result(test_result_t* res, const char* indent)
 {
     int total = res->pass + res->fail;
-    int quot = res->pass * 1000 / total;
+    int quot = (uint32_t)res->pass * 1000 / total;
     int pct_int = quot / 10;
     int pct_frac = quot % 10;
     if (res->fail) {

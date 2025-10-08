@@ -66,7 +66,11 @@ void test_math()
         TEST(atan2_west,       int_atan2(-1,  0) == -0x100);
         TEST(atan2_north_west, int_atan2(-1,  1) == -0x080);
         TEST(atan2_zero,       int_atan2( 0,  0) == 0);
-        TEST(atan2_big,        int_atan2(0x4000, 0x4000) == 0x80);
+        TEST(atan2_big,        int_atan2(0x4000, 0x4000)         == 0x80);
+        TEST(atan2_edge1,      int_atan2(0x200  - 1, 0x200)      == 0x80);
+        TEST(atan2_edge2,      int_atan2(0x4000 - 1, 0x4000)     == 0x80);
+        TEST(atan2_edge3,      int_atan2(0x8000 - 2, 0x8000 - 1) == 0x80);
+
         TEST(atan2_sum1,       sum1 == 2944);
         TEST(atan2_sum2,       sum2 == 847);
         // clang-format on

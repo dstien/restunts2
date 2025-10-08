@@ -1,5 +1,5 @@
-include ../platform/$(PLATFORM)/platform.mk
 include ../common.mk
+include ../platform/$(PLATFORM)/platform.mk
 
 CFLAGS += -I../c
 

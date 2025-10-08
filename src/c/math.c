@@ -124,9 +124,9 @@ int16_t __cdecl int_atan2(int16_t x, int16_t y)
             octant += 1; // Flip diagonal (1 octant, 45°).
         }
         uint32_t quotient = ((uint32_t)x << 16) / y;
-        // To ensure the step index is 0..0x80, round up the quotient by
-        // adding the max vale and shifting down into a single byte.
-        uint8_t step = (quotient + 0x80) >> 8;
+        // Round up the quotient by adding the max value and shift down to
+        // clamp the index to 0..257.
+        uint16_t step = (quotient + 0x80) >> 8;
         result = atan_table[step];
     }
 

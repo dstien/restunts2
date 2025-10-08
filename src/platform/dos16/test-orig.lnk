@@ -13,7 +13,8 @@ FILE    seg000.o, seg001.o, seg002.o, seg003.o, seg004.o, seg005.o, seg006.o,
         seg028.o, seg029.o, seg030.o, seg031.o, seg032.o, seg033.o, seg034.o,
         seg035.o, seg036.o, seg037.o, seg038.o, seg039.o,
         dseg.o, dsegu.o, custom.o
-LIBRARY ../../../build/test/dos16/libtest.a
+LIBRARY ../../../build/test/dos16/libtest.a,
+        clibm.lib # Just for 32-bit integer helpers.
 ALIAS   stuntsmain = _testmain
 ORDER   CLNAME STUNTSC
             SEGMENT seg000 SEGMENT seg001 SEGMENT seg002 SEGMENT seg003 SEGMENT seg004 SEGMENT seg005
