@@ -2641,7 +2641,7 @@ byte_4392C           db ?
 mcgawndsprite        dd ?
 skybox_current       dw ?
 rect_windshield      RECTANGLE <?>                              ; rect_windshielf = the area on screen between the roof and dashboard bitmaps
-byte_4393C           db ?
+g_staging            db ?
 byte_4393D           db ?
 snarres              dd ?
 trackdata3           dd ?
@@ -3308,11 +3308,11 @@ byte_442EA           db ?
                      db ?
                      db ?
                      db ?
-byte_4432A           db ?
+fscrn                db ?
                      db ?
 crshres              dd ?
 logoshape            SHAPE3D <?>
-byte_44346           db ?
+scrn                 db ?
                      db ?
 gState_travDist      dd ?
 gState_frame         dw ?
@@ -3387,17 +3387,17 @@ framespersec         dw ?
 td17_trk_elem_ordered dd ?
 byte_449D8           db ?
                      db ?
-byte_449DA           db ?
+gabort               db ?
                      db ?
 trackdata9           dd ?
 elem_xCenter         dw ?
 byte_449E2           db ?
                      db ?
 word_449E4           dw ?
-byte_449E6           db ?
+rspeed               db ?
                      db ?
 steerWhlRespTable_ptr dw ?
-word_449EA           dw ?
+lclipby              dw ?
 terrainHeight        dw ?
 trackdata12          dd ?
 idle_counter         dw ?
@@ -4073,7 +4073,7 @@ current_planptr      dd ?
 g_path_buf           db 94 dup (?)
 planindex            dw ?
 video_flag2_is1      dw ?
-word_44DCA           dw ?
+g_truckdoor          dw ?
 word_44DCC           dw ?
 rect_array_unk3      db 360 dup (?)
 vec_unk2             VECTOR <?>                                 ; Both this and the following one are likely
@@ -5582,7 +5582,7 @@ fontledresptr        dd ?
                      db ?
 someZeroVideoConst   dw ?
 nextPosAndNormalIP   dw ?
-word_45A00           dw ?
+g_rpfxrate           dw ?
 transformedshape_arg2array db ?
                      db ?
                      db ?
@@ -6980,13 +6980,12 @@ mat_rot_temp         MATRIX <?>
 dashb_toggle_copy    db ?
                      db ?
 mat_temp             MATRIX <?>
-textresprefix        db ?
+g_language           db ?
                      db ?
 wallptr              dd ?
-unk_46464            db ?
+g_opponent_initials  dw ?
                      db ?
-                     db ?
-byte_46467           db ?
+askfull              db ?
 word_46468           dw ?
 word_4646A           dw 4 dup (?)
 mat_x_rot            MATRIX <?>

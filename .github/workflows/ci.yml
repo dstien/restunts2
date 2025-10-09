@@ -29,6 +29,16 @@ jobs:
         continue-on-error: true
         run: make -C src/platform/dos16 restunts-port
 
+      - id: build_repldump_dos16_orig
+        name: Build repldump (dos16, orig)
+        continue-on-error: true
+        run: make -C src/platform/dos16 repldump-orig
+
+      - id: build_repldump_dos16_port
+        name: Build repldump (dos16, port)
+        continue-on-error: true
+        run: make -C src/platform/dos16 repldump-port
+
       - id: build_test_dos16_orig
         name: Build test (dos16, orig)
         continue-on-error: true
@@ -100,11 +110,63 @@ jobs:
           name: restunts-dos16
           path: artifact
 
+      - name: Prepare artifact repldump (dos16, orig, debug)
+        if: steps.build_repldump_dos16_orig.outcome == 'success'
+        run: |
+          rm -drf artifact
+          mkdir -p artifact/repldump-dos16-orig-debug
+          cp build/platform/dos16/REPLDUMO.* artifact/repldump-dos16-orig-debug/
+      - uses: actions/upload-artifact@v4
+        if: steps.build_repldump_dos16_orig.outcome == 'success'
+        with:
+          name: repldump-dos16-orig-debug
+          path: artifact
+
+      - name: Prepare artifact repldump (dos16, orig, release)
+        if: steps.build_repldump_dos16_orig.outcome == 'success'
+        run: |
+          rm -drf artifact
+          mkdir -p artifact/repldump-dos16-orig
+          cp build/platform/dos16/REPLDUMO.EXE artifact/repldump-dos16-orig/
+          wstrip -q artifact/repldump-dos16-orig/REPLDUMO.EXE
+      - uses: actions/upload-artifact@v4
+        if: steps.build_repldump_dos16_orig.outcome == 'success'
+        with:
+          name: repldump-dos16-orig
+          path: artifact
+
+      - name: Prepare artifact repldump (dos16, port, debug)
+        if: steps.build_repldump_dos16_port.outcome == 'success'
+        run: |
+          rm -drf artifact
+          mkdir -p artifact/repldump-dos16-debug
+          cp build/platform/dos16/REPLDUMP.* artifact/repldump-dos16-debug/
+      - uses: actions/upload-artifact@v4
+        if: steps.build_repldump_dos16_port.outcome == 'success'
+        with:
+          name: repldump-dos16-debug
+          path: artifact
+
+      - name: Prepare artifact repldump (dos16, port, release)
+        if: steps.build_repldump_dos16_port.outcome == 'success'
+        run: |
+          rm -drf artifact
+          mkdir -p artifact/repldump-dos16
+          cp build/platform/dos16/REPLDUMP.EXE artifact/repldump-dos16/
+          wstrip -q artifact/repldump-dos16/REPLDUMP.EXE
+      - uses: actions/upload-artifact@v4
+        if: steps.build_repldump_dos16_port.outcome == 'success'
+        with:
+          name: repldump-dos16
+          path: artifact
+
       # Fail job if any target failed.
       - name: Failed to build all targets
         if: |
           steps.build_restunts_dos16_orig.outcome == 'failure' ||
           steps.build_restunts_dos16_port.outcome == 'failure' ||
+          steps.build_repldump_dos16_orig.outcome == 'failure' ||
+          steps.build_repldump_dos16_port.outcome == 'failure' ||
           steps.build_test_dos16_orig.outcome     == 'failure' ||
           steps.build_test_dos16_port.outcome     == 'failure' ||
           steps.build_test_linux64.outcome        == 'failure'

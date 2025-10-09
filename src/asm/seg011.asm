@@ -9,6 +9,10 @@ seg011 segment byte public use16 'STUNTSC'
 
     db 0
 
+; ******************************************************************************
+; * int3dhypot
+; ******************************************************************************
+
 ; int __cdecl16far polarRadius3D(VECTOR * vec)
 polarRadius3D_asm_ proc far
     vec        = word ptr    6

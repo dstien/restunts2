@@ -195,7 +195,7 @@ init_main_asm_ proc far
     call    far ptr mmgr_alloc_a000
     mov     byte ptr [video_flag5_is0], 0x0
     mov     byte ptr [video_flag6_is1], 0x1
-    mov     byte ptr [textresprefix], 0x65
+    mov     byte ptr [g_language], 0x65
     mov     byte ptr [bp+var_argmode4], 0x0
     mov     byte ptr [bp+var_argnosound], 0x0
     mov     byte ptr [bp+var_argunknown], 0x0

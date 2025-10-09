@@ -63,8 +63,8 @@ dseg segment byte public use16 'STUNTSD'
     public aDos
     public rectptr_unk2
     public rectptr_unk
-    public byte_3B80C
-    public byte_3B85E
+    public TPath
+    public RPath
     public aDefault_1
     public g_sceneries
     public hillHeightConsts
@@ -85,7 +85,7 @@ dseg segment byte public use16 'STUNTSD'
     public aKevin
     public aOpp1
     public aOpp1_3
-    public aCarcoun
+    public g_car_res_name
     public aTitl
     public aSkidms
     public aSkidtitl

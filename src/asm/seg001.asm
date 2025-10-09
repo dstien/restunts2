@@ -191,7 +191,7 @@ LAB_1471_0156:
     les     di, [trackdata3]
     push    word ptr es:[bx+di]
     push    cs
-    call    near ptr sub_18D60
+    call    near ptr gettlistpoint
     add     sp, 0x8
     or      al, al
     jz      LAB_1471_01a3
@@ -444,7 +444,7 @@ LAB_1471_03a1:
     les     di, [trackdata3]
     push    word ptr es:[bx+di]
     push    cs
-    call    near ptr sub_18D60
+    call    near ptr gettlistpoint
     add     sp, 0x8
     or      al, al
     jz      LAB_1471_03f3
@@ -759,6 +759,10 @@ mat_mul_vector2_asm_ proc far
     pop     bp
     retf
 mat_mul_vector2_asm_ endp
+
+; ******************************************************************************
+; * dbg: movecar
+; ******************************************************************************
 
 ; void __cdecl16far update_player_state(CARSTATE * player_state, SIMD * player_simd, CARSTATE * opp_state, SIMD * opp_simd, int is_opponent)
 update_player_state_asm_ proc far
@@ -3839,7 +3843,7 @@ LAB_1471_244c:
 LAB_1471_2452:
     mov     ax, 0x1e
     imul    word ptr [framespersec]
-    mov     word ptr [word_45A00], ax
+    mov     word ptr [g_rpfxrate], ax
     mov     ax, 0x64
     cwd
     mov     cx, word ptr [framespersec]
@@ -4114,7 +4118,7 @@ LAB_1471_2694:
     push    ax
     push    word ptr [state.playerstate.car_trackdata3_index]
     push    cs
-    call    near ptr sub_18D60
+    call    near ptr gettlistpoint
     add     sp, 0x8
 LAB_1471_26fa:
     mov     ax, 0xd2
@@ -4237,7 +4241,7 @@ LAB_1471_27cb:
     mov     es, word ptr [trackdata3+2]
     push    word ptr es:[bx]
     push    cs
-    call    near ptr sub_18D60
+    call    near ptr gettlistpoint
     add     sp, 0x8
 LAB_1471_281f:
     mov     ax, si
@@ -4271,7 +4275,7 @@ restore_gamestate_asm_ proc far
 LAB_1471_2849:
     mov     ax, word ptr [bp+frame]
     cwd
-    mov     cx, word ptr [word_45A00]
+    mov     cx, word ptr [g_rpfxrate]
     idiv    cx
     mov     si, ax
     cmp     si, 0x14
@@ -4282,7 +4286,7 @@ LAB_1471_285b:
     cmp     word ptr [bp+frame], ax
     jc      LAB_1471_28a1
 LAB_1471_2863:
-    mov     ax, word ptr [word_45A00]
+    mov     ax, word ptr [g_rpfxrate]
     imul    si
     cmp     ax, word ptr [state.game_frame]
     ja      LAB_1471_2871
@@ -4357,6 +4361,10 @@ LAB_1471_28f2:
     retf
 restore_gamestate_asm_ endp
 
+; ******************************************************************************
+; * dbg: movesim
+; ******************************************************************************
+
 ; void __cdecl16far update_gamestate(void)
 update_gamestate_asm_ proc far
     var_carInputByte = byte ptr   -4
@@ -4379,12 +4387,12 @@ update_gamestate_asm_ proc far
 LAB_1471_2917:
     mov     ax, bx
     sub     dx, dx
-    div     word ptr [word_45A00]
+    div     word ptr [g_rpfxrate]
     or      dx, dx
     jnz     LAB_1471_2969
     mov     ax, bx
     sub     dx, dx
-    div     word ptr [word_45A00]
+    div     word ptr [g_rpfxrate]
     mov     si, ax
     mov     ax, offset state.kevinseed
     push    ax
@@ -4422,7 +4430,7 @@ LAB_1471_2969:
     inc     word ptr [state.game_frame_in_sec]
     cmp     word ptr [state.game_frame_in_sec], ax
     jnz     LAB_1471_29ae
-    cmp     byte ptr [byte_449DA], 0x0
+    cmp     byte ptr [gabort], 0x0
     jnz     LAB_1471_29ae
     cmp     byte ptr [state.playerstate.car_crashBmpFlag], 0x1
     jnz     LAB_1471_29a2
@@ -4433,7 +4441,7 @@ LAB_1471_2969:
 LAB_1471_29a2:
     cmp     byte ptr [game_replay_mode], 0x0
     jnz     LAB_1471_29ae
-    mov     byte ptr [byte_449DA], 0x1
+    mov     byte ptr [gabort], 0x1
 LAB_1471_29ae:
     cmp     byte ptr [state.game_inputmode], 0x0
     jz      LAB_1471_29e6
@@ -4448,11 +4456,11 @@ LAB_1471_29ae:
     push    cs
     call    near ptr opponent_op
 LAB_1471_29cc:
-    call    far ptr sub_2298C
+    call    far ptr move_helicopters
     cmp     byte ptr [state.field_42A], 0x0
     jz      LAB_1471_29dc
     push    cs
-    call    near ptr sub_19BA0
+    call    near ptr move_explode
 LAB_1471_29dc:
     push    cs
     call    near ptr audio_carstate
@@ -4468,21 +4476,21 @@ LAB_1471_29e6:
 LAB_1471_29f0:
     push    cs
     call    near ptr audio_carstate
-    cmp     byte ptr [byte_4393C], 0x0
+    cmp     byte ptr [g_staging], 0x0
     jnz     LAB_1471_29fe
     jmp     near ptr LAB_1471_2ad1
 LAB_1471_29fe:
-    cmp     word ptr [word_44DCA], 0x1c2
+    cmp     word ptr [g_truckdoor], 0x1c2
     jge     LAB_1471_2a0b
-    add     word ptr [word_44DCA], 0x8
+    add     word ptr [g_truckdoor], 0x8
 LAB_1471_2a0b:
-    cmp     byte ptr [byte_4393C], 0x1
+    cmp     byte ptr [g_staging], 0x1
     jnz     LAB_1471_2a1e
-    cmp     word ptr [word_44DCA], 0x180
+    cmp     word ptr [g_truckdoor], 0x180
     jle     LAB_1471_2a1e
-    inc     byte ptr [byte_4393C]
+    inc     byte ptr [g_staging]
 LAB_1471_2a1e:
-    cmp     byte ptr [byte_4393C], 0x2
+    cmp     byte ptr [g_staging], 0x2
     jz      LAB_1471_2a28
     jmp     near ptr LAB_1471_2ad1
 LAB_1471_2a28:
@@ -4557,7 +4565,7 @@ LAB_1471_2ac0:
     mov     ax, 0x2
     jmp     LAB_1471_2aad
 LAB_1471_2acc:
-    mov     byte ptr [byte_4393C], 0x0
+    mov     byte ptr [g_staging], 0x0
 LAB_1471_2ad1:
     pop     si
     pop     di
@@ -4566,6 +4574,10 @@ LAB_1471_2ad1:
     retf
 update_gamestate_asm_ endp
     db 0x90
+
+; ******************************************************************************
+; * dbg: moveplayer
+; ******************************************************************************
 
 ; void __cdecl16far player_op(byte car_input)
 player_op_asm_ proc far
@@ -4899,7 +4911,7 @@ LAB_1471_2dd5:
     push    ax
     push    word ptr [bp+var_2]
     push    cs
-    call    near ptr sub_18D60
+    call    near ptr gettlistpoint
     add     sp, 0x8
     mov     byte ptr [bp+var_2A], al
     push    si
@@ -4991,7 +5003,7 @@ LAB_1471_2e9f:
     push    ax
     push    word ptr [bp+var_2]
     push    cs
-    call    near ptr sub_18D60
+    call    near ptr gettlistpoint
     add     sp, 0x8
     sub     ax, ax
     push    ax
@@ -5009,7 +5021,7 @@ LAB_1471_2ec0:
     push    ax
     push    word ptr [bp+var_2]
     push    cs
-    call    near ptr sub_18D60
+    call    near ptr gettlistpoint
     add     sp, 0x8
     sub     ax, ax
     push    ax
@@ -5021,7 +5033,7 @@ LAB_1471_2ee0:
     push    ax
     push    word ptr [bp+var_2]
     push    cs
-    call    near ptr sub_18D60
+    call    near ptr gettlistpoint
     add     sp, 0x8
     mov     ax, word ptr [bp+var_1A+4]
     sub     ax, word ptr [bp+var_52+4]
@@ -5063,7 +5075,7 @@ LAB_1471_2f3c:
     push    ax
     push    word ptr [state.playerstate.car_trackdata3_index]
     push    cs
-    call    near ptr sub_18D60
+    call    near ptr gettlistpoint
     add     sp, 0x8
     or      al, al
     jz      LAB_1471_2f89
@@ -5247,6 +5259,10 @@ LAB_1471_3100:
     pop     bp
     retf
 player_op_asm_ endp
+
+; ******************************************************************************
+; * dbg: findcar
+; ******************************************************************************
 
 ; int __cdecl16far detect_penalty(char * unk, int * penalty_counter)
 detect_penalty_asm_ proc far
@@ -5521,6 +5537,10 @@ LAB_1471_3361:
     jmp     near ptr LAB_1471_31a9
 detect_penalty_asm_ endp
     db 0x90
+
+; ******************************************************************************
+; * dbg: doengine
+; ******************************************************************************
 
 ; void __cdecl16far update_car_speed(char car_input, int is_opponent, CARSTATE * carstate_, SIMD * simd_)
 update_car_speed_asm_ proc far
@@ -6141,6 +6161,10 @@ LAB_1471_38c0:
     pop     bp
     retf
 update_car_speed_asm_ endp
+
+; ******************************************************************************
+; * dbg: dohandling
+; ******************************************************************************
 ;  
 ; update_grip: 
 ;  
@@ -7022,6 +7046,10 @@ LAB_1471_4095:
 carState_rc_op_asm_ endp
     db 0x90
 
+; ******************************************************************************
+; * dbg: dosteering
+; ******************************************************************************
+
 ; void __cdecl16far upd_statef20_from_steer_input(char steering)
 upd_statef20_from_steer_input_asm_ proc far
     var_speed2shr0AandFC = byte ptr   -4
@@ -7156,6 +7184,10 @@ LAB_1471_4189:
     retf
 upd_statef20_from_steer_input_asm_ endp
     db 0x90
+
+; ******************************************************************************
+; * dbg: myupdatesfx
+; ******************************************************************************
 
 ; void __cdecl16far audio_carstate(void)
 audio_carstate_asm_ proc far
@@ -7692,8 +7724,8 @@ LAB_1471_464e:
     retf
 sub_18D06_asm_ endp
 
-; undefined2 __cdecl16far sub_18D60(int param_1, uint * param_2, char param_3, byte * param_4)
-sub_18D60_asm_ proc far
+; undefined2 __cdecl16far gettlistpoint(int param_1, uint * param_2, char param_3, byte * param_4)
+gettlistpoint_asm_ proc far
     var_30     = word ptr  -48
     var_2E     = word ptr  -46
     var_2C     = word ptr  -44
@@ -8064,7 +8096,7 @@ LAB_1471_495c:
     mov     sp, bp
     pop     bp
     retf
-sub_18D60_asm_ endp
+gettlistpoint_asm_ endp
 
 ; int __cdecl16far car_car_coll_detect_maybe(POINT2D * points1, VECTOR * vec1, POINT2D * points2, VECTOR * vec2)
 car_car_coll_detect_maybe_asm_ proc far
@@ -8614,7 +8646,7 @@ LAB_1471_4e7c:
     les     di, [trackdata3]
     push    word ptr es:[bx+di]
     push    cs
-    call    near ptr sub_18D60
+    call    near ptr gettlistpoint
     add     sp, 0x8
     pop     si
     pop     di
@@ -8630,6 +8662,10 @@ do_opponent_op_asm_ proc far
     retf
 do_opponent_op_asm_ endp
     db 0x90
+
+; ******************************************************************************
+; * dbg: finishgame
+; ******************************************************************************
 ; former audio_engine_unk / set_AV_event_triggers 
 ; Sets a player as crashed. 
 ; Events include special sounds, bitmaps and animations 
@@ -9331,8 +9367,8 @@ LAB_1471_5489:
 state_op_unk_asm_ endp
     db 0x90
 
-; void __cdecl16far sub_19BA0(void)
-sub_19BA0_asm_ proc far
+; void __cdecl16far move_explode(void)
+move_explode_asm_ proc far
     var_14     = word ptr  -20
     var_12     = word ptr  -18
     var_E      = word ptr  -14
@@ -9445,7 +9481,11 @@ LAB_1471_5586:
     mov     sp, bp
     pop     bp
     retf
-sub_19BA0_asm_ endp
+move_explode_asm_ endp
+
+; ******************************************************************************
+; * dbg: getsimdata
+; ******************************************************************************
 
 ; void __cdecl16far setup_aero_trackdata(void * car_res_ptr, int is_opponent)
 setup_aero_trackdata_asm_ proc far

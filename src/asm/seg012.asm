@@ -2988,6 +2988,10 @@ file_find_next_asm_ proc near
     jmp     _file_find_ok
 file_find_next_asm_ endp
     db 0
+
+; ******************************************************************************
+; * dbg: fixedmult
+; ******************************************************************************
 ;  
 ; Formely called scale_value. 
 ; Computes the product between the 
@@ -3068,6 +3072,10 @@ LAB_2ea2_1671:
     retf
 video_set_mode4_asm_ endp
     db 0
+
+; ******************************************************************************
+; * dbg: inthypot
+; ******************************************************************************
 
 ; int __cdecl16far polarRadius2D(int z_, int y_)
 polarRadius2D_asm_ proc far
@@ -3545,6 +3553,10 @@ caseD_0:
     retf
 set_bios_mode3_asm_ endp
 
+; ******************************************************************************
+; * dbg: interpretkey
+; ******************************************************************************
+
 ; uint __cdecl16far kb_parse_key(uint keycode)
 kb_parse_key_asm_ proc far
     keycode    = word ptr    6
@@ -3716,6 +3728,10 @@ LAB_2ea2_1aef:
     mov     word ptr [word_3FB04], ax
     jmp     LAB_2ea2_1adc
 nopsub_304B6_asm_ endp
+
+; ******************************************************************************
+; * dbg: normkeyi
+; ******************************************************************************
 
 ; uint __cdecl16far kb_get_char(void)
 kb_get_char_asm_ proc far
@@ -8728,6 +8744,10 @@ nopsub_328DB_asm_ proc far
     jmp     LAB_2ea2_3e88
 nopsub_328DB_asm_ endp
     db 0
+
+; ******************************************************************************
+; * dbg: transform
+; ******************************************************************************
 
 ; int __cdecl16far mat_mul_vector(VECTOR * invec, MATRIX * mat, VECTOR * outvec)
 mat_mul_vector_asm_ proc far
@@ -13831,7 +13851,7 @@ sub_35DC8_asm_ proc far
     push    ds
     push    si
     push    di
-    mov     cx, offset (byte_3B85E+18)
+    mov     cx, offset (RPath+18)
     mov     ds, word ptr [bp+param_2]
     mov     si, word ptr [bp+param_1]
     mov     ax, cs

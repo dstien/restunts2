@@ -309,10 +309,10 @@ LAB_1000_032f:
     sub     si, si
 LAB_1000_0346:
     les     bx, [td20_trk_file_appnd]
-    mov     al, byte ptr [si+byte_3B80C]
+    mov     al, byte ptr [si+TPath]
     mov     byte ptr es:[bx+si+0x70a], al
     les     bx, [td20_trk_file_appnd]
-    mov     al, byte ptr [si+byte_3B85E]
+    mov     al, byte ptr [si+RPath]
     mov     byte ptr es:[bx+si+0x75b], al
     inc     si
     cmp     si, 0x51
@@ -385,7 +385,7 @@ _do_intro:
     push    ax                                 ; int
     mov     ax, offset gameconfig.game_trackname
     push    ax
-    mov     ax, offset byte_3B80C
+    mov     ax, offset TPath
     push    ax                                 ; char *
     call    far ptr file_build_path
     add     sp, 0x8
@@ -492,10 +492,10 @@ LAB_1000_04e5:
 LAB_1000_04fc:
     les     bx, [td20_trk_file_appnd]
     mov     al, byte ptr es:[bx+si+0x70a]
-    mov     byte ptr [si+byte_3B80C], al
+    mov     byte ptr [si+TPath], al
     les     bx, [td20_trk_file_appnd]
     mov     al, byte ptr es:[bx+si+0x75b]
-    mov     byte ptr [si+byte_3B85E], al
+    mov     byte ptr [si+RPath], al
     inc     si
     cmp     si, 0x51
     jl      LAB_1000_04fc
@@ -2707,7 +2707,7 @@ LAB_1000_1a8d:
     mov     byte ptr [bp-0xd], al
     cmp     byte ptr [gameconfig.game_opponenttype], 0x0
     jz      LAB_1000_1ae6
-    mov     ax, offset unk_46464
+    mov     ax, offset g_opponent_initials
     push    ax
     lea     ax, [bp-0xc]
     push    ax                                 ; char *
@@ -2842,7 +2842,7 @@ LAB_1000_1bc3:
     push    ax                                 ; int
     mov     ax, offset gameconfig.game_trackname
     push    ax
-    mov     ax, offset byte_3B80C
+    mov     ax, offset TPath
     push    ax                                 ; char *
     call    far ptr file_build_path
     add     sp, 0x8
@@ -3271,14 +3271,14 @@ LAB_1000_1fc8:
     add     di, bp
 ; aCarcoun[...] = var_carids[...]
     mov     al, byte ptr [di+0xff12]
-    mov     byte ptr [(aCarcoun+3)], al
+    mov     byte ptr [(g_car_res_name+3)], al
     mov     al, byte ptr [di+0xff13]
-    mov     byte ptr [(aCarcoun+4)], al
+    mov     byte ptr [(g_car_res_name+4)], al
     mov     al, byte ptr [di+0xff14]
-    mov     byte ptr [(aCarcoun+5)], al
+    mov     byte ptr [(g_car_res_name+5)], al
     mov     al, byte ptr [di+0xff15]
-    mov     byte ptr [(aCarcoun+6)], al
-    mov     ax, offset aCarcoun
+    mov     byte ptr [(g_car_res_name+6)], al
+    mov     ax, offset g_car_res_name
     push    ax
     call    far ptr file_load_resfile
     add     sp, 0x2
@@ -4949,7 +4949,7 @@ caseD_3:
     push    ax                                 ; int
     mov     ax, offset aDefault_1
     push    ax
-    mov     ax, offset byte_3B85E
+    mov     ax, offset RPath
     push    ax                                 ; char *
     call    far ptr do_fileselect_dialog
     add     sp, 0xa
@@ -4960,7 +4960,7 @@ caseD_3:
     call    far ptr show_waiting
     mov     ax, offset aDefault_1
     push    ax
-    mov     ax, offset byte_3B85E
+    mov     ax, offset RPath
     push    ax                                 ; char *
     call    far ptr file_load_replay
     add     sp, 0x4
@@ -5805,7 +5805,7 @@ LAB_1000_38ff:
     push    ax                                 ; int
     mov     ax, offset gameconfig.game_trackname
     push    ax
-    mov     ax, offset byte_3B80C
+    mov     ax, offset TPath
     push    ax                                 ; char *
     call    far ptr file_build_path
     add     sp, 0x8

@@ -39,8 +39,8 @@ aCvx                 db "cvx", 0
 aDos                 db "dos", 0
 rectptr_unk2         dw 0x0000
 rectptr_unk          dw 0x0000
-byte_3B80C           db 82 dup (0x00)
-byte_3B85E           db 82 dup (0x00)
+TPath                db 82 dup (0x00)
+RPath                db 82 dup (0x00)
 aDefault_1           db "DEFAULT", 0
                      db 0
                      db 0
@@ -74,7 +74,7 @@ aOpp1                db 0x6F
 aOpp1_3              db 0x31
                      db 0
                      db 0
-aCarcoun             db 0x63, 0x61, 0x72, 0x63, 0x6F, 0x75, 0x6E, 0x00
+g_car_res_name       db 0x63, 0x61, 0x72, 0x63, 0x6F, 0x75, 0x6E, 0x00
 aTitl                db "TITL", 0
 aSkidms              db "skidms", 0
 aSkidtitl            db "skidtitl", 0

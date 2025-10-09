@@ -9,6 +9,10 @@ seg005 segment byte public use16 'STUNTSC'
 
     db 0x90
 
+; ******************************************************************************
+; * dbg: game
+; ******************************************************************************
+
 ; void __cdecl16far run_game(void)
 run_game_asm_ proc far
     var_16     = dword ptr -22
@@ -26,7 +30,7 @@ run_game_asm_ proc far
     mov     word ptr [rect_windshield], 0x0
     mov     word ptr [rect_windshield.rc_right], 0x140
     mov     word ptr [bp+var_2], 0xffff
-    mov     word ptr [word_449EA], 0xffff
+    mov     word ptr [lclipby], 0xffff
     call    far ptr get_kevinrandom
     mov     cl, 0x3
     shl     ax, cl
@@ -78,14 +82,14 @@ LAB_21b7_009f:
     db 0x90
 LAB_21b7_00b4:
     mov     byte ptr [kbormouse], 0x0
-    mov     byte ptr [byte_449E6], 0x0
-    mov     byte ptr [byte_449DA], 0x1
+    mov     byte ptr [rspeed], 0x0
+    mov     byte ptr [gabort], 0x1
     push    cs
     call    near ptr set_frame_callback
     mov     byte ptr [game_replay_mode_copy], 0xff
-    mov     byte ptr [byte_44346], 0x0
-    mov     byte ptr [byte_4432A], 0x0
-    mov     byte ptr [byte_46467], 0x0
+    mov     byte ptr [scrn], 0x0
+    mov     byte ptr [fscrn], 0x0
+    mov     byte ptr [askfull], 0x0
     mov     byte ptr [dashb_toggle], 0x0
     cmp     byte ptr [idle_expired], 0x0
     jz      LAB_21b7_00fe
@@ -117,7 +121,7 @@ LAB_21b7_0108:
     add     sp, 0x2
     mov     word ptr [word_45D94], 0x0
     mov     byte ptr [word_45D3E], 0x0
-    mov     byte ptr [byte_4393C], 0x1
+    mov     byte ptr [g_staging], 0x1
     mov     al, byte ptr [byte_3B8F2]
     cbw
     push    ax
@@ -168,7 +172,7 @@ LAB_21b7_0198:
 LAB_21b7_01bc:
     mov     byte ptr [cameramode], 0x0
     mov     byte ptr [game_replay_mode], 0x2
-    mov     word ptr [word_44DCA], 0x1f4
+    mov     word ptr [g_truckdoor], 0x1f4
     mov     al, byte ptr [gameconfig.game_framespersec]
     cbw
     mov     word ptr [framespersec], ax
@@ -215,7 +219,7 @@ LAB_21b7_0232:
     jnz     LAB_21b7_0214
     cmp     byte ptr [game_replay_mode], 0x0
     jnz     LAB_21b7_025b
-    cmp     byte ptr [byte_449DA], 0x0
+    cmp     byte ptr [gabort], 0x0
     jnz     LAB_21b7_025b
     cmp     byte ptr [state.game_inputmode], 0x0
     jz      LAB_21b7_025b
@@ -238,7 +242,7 @@ LAB_21b7_027b:
     mov     word ptr [slow_video_mgmt_copy], ax
     call    far ptr init_rect_arrays
 LAB_21b7_028c:
-    cmp     byte ptr [byte_46467], 0x0
+    cmp     byte ptr [askfull], 0x0
     jz      LAB_21b7_0306
     call    far ptr input_push_status
     call    far ptr audio_unk
@@ -279,15 +283,15 @@ LAB_21b7_02d9:
     push    ax
     call    far ptr update_crash_state
     add     sp, 0x4
-    mov     byte ptr [byte_449DA], 0x1
+    mov     byte ptr [gabort], 0x1
 LAB_21b7_0301:
-    mov     byte ptr [byte_46467], 0x0
+    mov     byte ptr [askfull], 0x0
 LAB_21b7_0306:
     cmp     byte ptr [video_flag5_is0], 0x0
     jz      LAB_21b7_031a
     call    far ptr setup_mcgawnd2
-    mov     al, byte ptr [byte_44346]
-    mov     byte ptr [byte_4432A], al
+    mov     al, byte ptr [scrn]
+    mov     byte ptr [fscrn], al
     jmp     LAB_21b7_031f
 LAB_21b7_031a:
     call    far ptr sprite_copy_wnd_to_1
@@ -344,7 +348,7 @@ LAB_21b7_03af:
     mov     ax, word ptr [roofbmpheight_copy]
     cmp     word ptr [bp+var_2], ax
     jnz     LAB_21b7_03c8
-    mov     ax, word ptr [word_449EA]
+    mov     ax, word ptr [lclipby]
     cmp     word ptr [dashbmp_y_copy], ax
     jnz     LAB_21b7_03c8
     mov     ax, word ptr [height_above_replaybar]
@@ -372,7 +376,7 @@ LAB_21b7_03c8:
     mov     ax, word ptr [roofbmpheight_copy]
     mov     word ptr [bp+var_2], ax
     mov     ax, word ptr [dashbmp_y_copy]
-    mov     word ptr [word_449EA], ax
+    mov     word ptr [lclipby], ax
     mov     ax, word ptr [height_above_replaybar]
     mov     word ptr [bp+var_E], ax
 LAB_21b7_040a:
@@ -380,7 +384,7 @@ LAB_21b7_040a:
     jnz     LAB_21b7_0414
     jmp     near ptr LAB_21b7_04e2
 LAB_21b7_0414:
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     mov     byte ptr [bx+byte_449D8], 0x0
@@ -461,14 +465,14 @@ LAB_21b7_04d8:
 LAB_21b7_04e2:
     cmp     byte ptr [replaybar_enabled], 0x0
     jnz     LAB_21b7_04f4
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     mov     byte ptr [bx+byte_449D8], 0x0
 LAB_21b7_04f4:
     mov     ax, offset rect_windshield
     push    ax
-    mov     al, byte ptr [byte_44346]
+    mov     al, byte ptr [scrn]
     cbw
     push    ax
     call    far ptr update_frame
@@ -541,14 +545,14 @@ LAB_21b7_05c1:
     jz      LAB_21b7_05e2
     call    far ptr mouse_draw_opaque_check
     call    far ptr setup_mcgawnd1
-    xor     byte ptr [byte_44346], 0x1
-    mov     al, byte ptr [byte_44346]
-    mov     byte ptr [byte_4432A], al
+    xor     byte ptr [scrn], 0x1
+    mov     al, byte ptr [scrn]
+    mov     byte ptr [fscrn], al
     call    far ptr mouse_draw_transparent_check
 LAB_21b7_05e2:
     cmp     byte ptr [game_replay_mode], 0x1
     jnz     LAB_21b7_060d
-    cmp     byte ptr [byte_4393C], 0x0
+    cmp     byte ptr [g_staging], 0x0
     jnz     LAB_21b7_060d
     mov     byte ptr [game_replay_mode], 0x0
     mov     ax, word ptr [framespersec2]
@@ -567,7 +571,7 @@ LAB_21b7_060d:
     jz      LAB_21b7_0620
     jmp     near ptr LAB_21b7_0728
 LAB_21b7_0620:
-    cmp     byte ptr [byte_449DA], 0x0
+    cmp     byte ptr [gabort], 0x0
     jz      LAB_21b7_062a
     jmp     near ptr LAB_21b7_0728
 LAB_21b7_062a:
@@ -579,7 +583,7 @@ LAB_21b7_0636:
     jmp     near ptr LAB_21b7_0728
     db 0x90
 LAB_21b7_063a:
-    cmp     byte ptr [byte_449DA], 0x0
+    cmp     byte ptr [gabort], 0x0
     jz      LAB_21b7_0698
     cmp     byte ptr [game_replay_mode], 0x0
     jnz     LAB_21b7_0652
@@ -587,11 +591,11 @@ LAB_21b7_063a:
     jz      LAB_21b7_0652
     jmp     near ptr LAB_21b7_0728
 LAB_21b7_0652:
-    cmp     byte ptr [byte_449DA], 0x2
+    cmp     byte ptr [gabort], 0x2
     jnz     LAB_21b7_065c
     jmp     near ptr LAB_21b7_0728
 LAB_21b7_065c:
-    mov     byte ptr [byte_449DA], 0x0
+    mov     byte ptr [gabort], 0x0
     mov     byte ptr [game_replay_mode], 0x2
     sub     ax, ax
     push    ax
@@ -668,7 +672,7 @@ LAB_21b7_06e7:
     jmp     near ptr LAB_21b7_0232
 LAB_21b7_070e:
     mov     byte ptr [game_replay_mode], 0x0
-    mov     byte ptr [byte_4393C], 0x0
+    mov     byte ptr [g_staging], 0x0
     mov     ax, word ptr [framespersec2]
     mov     word ptr [framespersec], ax
     mov     al, byte ptr [framespersec2]
@@ -843,7 +847,7 @@ LAB_21b7_08b0:
     call    far ptr update_crash_state
     add     sp, 0x4
 LAB_21b7_08c6:
-    mov     byte ptr [byte_449DA], 0x1
+    mov     byte ptr [gabort], 0x1
     jmp     near ptr LAB_21b7_0979
 LAB_21b7_08ce:
     mov     byte ptr [cameramode], 0x1
@@ -908,7 +912,7 @@ LAB_21b7_0950:
     cmp     byte ptr [game_replay_mode], 0x1
     jnz     LAB_21b7_0938
     mov     byte ptr [game_replay_mode], 0x0
-    mov     byte ptr [byte_4393C], 0x0
+    mov     byte ptr [g_staging], 0x0
     mov     ax, word ptr [framespersec2]
     mov     word ptr [framespersec], ax
     mov     al, byte ptr [framespersec2]
@@ -971,9 +975,9 @@ init_unknown_asm_ proc far
     sub     si, si
     mov     word ptr [elapsed_time2], si
     sub     al, al
-    mov     byte ptr [byte_449DA], al
-    mov     byte ptr [byte_4393C], al
-    mov     word ptr [word_44DCA], si
+    mov     byte ptr [gabort], al
+    mov     byte ptr [g_staging], al
+    mov     word ptr [g_truckdoor], si
     pop     si
     mov     sp, bp
     pop     bp
@@ -1053,11 +1057,11 @@ LAB_21b7_0a4a:
     jnz     LAB_21b7_0a8e
     mov     word ptr [word_44D1E], 0x0
 LAB_21b7_0a8e:
-    cmp     byte ptr [byte_449DA], 0x0
+    cmp     byte ptr [gabort], 0x0
     jz      LAB_21b7_0a98
     jmp     near ptr LAB_21b7_0b22
 LAB_21b7_0a98:
-    cmp     byte ptr [byte_46467], 0x0
+    cmp     byte ptr [askfull], 0x0
     jz      LAB_21b7_0aa2
     jmp     near ptr LAB_21b7_0b22
 LAB_21b7_0aa2:
@@ -1083,7 +1087,7 @@ LAB_21b7_0ace:
     inc     word ptr [word_46468]
     cmp     byte ptr [game_replay_mode], 0x2
     jnz     LAB_21b7_0b18
-    mov     al, byte ptr [byte_449E6]
+    mov     al, byte ptr [rspeed]
     cbw
     cmp     ax, 0x2
     jz      LAB_21b7_0af6
@@ -1152,14 +1156,14 @@ LAB_21b7_0b3c:
     pop     bp
     retf
 LAB_21b7_0b56:
-    cmp     byte ptr [byte_449DA], 0x0
+    cmp     byte ptr [gabort], 0x0
     jz      LAB_21b7_0b60
     jmp     near ptr LAB_21b7_0e15
 LAB_21b7_0b60:
     mov     byte ptr [is_in_replay], 0x1
     call    far ptr audio_carstate
 LAB_21b7_0b6a:
-    mov     byte ptr [byte_449DA], 0x1
+    mov     byte ptr [gabort], 0x1
     pop     si
     pop     di
     mov     sp, bp
@@ -1167,7 +1171,7 @@ LAB_21b7_0b6a:
     retf
     db 0x90
 LAB_21b7_0b76:
-    cmp     byte ptr [byte_449DA], 0x0
+    cmp     byte ptr [gabort], 0x0
     jnz     LAB_21b7_0b36
     cmp     byte ptr [state.game_3F6autoLoadEvalFlag], 0x0
     jnz     LAB_21b7_0b36
@@ -1175,7 +1179,7 @@ LAB_21b7_0b76:
     jz      LAB_21b7_0b36
     cmp     byte ptr [passed_security], 0x0
     jnz     LAB_21b7_0bb5
-    cmp     byte ptr [byte_4393C], 0x0
+    cmp     byte ptr [g_staging], 0x0
     jnz     LAB_21b7_0bb5
     mov     ax, word ptr [framespersec]
     shl     ax, 0x1
@@ -1316,7 +1320,7 @@ LAB_21b7_0cd7:
     cmp     byte ptr [word_45D3E], 0x0
     jnz     LAB_21b7_0cf6
     mov     byte ptr [word_45D3E], 0x1
-    mov     byte ptr [byte_46467], 0x1
+    mov     byte ptr [askfull], 0x1
     pop     si
     pop     di
     mov     sp, bp
@@ -1453,8 +1457,8 @@ LAB_21b7_0e15:
 replay_unk2_asm_ endp
     db 0x90
 
-; void __cdecl16far sub_2298C(void)
-sub_2298C_asm_ proc far
+; void __cdecl16far move_helicopters(void)
+move_helicopters_asm_ proc far
     var_34     = dword ptr -52
     var_30     = word ptr  -48
     var_2E     = word ptr  -46
@@ -1820,7 +1824,7 @@ LAB_21b7_111c:
     mov     sp, bp
     pop     bp
     retf
-sub_2298C_asm_ endp
+move_helicopters_asm_ endp
 
 ; int __cdecl16far file_load_replay(char * dir, char * filename)
 file_load_replay_asm_ proc far
@@ -2167,7 +2171,7 @@ LAB_21b7_1441:
     add     sp, 0x4
     call    far ptr mouse_draw_transparent_check
     sub     si, si
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     word ptr [bp+var_1E], ax
     mov     bx, ax
@@ -2204,7 +2208,7 @@ LAB_21b7_14c0:
     cbw
     or      ax, cx
     jnz     LAB_21b7_152a
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     cmp     byte ptr [bx+byte_40DFA], 0x0
@@ -2230,13 +2234,13 @@ LAB_21b7_14e7:
     push    word ptr es:[bx]
     call    far ptr sprite_putimage_and_alt
     add     sp, 0x8
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     mov     byte ptr [bx+byte_40DFA], 0x0
     jmp     near ptr LAB_21b7_162d
 LAB_21b7_152a:
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     word ptr [bp+var_20], ax
     mov     bx, ax
@@ -2266,7 +2270,7 @@ LAB_21b7_156e:
     push    word ptr [whlsprite2]
     call    far ptr sprite_set_1_from_argptr
     add     sp, 0x4
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     mov     byte ptr [bx+byte_40DFA], 0x1
@@ -2279,7 +2283,7 @@ LAB_21b7_156e:
     add     sp, 0x8
     mov     si, word ptr [state.playerstate.car_knob_x]
     mov     di, word ptr [state.playerstate.car_knob_y]
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     shl     ax, 0x1
     mov     word ptr [bp+var_20], ax
@@ -2346,7 +2350,7 @@ LAB_21b7_1654:
     jle     LAB_21b7_165e
     mov     byte ptr [bp+var_2], 0x2
 LAB_21b7_165e:
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     mov     al, byte ptr [bp+var_2]
@@ -2360,7 +2364,7 @@ LAB_21b7_1677:
     jnz     LAB_21b7_1683
     call    far ptr mouse_draw_opaque_check
 LAB_21b7_1683:
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     shl     ax, 0x1
     mov     word ptr [bp+var_20], ax
@@ -2369,7 +2373,7 @@ LAB_21b7_1683:
     jz      LAB_21b7_16c9
     push    word ptr [bx+word_40DF6]
     push    word ptr [bx+word_40DF2]
-    mov     al, byte ptr [byte_44346]
+    mov     al, byte ptr [scrn]
     cbw
     mov     bx, ax
     shl     bx, 0x1
@@ -2378,7 +2382,7 @@ LAB_21b7_1683:
     push    word ptr [bx+(gnobshapes+4*4)]
     call    far ptr sprite_putimage_and_alt
     add     sp, 0x8
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     shl     bx, 0x1
@@ -2402,7 +2406,7 @@ LAB_21b7_16e6:
     call    far ptr shape2d_op_unk3
     add     sp, 0x4
 LAB_21b7_16ee:
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     mov     al, byte ptr [bp+var_2]
@@ -2456,7 +2460,7 @@ LAB_21b7_1760:
     jnz     LAB_21b7_1787
     cmp     byte ptr [byte_454A4], 0x0
     jnz     LAB_21b7_1787
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     shl     ax, 0x1
     mov     word ptr [bp+var_20], ax
@@ -2471,7 +2475,7 @@ LAB_21b7_1787:
     jnz     LAB_21b7_1793
     call    far ptr mouse_draw_opaque_check
 LAB_21b7_1793:
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     shl     ax, 0x1
     mov     word ptr [bp+var_20], ax
@@ -2480,7 +2484,7 @@ LAB_21b7_1793:
     jz      LAB_21b7_17d9
     push    word ptr [bx+word_40DF6]
     push    word ptr [bx+word_40DF2]
-    mov     al, byte ptr [byte_44346]
+    mov     al, byte ptr [scrn]
     cbw
     mov     bx, ax
     shl     bx, 0x1
@@ -2489,7 +2493,7 @@ LAB_21b7_1793:
     push    word ptr [bx+(gnobshapes+4*4)]
     call    far ptr sprite_putimage_and_alt
     add     sp, 0x8
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     shl     bx, 0x1
@@ -2507,7 +2511,7 @@ LAB_21b7_17d9:
     push    word ptr [(whlshapes+3*4)]
     call    far ptr shape2d_op_unk5
     add     sp, 0x8
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     shl     ax, 0x1
     mov     word ptr [bp+var_20], ax
@@ -2683,7 +2687,7 @@ LAB_21b7_199b:
     call    far ptr sprite_putimage_and_alt
     add     sp, 0x8
 LAB_21b7_19d0:
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     shl     bx, 0x1
@@ -2709,7 +2713,7 @@ LAB_21b7_19fd:
     push    ax
     call    far ptr sprite_set_1_size
     add     sp, 0x8
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     shl     ax, 0x1
     mov     word ptr [bp+var_20], ax
@@ -2718,7 +2722,7 @@ LAB_21b7_19fd:
     jz      LAB_21b7_1a55
     push    word ptr [bx+word_40DF6]
     push    word ptr [bx+word_40DF2]
-    mov     al, byte ptr [byte_44346]
+    mov     al, byte ptr [scrn]
     cbw
     mov     bx, ax
     shl     bx, 0x1
@@ -2727,7 +2731,7 @@ LAB_21b7_19fd:
     push    word ptr [bx+(gnobshapes+4*4)]
     call    far ptr sprite_putimage_and_alt
     add     sp, 0x8
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     shl     bx, 0x1
@@ -2755,7 +2759,7 @@ LAB_21b7_1a65:
     shl     al, 0x1
     sub     byte ptr [bp+var_14], al
 LAB_21b7_1a89:
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     shl     ax, 0x1
     mov     word ptr [bp+var_20], ax
@@ -2779,7 +2783,7 @@ LAB_21b7_1a89:
     push    ax
     mov     bx, word ptr [bp+var_20]
     push    word ptr [bx+word_40DF2]
-    mov     al, byte ptr [byte_44346]
+    mov     al, byte ptr [scrn]
     cbw
     mov     bx, ax
     shl     bx, 0x1
@@ -2806,7 +2810,7 @@ LAB_21b7_1a89:
     push    word ptr [(gnobshapes+2*4)]
     call    far ptr sprite_putimage_or_alt
     add     sp, 0x8
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     shl     bx, 0x1
@@ -2848,6 +2852,10 @@ LAB_21b7_1b3c:
     retf
 setup_car_shapes_asm_ endp
 
+; ******************************************************************************
+; * dbg: loadgamefiles
+; ******************************************************************************
+
 ; int __cdecl16far setup_player_cars(void)
 setup_player_cars_asm_ proc far
     var_8      = word ptr   -8
@@ -2872,14 +2880,14 @@ setup_player_cars_asm_ proc far
     call    far ptr shape3d_load_car_shapes
     add     sp, 0x4
     mov     al, byte ptr [gameconfig]
-    mov     byte ptr [(aCarcoun+3)], al
+    mov     byte ptr [(g_car_res_name+3)], al
     mov     al, byte ptr [gameconfig.(game_playercarid+1)]
-    mov     byte ptr [(aCarcoun+4)], al
+    mov     byte ptr [(g_car_res_name+4)], al
     mov     al, byte ptr [gameconfig.(game_playercarid+2)]
-    mov     byte ptr [(aCarcoun+5)], al
+    mov     byte ptr [(g_car_res_name+5)], al
     mov     al, byte ptr [gameconfig.(game_playercarid+3)]
-    mov     byte ptr [(aCarcoun+6)], al
-    mov     ax, offset aCarcoun
+    mov     byte ptr [(g_car_res_name+6)], al
+    mov     ax, offset g_car_res_name
     push    ax
     call    far ptr file_load_resfile
     add     sp, 0x2
@@ -2898,14 +2906,14 @@ setup_player_cars_asm_ proc far
     cmp     byte ptr [gameconfig.game_opponenttype], 0x0
     jz      LAB_21b7_1c63
     mov     al, byte ptr [gameconfig.game_opponentcarid]
-    mov     byte ptr [(aCarcoun+3)], al
+    mov     byte ptr [(g_car_res_name+3)], al
     mov     al, byte ptr [gameconfig.(game_opponentcarid+1)]
-    mov     byte ptr [(aCarcoun+4)], al
+    mov     byte ptr [(g_car_res_name+4)], al
     mov     al, byte ptr [gameconfig.(game_opponentcarid+2)]
-    mov     byte ptr [(aCarcoun+5)], al
+    mov     byte ptr [(g_car_res_name+5)], al
     mov     al, byte ptr [gameconfig.(game_opponentcarid+3)]
-    mov     byte ptr [(aCarcoun+6)], al
-    mov     ax, offset aCarcoun
+    mov     byte ptr [(g_car_res_name+6)], al
+    mov     ax, offset g_car_res_name
     push    ax
     call    far ptr file_load_resfile
     add     sp, 0x2
@@ -3273,6 +3281,10 @@ LAB_21b7_1fd5:
 replay_unk_asm_ endp
     db 0x90
 
+; ******************************************************************************
+; * dbg: doreplay
+; ******************************************************************************
+
 ; word * __cdecl16far loop_game(word * param_1, uint param_2, int param_3, byte * param_4, int param_5)
 loop_game_asm_ proc far
     var_44     = word ptr  -68
@@ -3346,7 +3358,7 @@ LAB_21b7_201f:
     jmp     near ptr LAB_21b7_31ee
     db 0x90
 LAB_21b7_2036:
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     word ptr [bp+var_42], ax
     mov     bx, ax
@@ -3361,7 +3373,7 @@ LAB_21b7_2049:
     mov     byte ptr [bx+byte_40E08], 0xff
     sub     si, si
 LAB_21b7_2060:
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     mov     ax, si
@@ -3376,7 +3388,7 @@ LAB_21b7_2060:
     push    word ptr [rplyshapes]
     call    far ptr shape2d_op_unk
     add     sp, 0x4
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     shl     ax, 0x1
     mov     word ptr [bp+var_42], ax
@@ -3415,7 +3427,7 @@ LAB_21b7_20f6:
     mov     ax, word ptr [bp+param_2]
     add     ax, word ptr [elapsed_time1]
     mov     word ptr [bp+var_42], ax
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     shl     ax, 0x1
     add     ax, offset word_40E0A
@@ -3452,7 +3464,7 @@ LAB_21b7_20f6:
     add     sp, 0x6
     call    far ptr font_set_fontdef
 LAB_21b7_2167:
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     word ptr [bp+var_44], ax
     mov     bx, ax
@@ -3484,7 +3496,7 @@ LAB_21b7_2167:
     mov     al, byte ptr [bp+var_42]
     mov     byte ptr [byte_3E9DB], al
 LAB_21b7_21c2:
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     add     ax, offset byte_40E08
     mov     word ptr [bp+var_44], ax
@@ -3535,7 +3547,7 @@ LAB_21b7_21e4:
     call    far ptr __aFldiv
     mov     di, ax
 LAB_21b7_2224:
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     shl     ax, 0x1
     mov     word ptr [bp+var_44], ax
@@ -3546,7 +3558,7 @@ LAB_21b7_2224:
     jz      LAB_21b7_22aa
 LAB_21b7_223b:
     call    far ptr mouse_draw_opaque_check
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     shl     ax, 0x1
     mov     word ptr [bp+var_44], ax
@@ -3587,7 +3599,7 @@ LAB_21b7_223b:
     call    far ptr sprite_1_unk4
     add     sp, 0xa
 LAB_21b7_22aa:
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     mov     al, byte ptr [byte_3E9DB]
@@ -3595,7 +3607,7 @@ LAB_21b7_22aa:
     jz      LAB_21b7_22f8
 LAB_21b7_22b9:
     call    far ptr mouse_draw_opaque_check
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     word ptr [bp+var_44], ax
     mov     bx, ax
@@ -3634,7 +3646,7 @@ LAB_21b7_230a:
     mov     bx, ax
     mov     al, byte ptr [bx+byte_40E6A]
     mov     cx, ax
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     shl     bx, 0x1
     add     bx, ax
@@ -3643,7 +3655,7 @@ LAB_21b7_230a:
     jmp     LAB_21b7_22b9
     db 0x90
 LAB_21b7_232a:
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     mov     al, byte ptr [bx+byte_40E08]
@@ -3656,7 +3668,7 @@ LAB_21b7_232a:
 LAB_21b7_2343:
     call    far ptr shape2d_op_unk
     add     sp, 0x4
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     mov     byte ptr [bx+byte_40E08], 0xff
@@ -3671,7 +3683,7 @@ LAB_21b7_235a:
     jnz     LAB_21b7_23a8
     mov     al, byte ptr [bx+byte_40E6A]
     mov     cx, ax
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     shl     bx, 0x1
     add     bx, ax
@@ -3688,7 +3700,7 @@ LAB_21b7_235a:
     cbw
     mov     bx, ax
     shl     bx, 0x1
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     add     bx, ax
     mov     byte ptr [bx+byte_40E7A], 0x0
@@ -3704,7 +3716,7 @@ LAB_21b7_23b5:
     mov     bx, ax
     cmp     byte ptr [bx+byte_40E6A], 0x0
     jz      LAB_21b7_23fc
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     shl     bx, 0x1
     add     bx, ax
@@ -3720,7 +3732,7 @@ LAB_21b7_23b5:
     cbw
     mov     bx, ax
     shl     bx, 0x1
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     add     bx, ax
     mov     byte ptr [bx+byte_40E7A], 0x1
@@ -3728,7 +3740,7 @@ LAB_21b7_23fc:
     inc     byte ptr [bp+var_counter]
     cmp     byte ptr [bp+var_counter], 0x7
     jl      LAB_21b7_23b5
-    mov     al, byte ptr [byte_4432A]
+    mov     al, byte ptr [fscrn]
     cbw
     mov     bx, ax
     mov     al, byte ptr [byte_3E9DB]
@@ -3767,9 +3779,9 @@ LAB_21b7_246a:
     call    far ptr sprite_copy_2_to_1
     cmp     byte ptr [video_flag5_is0], 0x0
     jz      LAB_21b7_247e
-    mov     al, byte ptr [byte_44346]
+    mov     al, byte ptr [scrn]
     xor     al, 0x1
-    mov     byte ptr [byte_4432A], al
+    mov     byte ptr [fscrn], al
 LAB_21b7_247e:
     call    far ptr timer_get_delta_alt
     push    ax
@@ -3926,7 +3938,7 @@ LAB_21b7_25ea:
     cmp     byte ptr [replaybar_enabled], 0x0
     jnz     LAB_21b7_25fc
     mov     byte ptr [is_in_replay_copy], 0xff
-    mov     word ptr [word_449EA], 0xffff
+    mov     word ptr [lclipby], 0xffff
 LAB_21b7_25fc:
     cmp     byte ptr [is_in_replay], 0x0
     jz      LAB_21b7_2623
@@ -4290,7 +4302,7 @@ LAB_21b7_2940:
     mov     byte ptr [cameramode], 0x0
     mov     byte ptr [state.game_3F6autoLoadEvalFlag], 0x0
     mov     word ptr [state.game_frame_in_sec], 0x0
-    mov     byte ptr [byte_449E6], 0x0
+    mov     byte ptr [rspeed], 0x0
     sub     ax, ax
     push    ax
     mov     ax, 0x3
@@ -4326,7 +4338,7 @@ LAB_21b7_299a:
     push    ax                                 ; int
     mov     ax, 0x140
     push    ax
-    mov     ax, offset byte_3B85E
+    mov     ax, offset RPath
     push    ax                                 ; char *
     call    far ptr do_fileselect_dialog
     add     sp, 0xa
@@ -4557,7 +4569,7 @@ LAB_21b7_2bd8:
     call    far ptr update_crash_state
     add     sp, 0x4
 LAB_21b7_2be7:
-    mov     byte ptr [byte_449DA], 0x2
+    mov     byte ptr [gabort], 0x2
     jmp     near ptr LAB_21b7_2cb8
     db 0x90
 LAB_21b7_2bf0:
@@ -5086,7 +5098,7 @@ LAB_21b7_30d3:
     jmp     near ptr LAB_21b7_2ea9
     db 0x90
 LAB_21b7_30ea:
-    mov     byte ptr [byte_449E6], 0x0
+    mov     byte ptr [rspeed], 0x0
     sub     ax, ax
     push    ax
     mov     ax, 0x3
@@ -5166,7 +5178,7 @@ LAB_21b7_3194:
     push    cs
     call    near ptr loop_game
     add     sp, 0x6
-    mov     byte ptr [byte_449E6], 0x3
+    mov     byte ptr [rspeed], 0x3
 LAB_21b7_31a8:
     mov     byte ptr [is_in_replay], 0x0
     jmp     near ptr LAB_21b7_2777

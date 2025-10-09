@@ -2067,7 +2067,7 @@ LAB_2a2b_141e:
     push    ax                                 ; int
     mov     ax, offset gameconfig.game_trackname
     push    ax
-    mov     ax, offset byte_3B80C
+    mov     ax, offset TPath
     push    ax                                 ; char *
     call    far ptr do_fileselect_dialog
     add     sp, 0xa
@@ -2079,7 +2079,7 @@ LAB_2a2b_141e:
     push    ax                                 ; int
     mov     ax, offset gameconfig.game_trackname
     push    ax
-    mov     ax, offset byte_3B80C
+    mov     ax, offset TPath
     push    ax                                 ; char *
     call    far ptr file_build_path
     add     sp, 0x8
@@ -2125,7 +2125,7 @@ LAB_2a2b_14c4:
     push    ax                                 ; int
     mov     ax, offset gameconfig.game_trackname
     push    ax
-    mov     ax, offset byte_3B80C
+    mov     ax, offset TPath
     push    ax                                 ; char *
     call    far ptr do_savefile_dialog
     add     sp, 0x8
@@ -2137,7 +2137,7 @@ LAB_2a2b_14c4:
     push    ax                                 ; int
     mov     ax, offset gameconfig.game_trackname
     push    ax
-    mov     ax, offset byte_3B80C
+    mov     ax, offset TPath
     push    ax                                 ; char *
     call    far ptr file_build_path
     add     sp, 0x8

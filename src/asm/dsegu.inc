@@ -190,7 +190,7 @@ dsegu segment byte public use16 'STUNTSD'
     public mcgawndsprite
     public skybox_current
     public rect_windshield
-    public byte_4393C
+    public g_staging
     public byte_4393D
     public snarres
     public trackdata3
@@ -212,10 +212,10 @@ dsegu segment byte public use16 'STUNTSD'
     public polyinfonumpolys
     public mouse_butstate
     public byte_442EA
-    public byte_4432A
+    public fscrn
     public crshres
     public logoshape
-    public byte_44346
+    public scrn
     public gState_travDist
     public gState_frame
     public gState_total_finish_time
@@ -268,14 +268,14 @@ dsegu segment byte public use16 'STUNTSD'
     public framespersec
     public td17_trk_elem_ordered
     public byte_449D8
-    public byte_449DA
+    public gabort
     public trackdata9
     public elem_xCenter
     public byte_449E2
     public word_449E4
-    public byte_449E6
+    public rspeed
     public steerWhlRespTable_ptr
-    public word_449EA
+    public lclipby
     public terrainHeight
     public trackdata12
     public idle_counter
@@ -326,7 +326,7 @@ dsegu segment byte public use16 'STUNTSD'
     public g_path_buf
     public planindex
     public video_flag2_is1
-    public word_44DCA
+    public g_truckdoor
     public word_44DCC
     public rect_array_unk3
     public vec_unk2
@@ -397,7 +397,7 @@ dsegu segment byte public use16 'STUNTSD'
     public fontledresptr
     public someZeroVideoConst
     public nextPosAndNormalIP
-    public word_45A00
+    public g_rpfxrate
     public transformedshape_arg2array
     public cvxptr
     public elapsed_time1
@@ -466,10 +466,10 @@ dsegu segment byte public use16 'STUNTSD'
     public mat_rot_temp
     public dashb_toggle_copy
     public mat_temp
-    public textresprefix
+    public g_language
     public wallptr
-    public unk_46464
-    public byte_46467
+    public g_opponent_initials
+    public askfull
     public word_46468
     public word_4646A
     public mat_x_rot

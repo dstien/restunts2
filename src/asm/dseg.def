@@ -19,8 +19,8 @@ dseg segment byte public use16 'STUNTSD'
     extrn aDos:byte
     extrn rectptr_unk2:word
     extrn rectptr_unk:word
-    extrn byte_3B80C:byte
-    extrn byte_3B85E:byte
+    extrn TPath:byte
+    extrn RPath:byte
     extrn aDefault_1:byte
     extrn g_sceneries:byte
     extrn hillHeightConsts:word
@@ -41,7 +41,7 @@ dseg segment byte public use16 'STUNTSD'
     extrn aKevin:byte
     extrn aOpp1:byte
     extrn aOpp1_3:byte
-    extrn aCarcoun:byte
+    extrn g_car_res_name:byte
     extrn aTitl:byte
     extrn aSkidms:byte
     extrn aSkidtitl:byte

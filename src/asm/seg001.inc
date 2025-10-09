@@ -61,7 +61,7 @@ seg001 segment byte public use16 'STUNTSC'
     public audio_carstate_asm_
     public audio_unk3_asm_
     public sub_18D06_asm_
-    public sub_18D60_asm_
+    public gettlistpoint_asm_
     public car_car_coll_detect_maybe_asm_
     public init_plantrak_asm_
     public do_opponent_op_asm_
@@ -70,7 +70,7 @@ seg001 segment byte public use16 'STUNTSC'
     public plane_origin_op_asm_
     public vec_normalInnerProduct_asm_
     public state_op_unk_asm_
-    public sub_19BA0_asm_
+    public move_explode_asm_
     public setup_aero_trackdata_asm_
 
     ifdef RESTUNTS_ORIGINAL
@@ -92,7 +92,7 @@ seg001 segment byte public use16 'STUNTSC'
         audio_carstate = audio_carstate_asm_
         audio_unk3 = audio_unk3_asm_
         sub_18D06 = sub_18D06_asm_
-        sub_18D60 = sub_18D60_asm_
+        gettlistpoint = gettlistpoint_asm_
         car_car_coll_detect_maybe = car_car_coll_detect_maybe_asm_
         init_plantrak = init_plantrak_asm_
         do_opponent_op = do_opponent_op_asm_
@@ -101,7 +101,7 @@ seg001 segment byte public use16 'STUNTSC'
         plane_origin_op = plane_origin_op_asm_
         vec_normalInnerProduct = vec_normalInnerProduct_asm_
         state_op_unk = state_op_unk_asm_
-        sub_19BA0 = sub_19BA0_asm_
+        move_explode = move_explode_asm_
         setup_aero_trackdata = setup_aero_trackdata_asm_
     else
         ; Alias unported functions to the original asm implementation.
@@ -122,7 +122,7 @@ seg001 segment byte public use16 'STUNTSC'
         audio_carstate = audio_carstate_asm_
         audio_unk3 = audio_unk3_asm_
         sub_18D06 = sub_18D06_asm_
-        sub_18D60 = sub_18D60_asm_
+        gettlistpoint = gettlistpoint_asm_
         car_car_coll_detect_maybe = car_car_coll_detect_maybe_asm_
         init_plantrak = init_plantrak_asm_
         do_opponent_op = do_opponent_op_asm_
@@ -131,7 +131,7 @@ seg001 segment byte public use16 'STUNTSC'
         plane_origin_op = plane_origin_op_asm_
         vec_normalInnerProduct = vec_normalInnerProduct_asm_
         state_op_unk = state_op_unk_asm_
-        sub_19BA0 = sub_19BA0_asm_
+        move_explode = move_explode_asm_
         setup_aero_trackdata = setup_aero_trackdata_asm_
     endif
 seg001 ends

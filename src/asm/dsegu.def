@@ -146,7 +146,7 @@ dsegu segment byte public use16 'STUNTSD'
     extrn mcgawndsprite:dword
     extrn skybox_current:word
     extrn rect_windshield:RECTANGLE
-    extrn byte_4393C:byte
+    extrn g_staging:byte
     extrn byte_4393D:byte
     extrn snarres:dword
     extrn trackdata3:dword
@@ -168,10 +168,10 @@ dsegu segment byte public use16 'STUNTSD'
     extrn polyinfonumpolys:word
     extrn mouse_butstate:word
     extrn byte_442EA:byte
-    extrn byte_4432A:byte
+    extrn fscrn:byte
     extrn crshres:dword
     extrn logoshape:SHAPE3D
-    extrn byte_44346:byte
+    extrn scrn:byte
     extrn gState_travDist:dword
     extrn gState_frame:word
     extrn gState_total_finish_time:word
@@ -224,14 +224,14 @@ dsegu segment byte public use16 'STUNTSD'
     extrn framespersec:word
     extrn td17_trk_elem_ordered:dword
     extrn byte_449D8:byte
-    extrn byte_449DA:byte
+    extrn gabort:byte
     extrn trackdata9:dword
     extrn elem_xCenter:word
     extrn byte_449E2:byte
     extrn word_449E4:word
-    extrn byte_449E6:byte
+    extrn rspeed:byte
     extrn steerWhlRespTable_ptr:word
-    extrn word_449EA:word
+    extrn lclipby:word
     extrn terrainHeight:word
     extrn trackdata12:dword
     extrn idle_counter:word
@@ -282,7 +282,7 @@ dsegu segment byte public use16 'STUNTSD'
     extrn g_path_buf:byte
     extrn planindex:word
     extrn video_flag2_is1:word
-    extrn word_44DCA:word
+    extrn g_truckdoor:word
     extrn word_44DCC:word
     extrn rect_array_unk3:RECTANGLE
     extrn vec_unk2:VECTOR
@@ -353,7 +353,7 @@ dsegu segment byte public use16 'STUNTSD'
     extrn fontledresptr:dword
     extrn someZeroVideoConst:word
     extrn nextPosAndNormalIP:word
-    extrn word_45A00:word
+    extrn g_rpfxrate:word
     extrn transformedshape_arg2array:byte
     extrn cvxptr:dword
     extrn elapsed_time1:word
@@ -422,10 +422,10 @@ dsegu segment byte public use16 'STUNTSD'
     extrn mat_rot_temp:MATRIX
     extrn dashb_toggle_copy:byte
     extrn mat_temp:MATRIX
-    extrn textresprefix:byte
+    extrn g_language:byte
     extrn wallptr:dword
-    extrn unk_46464:byte
-    extrn byte_46467:byte
+    extrn g_opponent_initials:word
+    extrn askfull:byte
     extrn word_46468:word
     extrn word_4646A:word
     extrn mat_x_rot:MATRIX

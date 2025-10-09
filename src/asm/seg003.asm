@@ -3020,7 +3020,7 @@ LAB_19f1_1d95:
 LAB_19f1_1da7:
     mov     ax, 0x24
     push    ax
-    push    word ptr [word_44DCA]
+    push    word ptr [g_truckdoor]
     call    far ptr int_cos
     add     sp, 0x2
     push    ax
@@ -3029,7 +3029,7 @@ LAB_19f1_1da7:
     mov     word ptr [bp+var_multitileflag], ax
     mov     ax, 0x24
     push    ax
-    push    word ptr [word_44DCA]
+    push    word ptr [g_truckdoor]
     call    far ptr int_sin
     add     sp, 0x2
     push    ax
@@ -3157,7 +3157,7 @@ LAB_19f1_1da7:
     mov     word ptr [bx+0xe], ax
     mov     bx, word ptr [curtransshape_ptr]
     mov     word ptr [bx+0x10], 0x400
-    mov     ax, word ptr [word_44DCA]
+    mov     ax, word ptr [g_truckdoor]
     mov     cl, 0x6
     sar     ax, cl
     mov     word ptr [bp+var_multitileflag], ax

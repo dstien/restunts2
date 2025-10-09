@@ -4000,6 +4000,10 @@ LAB_1e1a_252e:
     retf
 sub_204AE_asm_ endp
 
+; ******************************************************************************
+; * dbg: compiletrack
+; ******************************************************************************
+
 ; int __cdecl16far track_setup(void)
 track_setup_asm_ proc far
     var_AF0    = dword ptr -2800
@@ -5760,6 +5764,10 @@ LAB_1e1a_360e:
 track_setup_asm_ endp
     db 0x90
 
+; ******************************************************************************
+; * dbg: opponentcompile
+; ******************************************************************************
+
 ; void __cdecl16far load_opponent_data(void)
 load_opponent_data_asm_ proc far
     var_F30    = word ptr  -3888
@@ -5802,7 +5810,7 @@ load_opponent_data_asm_ proc far
     add     sp, 0x6
     push    dx
     push    ax
-    mov     ax, offset unk_46464
+    mov     ax, offset g_opponent_initials
     push    ax
     call    far ptr copy_string
     add     sp, 0x6

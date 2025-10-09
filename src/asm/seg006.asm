@@ -2204,6 +2204,10 @@ _get_a_poly_info_done:
     pop     bp
     retf
 get_a_poly_info_asm_ endp
+
+; ******************************************************************************
+; * dbg: matematrix
+; ******************************************************************************
 ;  
 ; Combined rotation matrix for 
 ; angles around all axes.  

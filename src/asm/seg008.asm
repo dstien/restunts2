@@ -2098,6 +2098,10 @@ LAB_274b_12e5:
     retf
 parse_filepath_separators_asm_ endp
 
+; ******************************************************************************
+; * dbg: mykey
+; ******************************************************************************
+
 ; int __cdecl16far input_checking(int unk)
 input_checking_asm_ proc far
     unk        = word ptr    6
@@ -2302,6 +2306,10 @@ LAB_274b_1529:
 input_checking_asm_ endp
     db 0x90
 
+; ******************************************************************************
+; * dbg: hurrykey
+; ******************************************************************************
+
 ; int __cdecl16far input_do_checking(int unk)
 input_do_checking_asm_ proc far
     unk        = word ptr    6
@@ -2316,6 +2324,10 @@ input_do_checking_asm_ proc far
     retf
 input_do_checking_asm_ endp
     db 0x90
+
+; ******************************************************************************
+; * dbg: openresource
+; ******************************************************************************
 
 ; void * __cdecl16far file_load_resfile(char * filename)
 file_load_resfile_asm_ proc far
@@ -2383,6 +2395,10 @@ LAB_274b_15be:
     retf
 file_load_resfile_asm_ endp
 
+; ******************************************************************************
+; * dbg: closeresource
+; ******************************************************************************
+
 ; void __cdecl16far unload_resource(void * res)
 unload_resource_asm_ proc far
     res        = dword ptr   6
@@ -2414,6 +2430,12 @@ locate_shape_alt_asm_ proc far
     retf
 locate_shape_alt_asm_ endp
 
+; ******************************************************************************
+; * Get a localized resource. The configured language code
+; * is used as the resource name prefix.
+; * dbg: getresl
+; ******************************************************************************
+
 ; void * __cdecl16far locate_text_res(char * data, char * name_)
 locate_text_res_asm_ proc far
     var_4      = byte ptr   -4
@@ -2426,7 +2448,7 @@ locate_text_res_asm_ proc far
     push    bp
     mov     bp, sp
     sub     sp, 0x4
-    mov     al, byte ptr [textresprefix]
+    mov     al, byte ptr [g_language]
     mov     byte ptr [bp+var_4], al
     mov     bx, word ptr [bp+name_]
     mov     al, byte ptr [bx]
@@ -5293,6 +5315,10 @@ LAB_274b_2ceb:
     pop     bp
     retf
 do_dea_textres_asm_ endp
+
+; ******************************************************************************
+; * dbg: checkdisk
+; ******************************************************************************
 
 ; void __cdecl16far ensure_file_exists(int unk)
 ensure_file_exists_asm_ proc far

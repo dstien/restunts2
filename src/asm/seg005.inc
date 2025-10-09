@@ -51,7 +51,7 @@ seg005 segment byte public use16 'STUNTSC'
     public remove_frame_callback_asm_
     public frame_callback_asm_
     public replay_unk2_asm_
-    public sub_2298C_asm_
+    public move_helicopters_asm_
     public file_load_replay_asm_
     public file_write_replay_asm_
     public setup_car_shapes_asm_
@@ -72,7 +72,7 @@ seg005 segment byte public use16 'STUNTSC'
         remove_frame_callback = remove_frame_callback_asm_
         frame_callback = frame_callback_asm_
         replay_unk2 = replay_unk2_asm_
-        sub_2298C = sub_2298C_asm_
+        move_helicopters = move_helicopters_asm_
         file_load_replay = file_load_replay_asm_
         file_write_replay = file_write_replay_asm_
         setup_car_shapes = setup_car_shapes_asm_
@@ -90,7 +90,7 @@ seg005 segment byte public use16 'STUNTSC'
         remove_frame_callback = remove_frame_callback_asm_
         frame_callback = frame_callback_asm_
         replay_unk2 = replay_unk2_asm_
-        sub_2298C = sub_2298C_asm_
+        move_helicopters = move_helicopters_asm_
         file_load_replay = file_load_replay_asm_
         file_write_replay = file_write_replay_asm_
         setup_car_shapes = setup_car_shapes_asm_
