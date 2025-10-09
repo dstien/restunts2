@@ -3,6 +3,7 @@
 test_result_t g_total_tests = { 0, 0 };
 test_result_t g_total_groups = { 0, 0 };
 bool g_verbose = false;
+bool g_extensive = false;
 
 void print_result(test_result_t* res, const char* indent)
 {
@@ -25,12 +26,23 @@ int testmain(int argc, char** argv)
     printf("  Platform  : " PLATFORM_STR "\n");
     printf("  Build date: " DATE "\n\n");
 
-    if (argc > 1) {
-        if (argc == 2 && !stricmp(argv[1], "-v")) {
+    for (int i = 1; i < argc; i++) {
+        const char* a = argv[i];
+        if (!stricmp(a, "-v")) {
+            g_verbose = true;
+        }
+        else if (!stricmp(a, "-x")) {
+            g_extensive = true;
             g_verbose = true;
         }
         else {
-            printf("Usage: %s [-v]\n\n", argv[0]);
+#ifdef PLATFORM_DOS16
+            printf("Usage: %s [-x] [-v]\n", argv[0]);
+            printf("  -x   Extensive range tests\n");
+#else
+            printf("Usage: %s [-v]\n", argv[0]);
+#endif
+            printf("  -v   Verbose output\n");
             return 1;
         }
     }

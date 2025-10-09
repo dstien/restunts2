@@ -22,6 +22,20 @@ void test_math()
         TEST(sin_wrap1,         int_sin(0xC0DE) == 16029);
         TEST(sin_sum1,          sum1            == 2678373);
         TEST(sin_sum2,          sum2            == -15392);
+
+        #ifdef PLATFORM_DOS16
+            if (g_extensive) {
+                extern int16_t __cdecl int_sin_asm_(uint16_t angle);
+                printf("    sin_extensive...\n");
+                for (uint16_t a = 0; a < UINT16_MAX; a++) {
+                    int16_t c_res = int_sin(a);
+                    int16_t asm_res = int_sin_asm_(a);
+                    if (c_res != asm_res) {
+                        printf("a=%d => C=%d, ASM=%d\n", a, c_res, asm_res);
+                    }
+                }
+            }
+        #endif
         // clang-format on
     });
 
@@ -44,16 +58,30 @@ void test_math()
         TEST(cos_wrap1,         int_cos(0xF00D) == 16332);
         TEST(cos_sum1,          sum1            == 388432);
         TEST(cos_sum2,          sum2            == 2204904);
+
+        #ifdef PLATFORM_DOS16
+            if (g_extensive) {
+                extern int16_t __cdecl int_cos_asm_(uint16_t angle);
+                printf("    cos_extensive...\n");
+                for (uint16_t a = 0; a < UINT16_MAX; a++) {
+                    int16_t c_res = int_cos(a);
+                    int16_t asm_res = int_cos_asm_(a);
+                    if (c_res != asm_res) {
+                        printf("a=%d => C=%d, ASM=%d\n", a, c_res, asm_res);
+                    }
+                }
+            }
+        #endif
         // clang-format on
     });
 
     TEST_GROUP(int_atan2, {
         uint32_t sum1 = 0;
-        for (int x = -13, y = 13; x < 13; x++, y--) {
+        for (int16_t x = -13, y = 13; x < 13; x++, y--) {
             sum1 += int_atan2(x, y);
         }
         uint32_t sum2 = 0;
-        for (int x = -1337, y = 0xC0DE; x < 1337; x++, y--) {
+        for (int16_t x = -1337, y = 0xC0DE; x < 1337; x++, y--) {
             sum2 += int_atan2(x, y);
         }
         // clang-format off
@@ -73,6 +101,22 @@ void test_math()
 
         TEST(atan2_sum1,       sum1 == 2944);
         TEST(atan2_sum2,       sum2 == 847);
+
+        #ifdef PLATFORM_DOS16
+            if (g_extensive) {
+                extern int16_t __cdecl int_atan2_asm_(int16_t x, int16_t y);
+                printf("    atan2_extensive...\n");
+                for (int16_t x = -0x400; x <= 0x400; x++) {
+                    for (int16_t y = -0x400; y <= 0x400; y++) {
+                        int16_t c_res = int_atan2(x, y);
+                        int16_t asm_res = int_atan2_asm_(x, y);
+                        if (c_res != asm_res) {
+                            printf("x=%d, y=%d => C=%d, ASM=%d\n", x, y, c_res, asm_res);
+                        }
+                    }
+                }
+            }
+        #endif
         // clang-format on
     });
 }

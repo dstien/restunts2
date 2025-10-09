@@ -37,6 +37,7 @@ typedef struct {
 extern test_result_t g_total_tests;
 extern test_result_t g_total_groups;
 extern bool g_verbose;
+extern bool g_extensive;
 
 #define TEST(name, expr)                                                            \
     do {                                                                            \
