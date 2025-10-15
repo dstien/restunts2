@@ -11,13 +11,13 @@
 #define strlen  _strlen
 #define strrchr _strrchr
 
-extern void __cdecl _printf(const char*, ...);
-extern char* __cdecl _strcat(char*, const char*);
-extern int __cdecl _strcmp(const char*, const char*);
-extern int __cdecl _stricmp(const char*, const char*);
-extern char* __cdecl _strcpy(char*, const char*);
-extern int __cdecl _strlen(const char*);
-extern char* __cdecl _strrchr(const char*, int);
+extern int cdecl _printf(const char near*, ...);
+extern char* cdecl _strcat(char near*, const char near*);
+extern int cdecl _strcmp(const char near*, const char near*);
+extern int cdecl _stricmp(const char near*, const char near*);
+extern char* cdecl _strcpy(char near*, const char near*);
+extern int cdecl _strlen(const char near*);
+extern char* cdecl _strrchr(const char near*, int);
 
 // Stunts types
 #pragma pack(push, 1)
@@ -151,24 +151,24 @@ struct GAMEINFO {
 };
 
 // Stunts code
-extern void __cdecl fatal_error(const char*, ...);
-extern void __cdecl mmgr_alloc_a000(void);
-extern void far* __cdecl mmgr_alloc_resbytes(const char* name, int32_t size);
-extern void __cdecl init_kevinrandom(const char* seed);
-extern int16_t __cdecl get_kevinrandom(void);
-extern void __cdecl get_kevinrandom_seed(char* seed);
-extern void __cdecl init_polyinfo(void);
-extern int16_t __cdecl track_setup(void);
-extern void __cdecl setup_aero_trackdata(void far* carresptr, uint16_t is_opponent);
-extern void __cdecl load_opponent_data(void);
-extern void far* __cdecl file_read_fatal(const char* filename, void far* dst);
-extern void far* __cdecl file_load_resfile(const char* filename);
-extern char far* __cdecl locate_shape_alt(const char far* data, const char* name);
-extern void __cdecl restore_gamestate(uint16_t frame);
-extern void __cdecl player_op(uint8_t);
-extern void __cdecl opponent_op(void);
-extern void __cdecl move_helicopters(void);
-extern void __cdecl move_explode(void);
+extern void cdecl fatal_error(const char*, ...);
+extern void cdecl mmgr_alloc_a000(void);
+extern void far* cdecl mmgr_alloc_resbytes(const char* name, int32_t size);
+extern void cdecl init_kevinrandom(const char* seed);
+extern int16_t cdecl get_kevinrandom(void);
+extern void cdecl get_kevinrandom_seed(char* seed);
+extern void cdecl init_polyinfo(void);
+extern int16_t cdecl track_setup(void);
+extern void cdecl setup_aero_trackdata(void far* carresptr, uint16_t is_opponent);
+extern void cdecl load_opponent_data(void);
+extern void far* cdecl file_read_fatal(const char* filename, void far* dst);
+extern void far* cdecl file_load_resfile(const char* filename);
+extern char far* cdecl locate_shape_alt(const char far* data, const char* name);
+extern void cdecl restore_gamestate(uint16_t frame);
+extern void cdecl player_op(uint8_t);
+extern void cdecl opponent_op(void);
+extern void cdecl move_helicopters(void);
+extern void cdecl move_explode(void);
 
 // Stunts data
 #pragma aux g_language "*"

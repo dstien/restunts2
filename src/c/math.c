@@ -40,7 +40,7 @@ static int16_t sine_table[] = {
 };
 
 // Integer sin() scaled by 0x4000 using LUT.
-int16_t __cdecl int_sin(uint16_t angle)
+int16_t cdecl int_sin(uint16_t angle)
 {
     uint8_t step = SIN_GET_STEP(angle);
     switch (SIN_GET_QUADRANT(angle)) {
@@ -57,7 +57,7 @@ int16_t __cdecl int_sin(uint16_t angle)
 }
 
 // Integer cos() scaled by 0x4000 using LUT.
-int16_t __cdecl int_cos(uint16_t angle)
+int16_t cdecl int_cos(uint16_t angle)
 {
     return int_sin(angle + SIN_STEPS);
 }
@@ -88,7 +88,7 @@ static uint8_t atan_table[] = {
 };
 
 // Integer atan2() for the polar angle in the range -0x1FF to 0x200 using LUT.
-int16_t __cdecl int_atan2(int16_t x, int16_t y)
+int16_t cdecl int_atan2(int16_t x, int16_t y)
 {
     // The function can return without setting a return value, so we need to
     // track whether the initial AX value is unexpected in these cases.
