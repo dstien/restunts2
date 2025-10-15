@@ -1,6 +1,10 @@
 include ../common.mk
 include ../platform/$(PLATFORM)/platform.mk
 
+ifeq ($(ASSERT_UNDEFINED), 1)
+	DEFINES += -DASSERT_UNDEFINED
+endif
+
 define BUILD_INFO
 PLATFORM $(PLATFORM)
 CC       $(CC)

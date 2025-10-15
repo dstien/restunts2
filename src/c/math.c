@@ -1,5 +1,9 @@
 #include "math.h"
 
+#ifdef ASSERT_UNDEFINED
+    #include "externs.h"
+#endif
+
 // Quarter-wave lookup table for sin_fast() in 0x100 steps + the peak endpoint.
 // The value for a given angle is obtained by getting the index from the lower
 // 8 bits, the quadrant from the next 2 bits, and the remaining bits can be
@@ -83,9 +87,17 @@ static uint8_t atan_table[] = {
     128, 128
 };
 
-// Integer atan2() in the range -0x1FF to 0x200 using LUT.
+// Integer atan2() for the polar angle in the range -0x1FF to 0x200 using LUT.
 int16_t __cdecl int_atan2(int16_t x, int16_t y)
 {
+    // The function can return without setting a return value, so we need to
+    // track whether the initial AX value is unexpected in these cases.
+#ifdef ASSERT_UNDEFINED
+    #pragma warning 200 9
+    int16_t ax_value;
+    __asm mov ax_value, ax;
+#endif
+
     // The original code is handwritten assembly that picks the octant using a
     // set of flags whose sum corresponds to an index in a jump table of word
     // sized offsets. We just get the numeric octant to handle in a switch
@@ -93,7 +105,7 @@ int16_t __cdecl int_atan2(int16_t x, int16_t y)
     uint8_t octant = 0;
     int16_t result;
 
-    // Normalise coordinates to first quadrant.
+    // Fold coordinates to first quadrant.
     if (x < 0) {
         octant += 4; // Flip Y-axis (4 octants, 180°).
         x = -x;
@@ -108,6 +120,11 @@ int16_t __cdecl int_atan2(int16_t x, int16_t y)
         // atan(0/0) is undefined, and so is the original code's return value,
         // although in practice it is always 0.
         if (x == 0) {
+#ifdef ASSERT_UNDEFINED
+            if (ax_value != 0) {
+                fatal_error("atan(0/0) AX=%d\n", ax_value);
+            }
+#endif
             return 0;
         }
         // atan(1/1) is π/4.
@@ -116,7 +133,7 @@ int16_t __cdecl int_atan2(int16_t x, int16_t y)
         }
     }
     else {
-        // Normalise coordinates to first octant.
+        // Fold coordinates to first octant.
         if (x > y) {
             int16_t tmp = x;
             x = y;
@@ -130,7 +147,7 @@ int16_t __cdecl int_atan2(int16_t x, int16_t y)
         result = atan_table[step];
     }
 
-    // Retun angle adjusted to the octant.
+    // Retun angle unfolded to its octant.
     switch (octant) {
         case 0:
             return result;
