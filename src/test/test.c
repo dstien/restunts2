@@ -1,5 +1,11 @@
 #include "test.h"
 
+// Buffer for copying objects into DGROUP.
+#ifdef PLATFORM_DOS16
+uint8_t far* g_dg_buf;
+unsigned g_dg_buf_idx;
+#endif
+
 test_result_t g_total_tests = { 0, 0 };
 test_result_t g_total_groups = { 0, 0 };
 bool g_verbose = false;
@@ -12,37 +18,42 @@ void print_result(test_result_t* res, const char* indent)
     int pct_int = quot / 10;
     int pct_frac = quot % 10;
     if (res->fail) {
-        PRINT_COLOR(RED, "%s%d/%d (%d.%d%%)", indent, res->pass, total, pct_int, pct_frac);
+        PRINT_COLOR(
+                RED, FSTR() "%d/%d (%d.%d%%)", indent, res->pass, total, pct_int, pct_frac
+        );
     }
     else {
-        PRINT_COLOR(GREEN, "%s%d/%d (%d.%d%%)", indent, res->pass, total, pct_int, pct_frac);
+        PRINT_COLOR(
+                GREEN, FSTR() "%d/%d (%d.%d%%)", indent, res->pass, total, pct_int, pct_frac
+        );
     }
-    printf(" passed\n");
+    tprintf(" passed\n");
 }
 
-int testmain(int argc, char** argv)
+int testmain(int argc, char near* near* argv)
 {
-    printf("restunts test suite\n");
-    printf("  Platform  : " PLATFORM_STR "\n");
-    printf("  Build date: " DATE "\n\n");
+    dg_reset();
+    tprintf("restunts test suite\n");
+    tprintf("  Platform  : " PLATFORM_STR "\n");
+    tprintf("  Build date: " DATE "\n\n");
 
     for (int i = 1; i < argc; i++) {
         const char* a = argv[i];
-        if (!stricmp(a, "-v")) {
+        if (!stricmp(_(a), _("-v"))) {
             g_verbose = true;
         }
-        else if (!stricmp(a, "-x")) {
+        else if (!stricmp(_(a), _("-x"))) {
             g_extensive = true;
             g_verbose = true;
         }
         else {
 #ifdef PLATFORM_DOS16
-            printf("Usage: %s [-x] [-v]\n", argv[0]);
-            printf("  -x   Extensive range tests\n");
+            tprintf("Usage: %Fs [-x] [-v]\n", argv[0]);
+            tprintf("  -x   Extensive range tests\n");
 #else
-            printf("Usage: %s [-v]\n", argv[0]);
+            tprintf("Usage: %s [-v]\n", argv[0]);
 #endif
-            printf("  -v   Verbose output\n");
+            tprintf("  -v   Verbose output\n");
             return 1;
         }
     }
@@ -50,10 +61,10 @@ int testmain(int argc, char** argv)
     PRINT_COLOR(DIM, "math.c\n");
     test_math();
 
-    printf("\n");
-    printf("Total functions: ");
+    tprintf("\n");
+    tprintf("Total functions: ");
     print_result(&g_total_groups, "");
-    printf("Total tests    : ");
+    tprintf("Total tests    : ");
     print_result(&g_total_tests, "");
 
     return g_total_tests.fail;

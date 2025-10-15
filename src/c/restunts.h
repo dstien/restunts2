@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdbool.h>
 #include <stdint.h>
 
 #if defined(__WATCOMC__) && defined(__I86__) // clang-format off

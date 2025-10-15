@@ -1,6 +1,6 @@
-#include "util.h"
 #include <externs.h>
 #include <restunts.h>
+#include "util.h"
 
 void init_track_tables(void)
 {

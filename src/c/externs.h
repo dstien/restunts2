@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stdint.h>
+#include "math.h"
 
 // clib
 #define printf  _printf

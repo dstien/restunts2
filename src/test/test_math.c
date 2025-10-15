@@ -1,5 +1,28 @@
-#include "math.h"
+#include <math.h>
 #include "test.h"
+
+// Shim for calling int_atan2 with AX = 0 on DOS16. The original implementation
+// has undefined behaviour that depend on AX being 0. Since the DOS16 build of
+// these tests use large memory model, AX is set to DS.
+int16_t cdecl call_int_atan2(int16_t x, int16_t y);
+int16_t cdecl call_int_atan2_asm_(int16_t x, int16_t y);
+extern int16_t cdecl int_atan2_asm_(int16_t x, int16_t y);
+#ifdef PLATFORM_DOS16
+    #pragma aux call_int_atan2 = \
+            "push cx"            \
+            "push bx"            \
+            "xor ax, ax"         \
+            "call int_atan2"     \
+            "add sp, 4" parm caller[bx][cx] modify exact[ax];
+    #pragma aux call_int_atan2_asm_ = \
+            "push cx"                 \
+            "push bx"                 \
+            "xor ax, ax"              \
+            "call int_atan2_asm_"     \
+            "add sp, 4" parm caller[bx][cx] modify exact[ax];
+#else
+    #define call_int_atan2 int_atan2
+#endif
 
 void test_math()
 {
@@ -25,13 +48,13 @@ void test_math()
 
         #ifdef PLATFORM_DOS16
             if (g_extensive) {
-                extern int16_t __cdecl int_sin_asm_(uint16_t angle);
-                printf("    sin_extensive...\n");
+                extern int16_t cdecl int_sin_asm_(uint16_t angle);
+                tprintf("    sin_extensive...\n");
                 for (uint16_t a = 0; a < UINT16_MAX; a++) {
                     int16_t c_res = int_sin(a);
                     int16_t asm_res = int_sin_asm_(a);
                     if (c_res != asm_res) {
-                        printf("a=%d => C=%d, ASM=%d\n", a, c_res, asm_res);
+                        tprintf("a=%d => C=%d, ASM=%d\n", a, c_res, asm_res);
                     }
                 }
             }
@@ -61,13 +84,13 @@ void test_math()
 
         #ifdef PLATFORM_DOS16
             if (g_extensive) {
-                extern int16_t __cdecl int_cos_asm_(uint16_t angle);
-                printf("    cos_extensive...\n");
+                extern int16_t cdecl int_cos_asm_(uint16_t angle);
+                tprintf("    cos_extensive...\n");
                 for (uint16_t a = 0; a < UINT16_MAX; a++) {
                     int16_t c_res = int_cos(a);
                     int16_t asm_res = int_cos_asm_(a);
                     if (c_res != asm_res) {
-                        printf("a=%d => C=%d, ASM=%d\n", a, c_res, asm_res);
+                        tprintf("a=%d => C=%d, ASM=%d\n", a, c_res, asm_res);
                     }
                 }
             }
@@ -78,40 +101,40 @@ void test_math()
     TEST_GROUP(int_atan2, {
         uint32_t sum1 = 0;
         for (int16_t x = -13, y = 13; x < 13; x++, y--) {
-            sum1 += int_atan2(x, y);
+            sum1 += call_int_atan2(x, y);
         }
         uint32_t sum2 = 0;
         for (int16_t x = -1337, y = 0xC0DE; x < 1337; x++, y--) {
-            sum2 += int_atan2(x, y);
+            sum2 += call_int_atan2(x, y);
         }
         // clang-format off
-        TEST(atan2_north,      int_atan2( 0,  1) == 0);
-        TEST(atan2_north_east, int_atan2( 1,  1) == 0x80);
-        TEST(atan2_east,       int_atan2( 1,  0) == 0x100);
-        TEST(atan2_south_east, int_atan2( 1, -1) == 0x180);
-        TEST(atan2_south,      int_atan2( 0, -1) == 0x200);
-        TEST(atan2_south_west, int_atan2(-1, -1) == -0x180);
-        TEST(atan2_west,       int_atan2(-1,  0) == -0x100);
-        TEST(atan2_north_west, int_atan2(-1,  1) == -0x080);
-        TEST(atan2_zero,       int_atan2( 0,  0) == 0);
-        TEST(atan2_big,        int_atan2(0x4000, 0x4000)         == 0x80);
-        TEST(atan2_edge1,      int_atan2(0x200  - 1, 0x200)      == 0x80);
-        TEST(atan2_edge2,      int_atan2(0x4000 - 1, 0x4000)     == 0x80);
-        TEST(atan2_edge3,      int_atan2(0x8000 - 2, 0x8000 - 1) == 0x80);
+        TEST(atan2_north,      call_int_atan2( 0,  1) == 0);
+        TEST(atan2_north_east, call_int_atan2( 1,  1) == 0x80);
+        TEST(atan2_east,       call_int_atan2( 1,  0) == 0x100);
+        TEST(atan2_south_east, call_int_atan2( 1, -1) == 0x180);
+        TEST(atan2_south,      call_int_atan2( 0, -1) == 0x200);
+        TEST(atan2_south_west, call_int_atan2(-1, -1) == -0x180);
+        TEST(atan2_west,       call_int_atan2(-1,  0) == -0x100);
+        TEST(atan2_north_west, call_int_atan2(-1,  1) == -0x080);
+        TEST(atan2_zero,       call_int_atan2( 0,  0) == 0);
+        TEST(atan2_big,        call_int_atan2(0x4000, 0x4000)         == 0x80);
+        TEST(atan2_edge1,      call_int_atan2(0x200  - 1, 0x200)      == 0x80);
+        TEST(atan2_edge2,      call_int_atan2(0x4000 - 1, 0x4000)     == 0x80);
+        TEST(atan2_edge3,      call_int_atan2(0x8000 - 2, 0x8000 - 1) == 0x80);
 
         TEST(atan2_sum1,       sum1 == 2944);
         TEST(atan2_sum2,       sum2 == 847);
 
         #ifdef PLATFORM_DOS16
             if (g_extensive) {
-                extern int16_t __cdecl int_atan2_asm_(int16_t x, int16_t y);
-                printf("    atan2_extensive...\n");
+                extern int16_t cdecl int_atan2_asm_(int16_t x, int16_t y);
+                tprintf("    atan2_extensive...\n");
                 for (int16_t x = -0x400; x <= 0x400; x++) {
                     for (int16_t y = -0x400; y <= 0x400; y++) {
-                        int16_t c_res = int_atan2(x, y);
-                        int16_t asm_res = int_atan2_asm_(x, y);
+                        int16_t c_res = call_int_atan2(x, y);
+                        int16_t asm_res = call_int_atan2_asm_(x, y);
                         if (c_res != asm_res) {
-                            printf("x=%d, y=%d => C=%d, ASM=%d\n", x, y, c_res, asm_res);
+                            tprintf("x=%d, y=%d => C=%d, ASM=%d\n", x, y, c_res, asm_res);
                         }
                     }
                 }
