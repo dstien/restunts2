@@ -121,7 +121,6 @@ extern bool g_extensive;
         if (g_verbose) {                                                \
             tprintf("    " FSTR(-20), #name);                           \
         }                                                               \
-        set_ax(0);                                                      \
         if (!(expr)) {                                                  \
             res.fail++;                                                 \
             if (g_verbose) {                                            \
@@ -176,16 +175,6 @@ extern bool g_extensive;
             g_total_groups.pass++;                          \
         }                                                   \
     } while (0)
-
-// Watcom won't compile inline assembly in macro parameters, so we sneak it in
-// with a function instead. This is to set AX when dealing with undefined
-// return values on DOS16.
-static inline void set_ax(int16_t x)
-{
-#ifdef PLATFORM_DOS16
-    __asm mov ax, x;
-#endif
-}
 
 // Very simple deterministic RNGs. The shift constants were picked by searching
 // GitHub for xorshift16 and xorshift32, then picking the values I saw
