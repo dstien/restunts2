@@ -1,0 +1,7 @@
+SYSTEM  PMODEW
+OPTION  MAP = ../../../build/platform/dos32/test32.map,
+        QUIET
+NAME    ../../../build/platform/dos32/test32.exe
+FILE    ../../../build/test/dos32/test.o # Dummy entry to please wlink.
+LIBRARY ../../../build/test/dos32/libtest.a,
+        ../../../build/c/dos32/librestunts.a

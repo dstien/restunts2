@@ -49,6 +49,11 @@ jobs:
         continue-on-error: true
         run: make -C src/platform/dos16 test-port
 
+      - id: build_test_dos32
+        name: Build test (dos32)
+        continue-on-error: true
+        run: make -C src/platform/dos32
+
       - id: build_test_linux64
         name: Build test (linux64)
         continue-on-error: true
@@ -57,8 +62,9 @@ jobs:
       # Artifacts.
       - name: Uppercase DOS artifacts
         run: |
-          cd build/platform/dos16
-          for file in *; do mv "${file}" "${file^^}"; done
+          for dir in build/platform/dos16 build/platform/dos32; do
+            (cd "$dir" && for file in *; do mv "${file}" "${file^^}"; done)
+          done
 
       - name: Prepare artifact restunts (dos16, orig, debug)
         if: steps.build_restunts_dos16_orig.outcome == 'success'
@@ -161,7 +167,7 @@ jobs:
           path: artifact
 
       # Fail job if any target failed.
-      - name: Failed to build all targets
+      - name: Ensure all targets succeeded
         if: |
           steps.build_restunts_dos16_orig.outcome == 'failure' ||
           steps.build_restunts_dos16_port.outcome == 'failure' ||
@@ -169,6 +175,7 @@ jobs:
           steps.build_repldump_dos16_port.outcome == 'failure' ||
           steps.build_test_dos16_orig.outcome     == 'failure' ||
           steps.build_test_dos16_port.outcome     == 'failure' ||
+          steps.build_test_dos32.outcome          == 'failure' ||
           steps.build_test_linux64.outcome        == 'failure'
         run: exit 1
 
@@ -180,6 +187,8 @@ jobs:
           wstrip -q artifact/TEST.EXE
           cp build/platform/dos16/TESTO.EXE artifact/
           wstrip -q artifact/TESTO.EXE
+          cp build/platform/dos32/TEST32.EXE artifact/
+          wstrip -q artifact/TEST32.EXE
           cp build/platform/linux64/test-linux64 artifact/
           strip artifact/test-linux64
       - uses: actions/upload-artifact@v4
@@ -216,6 +225,11 @@ jobs:
         continue-on-error: true
         run: dosemu -n -quiet -K . -E "TEST.EXE -v"
 
+      - id: test_dos32
+        name: Test dos32
+        continue-on-error: true
+        run: dosemu -n -quiet -K . -E "TEST32.EXE -v"
+
       - id: test_linux64
         name: Test linux64
         continue-on-error: true
@@ -224,9 +238,10 @@ jobs:
           ./test-linux64 -v
 
       # Fail job if any tests failed.
-      - name: Failed to pass all targets
+      - name: Ensure all targets passed
         if: |
           steps.test_dos16_orig.outcome == 'failure' ||
           steps.test_dos16_port.outcome == 'failure' ||
+          steps.test_dos32.outcome      == 'failure' ||
           steps.test_linux64.outcome    == 'failure'
         run: exit 1

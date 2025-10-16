@@ -28,19 +28,27 @@ A recreation of the original Stunts 1.1 executable can be built using GNU Make a
 ```
 $ make
 ```
-This produces four 16-bit real-mode DOS executables in `build/platform/dos16`:
-* `restunts.exe`: Combines our ported C functions with the original code.
-* `restunto.exe`: Uses solely the original code. It is functionally identical to the retail version, but not binary identical.
-* `test.exe`: Runs unit tests for the ported C code.
-* `testo.exe`: Runs unit tests on the original code. If these tests fails, the tests are wrong.
+This produces six 16-bit real-mode DOS executables in `build/platform/dos16`:
+| Executable     | Description      | Code origin       |
+| ---            | ---              | ---               |
+| `restunts.exe` | Game             | Ported + original |
+| `restunto.exe` | Game             | Original          |
+| `repldump.exe` | Replay dump tool | Ported + original |
+| `repldumo.exe` | Replay dump tool | Original core     |
+| `test.exe`     | Unit tests       | Ported + original |
+| `testo.exe`    | Unit tests       | Original core     |
 
-Builds are debug-enabled by default. Release builds can be made with `make DEBUG=0` or running `wstrip` on the executable.
+The versions with original code are used to verify the behaviour of the ported code. The `repldump` tool writes the game state for every frame in a given replay to a binary file so that the simulation of an entire race can be verified programmatically.
 
-The ported code can also be compiled for x86_64 with *clang*:
-```
-$ make linux64
-```
-This produces the unit test executable `build/platform/linux64/test-linux64`, which ensures that the code is portable and preserves the original code's behaviour.
+Builds are debug-enabled by default. Release builds can be made with `make DEBUG=0` or running `wstrip` on the executables. Additional checks to detect unexpected undefined behaviour can be enabled with `make ASSERT_UNDEFINED=1`.
+
+The fully ported code can also be built and tested for other platforms:
+| Platform     | Make target    | Compiler    | Executable                            |
+| ---          | ---            | ---         | ---                                   |
+| DOS x86_32   | `make dos32`   | Open Watcom | `build/platform/dos32/test32.exe`     |
+| Linux x86_64 | `make linux64` | clang       | `build/platform/linux64/test-linux64` |
+
+These targets do not produce a playable game, only unit tests to aid the reversing process.
 
 ## Debugging
 
@@ -133,6 +141,15 @@ This workaround will prevent you from opening other Ghidra projects because they
 <summary><b>DOS builds fail or succeed with warnings and broken EXE files</b></summary>
 
 Ensure that you are including Watcom's DOS headers with `INCLUDE=$WATCOM/h` and not the Linux headers (`$WATCOM/lh`).
+</details>
+
+<details>
+<summary><b>DOS32 build just prints <i>"This is a PMODE/W executable"</i></b></summary>
+
+`wlink` coudn't find `pmodew.exe`. Include `$WATCOM/binw` in your `PATH`:
+```
+$ PATH=$PATH:$WATCOM/binw make dos32
+```
 </details>
 
 <details>
