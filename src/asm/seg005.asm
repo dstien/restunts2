@@ -1631,7 +1631,7 @@ LAB_21b7_0f26:
     mov     ax, word ptr [bp+var_1C]
     sub     ax, word ptr [bx+state.game_vec1.vx]
     push    ax
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     mov     di, ax
     cmp     word ptr [bp+var_22], di
@@ -1728,7 +1728,7 @@ LAB_21b7_1038:
 LAB_21b7_104a:
     push    word ptr [bp+var_28]
     push    word ptr [bp+var_20]
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     mov     word ptr [bp+var_8], ax
     mov     ax, word ptr [bp+var_2C]

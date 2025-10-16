@@ -21,18 +21,14 @@ extern char* cdecl _strrchr(const char near*, int);
 
 // Stunts types
 #pragma pack(push, 1)
-struct VECTOR {
-    int16_t x, y, z;
-};
-
-struct VECTORLONG {
+typedef struct VECTORLONG {
     int32_t lx, ly, lz;
-};
+} VECTORLONG;
 
-struct CARSTATE {
-    struct VECTORLONG car_posWorld1;
-    struct VECTORLONG car_posWorld2;
-    struct VECTOR car_rotate;
+typedef struct CARSTATE {
+    VECTORLONG car_posWorld1;
+    VECTORLONG car_posWorld2;
+    VECTOR car_rotate;
     int16_t car_pseudoGravity;
     int16_t car_steeringAngle;
     int16_t car_currpm;
@@ -61,11 +57,11 @@ struct CARSTATE {
     int16_t car_rc3[4];
     int16_t car_rc4[4];
     int16_t car_rc5[4];
-    struct VECTOR car_whlWorldCrds1[4];
-    struct VECTOR car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3;
-    struct VECTOR car_vec_unk4;
-    struct VECTOR car_vec_unk5;
+    VECTOR car_whlWorldCrds1[4];
+    VECTOR car_whlWorldCrds2[4];
+    VECTOR car_vec_unk3;
+    VECTOR car_vec_unk4;
+    VECTOR car_vec_unk5;
     int16_t field_B6;
     int16_t field_B8;
     int16_t field_BA;
@@ -86,15 +82,15 @@ struct CARSTATE {
     char field_CD;
     char field_CE;
     char field_CF;
-};
+} CARSTATE;
 
-struct GAMESTATE {
+typedef struct GAMESTATE {
     int32_t game_longs1[24];
     int32_t game_longs2[24];
     int32_t game_longs3[24];
-    struct VECTOR game_vec1[2];
-    struct VECTOR game_vec3;
-    struct VECTOR game_vec4;
+    VECTOR game_vec1[2];
+    VECTOR game_vec3;
+    VECTOR game_vec4;
     int16_t game_frame_in_sec;
     int16_t game_frames_per_sec;
     int32_t game_travDist;
@@ -107,8 +103,8 @@ struct GAMESTATE {
     uint16_t game_impactSpeed;
     uint16_t game_topSpeed;
     int16_t game_jumpCount;
-    struct CARSTATE playerstate;
-    struct CARSTATE opponentstate;
+    CARSTATE playerstate;
+    CARSTATE opponentstate;
     int16_t field_2F2;
     int16_t field_2F4;
     int16_t game_startcol;
@@ -135,9 +131,9 @@ struct GAMESTATE {
     char field_45D;
     char field_45E;
     char field_45F;
-};
+} GAMESTATE;
 
-struct GAMEINFO {
+typedef struct GAMEINFO {
     char game_playercarid[4];
     char game_playermaterial;
     char game_playertransmission;
@@ -148,7 +144,8 @@ struct GAMEINFO {
     char game_trackname[9];
     uint16_t game_framespersec;
     uint16_t game_recordedframes;
-};
+} GAMEINFO;
+#pragma pack(pop)
 
 // Stunts code
 extern void cdecl fatal_error(const char*, ...);
@@ -188,11 +185,11 @@ extern uint16_t framespersec;
 #pragma aux run_game_random "*"
 extern int16_t run_game_random;
 #pragma aux gameconfig "*"
-extern struct GAMEINFO gameconfig;
+extern GAMEINFO gameconfig;
 #pragma aux state "*"
-extern struct GAMESTATE state;
+extern GAMESTATE state;
 #pragma aux cvxptr "*"
-extern struct GAMESTATE far* cvxptr;
+extern GAMESTATE far* cvxptr;
 #pragma aux gabort "*"
 extern uint8_t gabort;
 #pragma aux trackrows "*"
@@ -257,3 +254,5 @@ extern int8_t far* td21_col_from_path;
 extern int8_t far* td22_row_from_path;
 #pragma aux trackdata23 "*"
 extern uint8_t far* trackdata23;
+#pragma aux audiotimers "*"
+extern void far* audiotimers;

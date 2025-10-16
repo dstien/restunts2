@@ -13,8 +13,8 @@ seg011 segment byte public use16 'STUNTSC'
 ; * int3dhypot
 ; ******************************************************************************
 
-; int __cdecl16far polarRadius3D(VECTOR * vec)
-polarRadius3D_asm_ proc far
+; int __cdecl16far int_hypot_3d(VECTOR * vec)
+int_hypot_3d_asm_ proc far
     vec        = word ptr    6
 
     push    bp
@@ -23,14 +23,14 @@ polarRadius3D_asm_ proc far
     push    word ptr [bx+0x4]
     push    word ptr [bx+0x2]
     push    word ptr [bx]
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     push    ax
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     pop     bp
     retf
-polarRadius3D_asm_ endp
+int_hypot_3d_asm_ endp
 
 seg011 ends
 end

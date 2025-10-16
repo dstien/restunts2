@@ -88,7 +88,7 @@ seg012 segment byte public use16 'STUNTSC'
     public file_find_next_asm_
     public multiply_and_scale_asm_
     public video_set_mode4_asm_
-    public polarRadius2D_asm_
+    public int_hypot_asm_
     public video_set_mode7_asm_
     public nopsub_30180_asm_
     public timer_setup_interrupt_asm_
@@ -333,7 +333,7 @@ seg012 segment byte public use16 'STUNTSC'
         file_find_next = file_find_next_asm_
         multiply_and_scale = multiply_and_scale_asm_
         video_set_mode4 = video_set_mode4_asm_
-        polarRadius2D = polarRadius2D_asm_
+        int_hypot = int_hypot_asm_
         video_set_mode7 = video_set_mode7_asm_
         nopsub_30180 = nopsub_30180_asm_
         timer_setup_interrupt = timer_setup_interrupt_asm_
@@ -561,7 +561,6 @@ seg012 segment byte public use16 'STUNTSC'
         file_find_next = file_find_next_asm_
         multiply_and_scale = multiply_and_scale_asm_
         video_set_mode4 = video_set_mode4_asm_
-        polarRadius2D = polarRadius2D_asm_
         video_set_mode7 = video_set_mode7_asm_
         nopsub_30180 = nopsub_30180_asm_
         timer_setup_interrupt = timer_setup_interrupt_asm_
@@ -758,6 +757,7 @@ seg012 segment byte public use16 'STUNTSC'
         file_unflip_shape2d_pes = file_unflip_shape2d_pes_asm_
         ; Functions ported to C are external.
         extrn int_atan2:proc
+        extrn int_hypot:proc
         extrn int_sin:proc
         extrn int_cos:proc
     endif

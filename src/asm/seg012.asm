@@ -3077,8 +3077,8 @@ video_set_mode4_asm_ endp
 ; * dbg: inthypot
 ; ******************************************************************************
 
-; int __cdecl16far polarRadius2D(int z_, int y_)
-polarRadius2D_asm_ proc far
+; int __cdecl16far int_hypot(int z_, int y_)
+int_hypot_asm_ proc far
     z_         = word ptr    6
     y_         = word ptr    8
 
@@ -3140,7 +3140,7 @@ LAB_2ea2_16f2:
     div     bx
     pop     bp
     retf
-polarRadius2D_asm_ endp
+int_hypot_asm_ endp
 
 ; void __cdecl16far video_set_mode7(void)
 video_set_mode7_asm_ proc far

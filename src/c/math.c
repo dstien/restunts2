@@ -9,6 +9,7 @@
 // 8 bits, the quadrant from the next 2 bits, and the remaining bits can be
 // discarded as the sine wraps around every 0x400 steps. The values are scaled
 // by 0x4000.
+#define SIN_SCALE_BITS      14
 #define SIN_STEPS           0x100
 #define SIN_GET_STEP(a)     (a & 0xFF)
 #define SIN_GET_QUADRANT(a) ((a >> 8) & 3)
@@ -64,8 +65,8 @@ int16_t cdecl int_cos(uint16_t angle)
 
 // One-octant (45°) lookup table of the arctangent in 0x100 steps + the peak
 // endpoint. The polar angle for a given coordinate is found by determining
-// the octant, normalise the coordinates to be in the first octant, get the
-// angle at index x/y and rotate it back to the actual octant.
+// the octant, fold the coordinates to the first octant, get the angle at
+// index x/y and unfold it back to its actual octant.
 static uint8_t atan_table[] = {
     0,   1,   1,   2,   3,   3,   4,   4,   5,   6,   6,   7,   8,   8,   9,
     10,  10,  11,  11,  12,  13,  13,  14,  15,  15,  16,  16,  17,  18,  18,
@@ -167,4 +168,42 @@ int16_t cdecl int_atan2(int16_t x, int16_t y)
         default:
             return -(result + 0x100);
     }
+}
+
+// Integer hypotenuse for the polar radius using int_atan2, int_sin or int_cos.
+int16_t cdecl int_hypot(int16_t x, int16_t y)
+{
+    // Get the polar angle for (x, y).
+    int16_t angle = int_atan2(x, y);
+
+    // Fold second semicircle to the first.
+    if (angle < 0) {
+        angle = -angle;
+    }
+    // Fold second quadrant to the first.
+    if (angle >= 0x100) {
+        angle = -(angle - 0x200);
+    }
+
+    // To reduce rounding errors caused by the fixed granularities of the
+    // lookup tables, y/cos(a) is used for the first octant and x/sin(a)
+    // for the second.
+    if (angle <= 0x80) {
+        if (y < 0) {
+            y = -y;
+        }
+        return ((uint32_t)y << SIN_SCALE_BITS) / int_cos(angle);
+    }
+    else {
+        if (x < 0) {
+            x = -x;
+        }
+        return ((uint32_t)x << SIN_SCALE_BITS) / int_sin(angle);
+    }
+}
+
+// Integer 3D hypotenuse using nested 2D int_hypot calls.
+int16_t cdecl int_hypot_3d(const VECTOR* vec)
+{
+    return int_hypot(int_hypot(vec->x, vec->y), vec->z);
 }

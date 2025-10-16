@@ -582,7 +582,7 @@ LAB_19f1_0483:
     mov     ax, word ptr [bp+var_vec5]
     sub     ax, word ptr [bp+var_vec4]
     push    ax
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     mov     word ptr [bp+var_38], ax
     push    ax
@@ -4645,7 +4645,7 @@ draw_track_preview_asm_ proc far
     mov     ax, word ptr [word_3C10E]
     sub     ax, word ptr [word_3C108]
     push    ax
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     mov     word ptr [bp+var_4], ax
     push    ax
@@ -6458,7 +6458,7 @@ LAB_19f1_3d6d:
     mov     ax, word ptr [bp+var_6]
     sub     ax, word ptr [bp+var_3E]
     push    ax
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     mov     word ptr [bp+var_C], ax
     push    ax

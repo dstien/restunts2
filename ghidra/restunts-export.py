@@ -26,6 +26,8 @@ PORTED_FUNCS_BY_FILE = {
         "int_sin",
         "int_cos",
         "int_atan2",
+        "int_hypot",
+        "int_hypot_3d",
     },
 }
 # Source file by function for quick lookup of whether a function is ported.

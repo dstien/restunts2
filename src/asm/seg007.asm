@@ -669,10 +669,10 @@ audio_op_unk2_asm_ proc far
     push    word ptr [bp+param_7]
     push    word ptr [bp+param_8]
     push    word ptr [bp+param_6]
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     push    ax
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     mov     word ptr [bp+var_C], ax
     cmp     ax, 0x1770
@@ -687,10 +687,10 @@ LAB_26ba_05d2:
     push    word ptr [bp+param_4]
     push    word ptr [bp+param_5]
     push    word ptr [bp+param_3]
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     push    ax
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     mov     word ptr [bp+var_A], ax
     sub     ax, word ptr [bp+var_C]

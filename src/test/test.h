@@ -57,7 +57,18 @@
     }
 
     // Copy arbitrary bytes to the buffer in DGROUP.
-    #define dg_ptr(ptr, size) DG_PTR_NOT_IMPLEMENTED
+    static inline void near* dg_ptr(const void* ptr, unsigned size)
+    {
+        int i;
+        for (i = 0; i < size; i++) {
+            g_dg_buf[g_dg_buf_idx + i] = ((const uint8_t*)ptr)[i];
+        }
+
+        void* result = g_dg_buf + g_dg_buf_idx;
+        g_dg_buf_idx += i;
+
+        return (void near*)FP_OFF(result);
+    }
 
     // printf() convenience that copies the formatting string to DGROUP.
     #define tprintf(fmt, ...) printf(dg_str(fmt), ##__VA_ARGS__)
@@ -81,6 +92,9 @@
 
     #define FSTR(...) "%" _STR(__VA_ARGS__) "s"
 #endif // clang-format on
+
+// Conversion conveniences.
+#define VEC(arg) _(arg, sizeof(VECTOR))
 
 // dosemu, DOSBox and Windows 10 all support ANSI colours.
 #define RED   "\033[31m"
@@ -128,7 +142,7 @@ extern bool g_extensive;
         }                                                               \
     } while (0)
 
-#define TEST_GROUP(name, BODY)                              \
+#define TEST_GROUP(name, ...)                              \
     do {                                                    \
         dg_reset();                                         \
         test_result_t res = { 0, 0 };                       \
@@ -139,7 +153,7 @@ extern bool g_extensive;
             tprintf("  " FSTR(-20), #name);                 \
         }                                                   \
                                                             \
-        BODY;                                               \
+        __VA_ARGS__;                                        \
                                                             \
         if (g_verbose) {                                    \
             print_result(&res, "                        "); \
@@ -171,6 +185,25 @@ static inline void set_ax(int16_t x)
 #ifdef PLATFORM_DOS16
     __asm mov ax, x;
 #endif
+}
+
+// Very simple deterministic RNGs. The shift constants were picked by searching
+// GitHub for xorshift16 and xorshift32, then picking the values I saw
+// recurring, counting on the wisdom of the crowd.
+static inline uint16_t xorshift16(uint16_t x)
+{
+    x ^= x << 7;
+    x ^= x >> 9;
+    x ^= x << 8;
+    return x;
+}
+
+static inline uint32_t xorshift32(uint32_t x)
+{
+    x ^= x << 13;
+    x ^= x >> 17;
+    x ^= x >> 5;
+    return x;
 }
 
 void print_result(test_result_t* res, const char* indent);

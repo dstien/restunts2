@@ -44,13 +44,13 @@ include dseg.def
 include dsegu.def
 
 seg011 segment byte public use16 'STUNTSC'
-    public polarRadius3D_asm_
+    public int_hypot_3d_asm_
 
     ifdef RESTUNTS_ORIGINAL
         ; Alias all functions to the original asm implementation.
-        polarRadius3D = polarRadius3D_asm_
+        int_hypot_3d = int_hypot_3d_asm_
     else
-        ; Alias unported functions to the original asm implementation.
-        polarRadius3D = polarRadius3D_asm_
+        ; Functions ported to C are external.
+        extrn int_hypot_3d:proc
     endif
 seg011 ends

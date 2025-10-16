@@ -1392,7 +1392,7 @@ LAB_24d6_0d3e:
     mov     ax, word ptr es:[bx+0x6]
     sub     ax, word ptr es:[bx+0xa]
     push    ax
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     mov     si, ax
     les     bx, [transshapepolyinfo]
@@ -1402,7 +1402,7 @@ LAB_24d6_0d3e:
     mov     ax, word ptr es:[bx+0x6]
     sub     ax, word ptr es:[bx+0xe]
     push    ax
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     mov     di, ax
     cmp     di, si
@@ -1554,7 +1554,7 @@ LAB_24d6_0ea1:
     push    word ptr [bp+var_vec3+4]
     lea     ax, [bp+var_vec2]
     push    ax
-    call    far ptr polarRadius3D
+    call    far ptr int_hypot_3d
     add     sp, 0x2
     push    ax
     call    far ptr projectiondata9_times_ratio
@@ -2488,7 +2488,7 @@ vector_op_unk2_asm_ proc far
     call    far ptr _abs
     add     sp, 0x2
     push    ax
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     mov     word ptr [bp+var_4], ax
     mov     word ptr [bp+var_2], 0x0

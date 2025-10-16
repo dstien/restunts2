@@ -537,7 +537,7 @@ code_bto_lCorner:
     add     ah, 0x4
 code_lCorner_radius:
     push    ax
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     mov     word ptr [bp-0xa], ax
     cmp     ax, 0x588
@@ -559,7 +559,7 @@ code_bto_sCorner:
     add     ah, 0x2
 code_sCorner_radius:
     push    ax
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     mov     word ptr [bp-0xa], ax
     cmp     ax, 0x188
@@ -907,7 +907,7 @@ LAB_1e1a_07ea:
     mov     ax, word ptr [bp-0x2c]
     add     ah, 0x4
     push    ax
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     sub     ax, 0x600
 ; delta from centerline  
@@ -1101,7 +1101,7 @@ code_bto_bankCorner:
     mov     ax, word ptr [bp-0x2c]
     add     ah, 0x4
     push    ax
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     sub     ax, 0x600
     mov     word ptr [bp-0xa], ax
@@ -1950,7 +1950,7 @@ LAB_1e1a_11ef:
 LAB_1e1a_1208:
     push    word ptr [bp-0x28]
     push    word ptr [bp-0x1e]
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     mov     word ptr [bp-0xa], ax
     cmp     ax, 0x14c

@@ -161,7 +161,7 @@ LAB_1471_00fc:
     mov     word ptr [bp+var_2E], ax
     lea     ax, [bp+var_32]
     push    ax
-    call    far ptr polarRadius3D
+    call    far ptr int_hypot_3d
     add     sp, 0x2
     jmp     LAB_1471_014e
 LAB_1471_0138:
@@ -171,7 +171,7 @@ LAB_1471_0138:
     mov     ax, word ptr [bp+var_3C]
     sub     ax, word ptr [bp+var_28]
     push    ax
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
 LAB_1471_014e:
     mov     si, ax
@@ -1477,7 +1477,7 @@ LAB_1471_0c9e:
     mov     word ptr [bp+vec_17C+4], ax
     lea     ax, [bp+vec_17C]
     push    ax
-    call    far ptr polarRadius3D
+    call    far ptr int_hypot_3d
     add     sp, 0x2
 ; Distance to the wall, maybe?  
     mov     word ptr [bp+var_F2], ax
@@ -2121,7 +2121,7 @@ LAB_1471_1320:
     mov     word ptr [bp+vec_17C+4], ax
     lea     ax, [bp+vec_17C]
     push    ax
-    call    far ptr polarRadius3D
+    call    far ptr int_hypot_3d
     add     sp, 0x2
     mov     word ptr [bp+var_EE], ax
     mov     al, byte ptr [bp+var_wheelIndex]
@@ -6772,7 +6772,7 @@ car_car_speed_adjust_maybe_asm_ proc far
     mov     ax, word ptr [bp+var_14]
     sub     ax, word ptr [bp+var_10]
     push    ax
-    call    far ptr polarRadius2D
+    call    far ptr int_hypot
     add     sp, 0x4
     mov     word ptr [bp+var_A], ax
     cmp     ax, 0xa
@@ -8185,7 +8185,7 @@ LAB_1471_49ca:
     mov     word ptr [bp+var_26], ax
     lea     ax, [bp+var_2A]
     push    ax
-    call    far ptr polarRadius3D
+    call    far ptr int_hypot_3d
     add     sp, 0x2
     cmp     ax, si
     ja      LAB_1471_49c2
