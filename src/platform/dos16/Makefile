@@ -21,6 +21,8 @@ REPLDUMP_ORIG_LNK := repldump-orig.lnk
 
 ASM_PORT_OBJS := $(patsubst ../../asm/%.asm,../../../build/asm/port/%.o,$(wildcard ../../asm/*.asm))
 ASM_ORIG_OBJS := $(patsubst ../../asm/%.asm,../../../build/asm/orig/%.o,$(wildcard ../../asm/*.asm))
+ASM_PORT_STAMP := ../../../build/asm/port/.stamp
+ASM_ORIG_STAMP := ../../../build/asm/orig/.stamp
 
 RESTUNTS_LIB := ../../../build/c/$(PLATFORM)/librestunts.a
 TEST_LIB := ../../../build/test/$(PLATFORM)/libtest.a
@@ -38,11 +40,15 @@ repldump-orig: $(REPLDUMP_ORIG)
 $(OUT_DIR):
 	@$(MKDIR) $@
 
-$(ASM_PORT_OBJS):
+# Wait for build stamp in asm dir to prevent race to rebuild individual object
+# files during parallel builds.
+$(ASM_PORT_STAMP):
 	@$(MAKE) -C ../../asm TARGET=port
+$(ASM_PORT_OBJS): | $(ASM_PORT_STAMP)
 
-$(ASM_ORIG_OBJS):
+$(ASM_ORIG_STAMP):
 	@$(MAKE) -C ../../asm TARGET=orig
+$(ASM_ORIG_OBJS): | $(ASM_ORIG_STAMP)
 
 $(RESTUNTS_LIB):
 	@$(MAKE) -C ../../c PLATFORM=$(PLATFORM)

@@ -43,9 +43,10 @@ get_seg_size = $(lastword $(subst :, ,$(filter $1:%,$(SEG_SIZES))))
 
 OBJ_DIR := ../../build/asm/$(TARGET)
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.asm=.o))
+STAMP := $(OBJ_DIR)/.stamp
 
 .PHONY: all clean
-all: $(OBJS)
+all: $(STAMP)
 
 $(OBJ_DIR):
 	@$(MKDIR) $@
@@ -54,12 +55,13 @@ $(OBJ_DIR)/%.o: %.asm $(INCLUDES) | $(OBJ_DIR)
 	$(call INFO_BOX, $(BUILD_INFO))
 	$(info $(AS) $<)
 	@$(AS) $(ASFLAGS) -fr=$(OBJ_DIR)/$*.err -fl=$(OBJ_DIR)/$*.lst -fo=$@ $<
-# Disassemble.
-#	@wdis $@ > $(OBJ_DIR)/$*.dis
-# Verify compiled size for maintaining original alignments.
+	@# Verify compiled size for maintaining original alignments.
 	@target_size="$(call get_seg_size,$*)"; [ -n "$$target_size" ] || { echo "Missing target size for $*"; exit 1; }; \
 	compiled_size=$$(grep -m1 "^$*" $(OBJ_DIR)/$*.lst | cut -c50-53); \
 	[ "$$compiled_size" = "$$target_size" ] || { printf "\033[1;31merror:\033[0m %s size %s does not match target size %s\n" "$*" "$$compiled_size" "$$target_size"; exit 1; }; \
+
+$(STAMP): $(OBJS)
+	touch $@
 
 clean:
 	$(RM) $(OBJ_DIR)/*.o $(OBJ_DIR)/*.lst $(OBJ_DIR)/*.err $(OBJ_DIR)/*.dis
