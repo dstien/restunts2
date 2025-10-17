@@ -19,7 +19,7 @@ BraceWrapping:
   AfterNamespace:        false
   AfterObjCDeclaration:  false
   AfterStruct:           false
-  AfterUnion:            true
+  AfterUnion:            false
   BeforeCatch:           false
   BeforeElse:            true
   BeforeLambdaBody:      false

@@ -4076,9 +4076,10 @@ video_flag2_is1      dw ?
 g_truckdoor          dw ?
 word_44DCC           dw ?
 rect_array_unk3      db 360 dup (?)
-vec_unk2             VECTOR <?>                                 ; Both this and the following one are likely
-                                                                ; velocity vectors - pre and post any needed
-                                                                ; rotations.
+; Both this and the following one are likely
+; velocity vectors - pre and post any needed
+; rotations. 
+vec_unk2             VECTOR <?>
 vec_planerotopresult VECTOR <?>
 pState_minusRotate_z_2 dw ?
 pState_minusRotate_x_2 dw ?

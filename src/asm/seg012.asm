@@ -8749,8 +8749,8 @@ nopsub_328DB_asm_ endp
 ; * dbg: transform
 ; ******************************************************************************
 
-; int __cdecl16far mat_mul_vector(VECTOR * invec, MATRIX * mat, VECTOR * outvec)
-mat_mul_vector_asm_ proc far
+; int __cdecl16far vec_transform(VECTOR * invec, MATRIX * mat, VECTOR * outvec)
+vec_transform_asm_ proc far
     invec      = word ptr    6
     mat        = word ptr    8
     outvec     = word ptr   10
@@ -8886,7 +8886,7 @@ LAB_2ea2_3fce:
     pop     si
     pop     bp
     retf
-mat_mul_vector_asm_ endp
+vec_transform_asm_ endp
 
 ; int __cdecl16far mat_multiply(MATRIX * rmat, MATRIX * lmat, MATRIX * outmat)
 mat_multiply_asm_ proc far

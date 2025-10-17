@@ -252,7 +252,7 @@ LAB_1471_01dc:
     push    word ptr [bp+var_16]
     lea     ax, [bp+var_26]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     cmp     word ptr [bp+var_1A], 0x5a
     jg      LAB_1471_01aa
@@ -295,7 +295,7 @@ LAB_1471_025c:
     push    word ptr [bp+var_16]
     lea     ax, [bp+var_26]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     cmp     word ptr [bp+var_6], 0x0
     jge     LAB_1471_02ee
@@ -412,7 +412,7 @@ LAB_1471_0364:
     push    word ptr [bp+var_16]
     lea     ax, [bp+var_26]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     push    word ptr [bp+var_38]
     push    word ptr [bp+var_3C]
@@ -647,7 +647,7 @@ LAB_1471_0577:
     push    word ptr [bp+var_16]
     lea     ax, [bp+var_26]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     push    word ptr [bp+var_38]
     mov     ax, word ptr [bp+var_3C]
@@ -751,7 +751,7 @@ mat_mul_vector2_asm_ proc far
     lea     ax, [bp+var_mat]
     push    ax
     push    word ptr [bp+invec]
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     pop     si
     pop     di
@@ -927,7 +927,7 @@ LAB_1471_077f:
     push    ax
     lea     ax, [bp+vec_1C6]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     bx, word ptr [bp+player_state]
     mov     ax, word ptr [bp+vec_FC+2]
@@ -976,7 +976,7 @@ LAB_1471_07f9:
     push    ax
     lea     ax, [bp+vec_1C6]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     bx, word ptr [bp+player_state]
     cmp     byte ptr [bx+0xc1], 0x0
@@ -993,7 +993,7 @@ LAB_1471_07f9:
     push    ax
     lea     ax, [bp+vec_1C6]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     jmp     LAB_1471_086c
     db 0x90
@@ -1105,7 +1105,7 @@ LAB_1471_093a:
     push    ax
     lea     ax, [bp+vec_1C6]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     push    si
     lea     di, [bp+vec_1C6]
@@ -1125,7 +1125,7 @@ LAB_1471_0967:
     push    ax
     lea     ax, [bp+vec_1C6]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     ax, word ptr [bp+vec_FC]
     cwd
@@ -1382,7 +1382,7 @@ LAB_1471_0bc7:
     push    ax
     lea     ax, [bp+vec_182]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     lea     ax, [bp+vec_1C]
     push    ax
@@ -1390,7 +1390,7 @@ LAB_1471_0bc7:
     push    ax
     lea     ax, [bp+vec_1E4]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     cmp     word ptr [bp+vec_1C+4], 0x0
     jle     LAB_1471_0c28
@@ -1533,7 +1533,7 @@ LAB_1471_0d5e:
     push    word ptr [bp+var_EA]
     lea     ax, [bp+vec_FC]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     ax, word ptr [pState_minusRotate_y_1]
     neg     ax
@@ -1890,7 +1890,7 @@ LAB_1471_10cc:
     push    ax
     lea     ax, [bp+vec_182]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     lea     ax, [bp+vec_1C]
     push    ax
@@ -1898,7 +1898,7 @@ LAB_1471_10cc:
     push    ax
     lea     ax, [bp+vec_1E4]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     byte ptr [bp+var_136], 0x0
     cmp     byte ptr [byte_4392C], 0x0
@@ -2529,7 +2529,7 @@ LAB_1471_1775:
     push    ax
     lea     ax, [bp+vec_1C6]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     ax, word ptr [bp+vec_182]
     cwd
@@ -2727,7 +2727,7 @@ LAB_1471_1997:
     push    ax
     lea     ax, [bp+vec_FC]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     inc     byte ptr [bp+var_wheelIndex]
     cmp     byte ptr [bp+var_wheelIndex], 0x4
@@ -2802,7 +2802,7 @@ LAB_1471_1a59:
     push    ax
     lea     ax, [bp+0xff04]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     inc     byte ptr [bp+0xff18]
     cmp     byte ptr [bp+0xff18], 0x4
@@ -2995,7 +2995,7 @@ LAB_1471_1c26:
     push    word ptr [bp+var_EA]
     lea     ax, [bp+vec_1C6]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     ax, word ptr [bp+vec_FC]
     cwd
@@ -4877,7 +4877,7 @@ LAB_1471_2d80:
     push    word ptr [bp+var_matptr]
     lea     ax, [bp+var_32]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     si, word ptr [bp+var_38+4]
 LAB_1471_2da3:
@@ -4970,7 +4970,7 @@ LAB_1471_2e4b:
     push    word ptr [bp+var_matptr]
     lea     ax, [bp+var_28]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     cmp     byte ptr [bp+var_2C], 0x0
     jz      LAB_1471_2e7d
@@ -5159,7 +5159,7 @@ LAB_1471_2fe9:
     push    word ptr [bp+var_matptr]
     lea     ax, [bp+var_28]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     push    word ptr [bp+var_38+4]
     mov     ax, word ptr [bp+var_38]
@@ -8233,7 +8233,7 @@ LAB_1471_4a5c:
     push    word ptr [bp+var_4]
     lea     ax, [bp+var_C]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     bx, word ptr [bp+vec1]
     mov     ax, word ptr [bx]
@@ -8313,7 +8313,7 @@ LAB_1471_4ae7:
     push    word ptr [bp+var_4]
     lea     ax, [bp+var_C]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     cmp     word ptr [bp+var_28], 0x0
     jl      LAB_1471_4ae4
@@ -8389,7 +8389,7 @@ LAB_1471_4bc2:
     push    word ptr [bp+var_4]
     lea     ax, [bp+var_C]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     bx, word ptr [bp+vec2]
     mov     ax, word ptr [bx]
@@ -8471,7 +8471,7 @@ LAB_1471_4c56:
     push    word ptr [bp+var_4]
     lea     ax, [bp+var_C]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     cmp     word ptr [bp+var_28], 0x0
     jl      LAB_1471_4c4a
@@ -8908,7 +8908,7 @@ LAB_1471_50c6:
     push    ax
     mov     ax, offset vec_unk2
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     ax, 0x22
     imul    word ptr [planindex_copy]
@@ -8938,7 +8938,7 @@ LAB_1471_50c6:
     push    ax
     lea     ax, [bp+var_8]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     push    word ptr [bp+var_32+4]
     mov     ax, word ptr [bp+var_32]
@@ -8968,7 +8968,7 @@ LAB_1471_5156:
     push    ax
     mov     ax, offset vec_unk2
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     ax, offset vec_planerotopresult
     push    ax
@@ -9026,7 +9026,7 @@ LAB_1471_51da:
     push    ax
     mov     ax, offset vec_unk2
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     ax, offset vec_planerotopresult
     push    ax
@@ -9043,7 +9043,7 @@ LAB_1471_51fc:
     mov     ax, offset vec_unk2
 LAB_1471_5207:
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     pop     si
     pop     di
@@ -9423,7 +9423,7 @@ LAB_1471_54bb:
     push    word ptr [bp+var_4]
     lea     ax, [bp+var_C]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     di, si
     mov     cl, 0x2

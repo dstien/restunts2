@@ -151,7 +151,7 @@ select_cliprect_rotate_asm_ proc far
     push    word ptr [bp+var_matptr]
     lea     ax, [bp+var_vec]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     push    word ptr [bp+var_vec2+4]
     push    word ptr [bp+var_vec2]
@@ -333,7 +333,7 @@ LAB_24d6_0256:
     mov     ax, offset mat_temp
     push    ax
     push    word ptr [bp+transshape]
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     lea     ax, [bp+var_mat2]
     push    ax
@@ -357,7 +357,7 @@ LAB_24d6_0256:
     push    ax
     lea     ax, [bp+var_vec2]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     cmp     word ptr [bp+var_vec3+2], 0x0
     jle     LAB_24d6_02e6
@@ -500,7 +500,7 @@ LAB_24d6_0436:
     push    ax
     lea     ax, [bp+var_vec2]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     ax, word ptr [bp+var_vec]
     add     word ptr [bp+var_vec3], ax
@@ -706,7 +706,7 @@ LAB_24d6_0648:
     push    ax
     lea     ax, [bp+var_vec2]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     ax, word ptr [bp+var_vec]
     add     word ptr [bp+var_vec3], ax

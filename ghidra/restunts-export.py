@@ -28,6 +28,7 @@ PORTED_FUNCS_BY_FILE = {
         "int_atan2",
         "int_hypot",
         "int_hypot_3d",
+        "vec_transform",
     },
 }
 # Source file by function for quick lookup of whether a function is ported.

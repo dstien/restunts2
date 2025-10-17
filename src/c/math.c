@@ -4,12 +4,18 @@
     #include "externs.h"
 #endif
 
+// Stunts' integer trigonometry arithmetics uses the Q14 format, so that a
+// 16-bit word stores:
+// * 14 fractional bits
+// * 1 integer bit
+// * 1 sign bit
+// Making values effectively scaled by 1 << 14 = 0x4000.
+#define SCALE_BITS 14
+
 // Quarter-wave lookup table for sin_fast() in 0x100 steps + the peak endpoint.
 // The value for a given angle is obtained by getting the index from the lower
 // 8 bits, the quadrant from the next 2 bits, and the remaining bits can be
-// discarded as the sine wraps around every 0x400 steps. The values are scaled
-// by 0x4000.
-#define SIN_SCALE_BITS      14
+// discarded as the sine wraps around every 0x400 steps.
 #define SIN_STEPS           0x100
 #define SIN_GET_STEP(a)     (a & 0xFF)
 #define SIN_GET_QUADRANT(a) ((a >> 8) & 3)
@@ -207,18 +213,61 @@ int16_t cdecl int_hypot(int16_t x, int16_t y)
         if (y < 0) {
             y = -y;
         }
-        return ((uint32_t)y << SIN_SCALE_BITS) / int_cos(angle);
+        return ((uint32_t)y << SCALE_BITS) / int_cos(angle);
     }
     else {
         if (x < 0) {
             x = -x;
         }
-        return ((uint32_t)x << SIN_SCALE_BITS) / int_sin(angle);
+        return ((uint32_t)x << SCALE_BITS) / int_sin(angle);
     }
 }
 
 // Integer 3D hypotenuse using nested 2D int_hypot calls.
-int16_t cdecl int_hypot_3d(const VECTOR* vec)
+int16_t cdecl int_hypot_3d(const VECTOR near* vec)
 {
     return int_hypot(int_hypot(vec->x, vec->y), vec->z);
+}
+
+// Transform vector using given matrix.
+void cdecl vec_transform(const VECTOR near* src, const MATRIX near* mat, VECTOR near* dst)
+{
+    if (mat->m11 != 0 && src->x != 0) {
+        dst->x = ((int32_t)mat->m11 * src->x) >> SCALE_BITS;
+    }
+    else {
+        dst->x = 0;
+    }
+    if (mat->m12 != 0 && src->y != 0) {
+        dst->x += ((int32_t)mat->m12 * src->y) >> SCALE_BITS;
+    }
+    if (mat->m13 != 0 && src->z != 0) {
+        dst->x += ((int32_t)mat->m13 * src->z) >> SCALE_BITS;
+    }
+
+    if (mat->m21 != 0 && src->x != 0) {
+        dst->y = ((int32_t)mat->m21 * src->x) >> SCALE_BITS;
+    }
+    else {
+        dst->y = 0;
+    }
+    if (mat->m22 != 0 && src->y != 0) {
+        dst->y += ((int32_t)mat->m22 * src->y) >> SCALE_BITS;
+    }
+    if (mat->m23 != 0 && src->z != 0) {
+        dst->y += ((int32_t)mat->m23 * src->z) >> SCALE_BITS;
+    }
+
+    if (mat->m31 != 0 && src->x != 0) {
+        dst->z = ((int32_t)mat->m31 * src->x) >> SCALE_BITS;
+    }
+    else {
+        dst->z = 0;
+    }
+    if (mat->m32 != 0 && src->y != 0) {
+        dst->z += ((int32_t)mat->m32 * src->y) >> SCALE_BITS;
+    }
+    if (mat->m33 != 0 && src->z != 0) {
+        dst->z += ((int32_t)mat->m33 * src->z) >> SCALE_BITS;
+    }
 }

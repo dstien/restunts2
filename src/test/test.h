@@ -41,8 +41,16 @@
         g_dg_buf_idx = 0;
     }
 
-    // Copy a null-terminated string to the buffer in DGROUP and return a near
-    // pointer to it for use with DS.
+    // Reserve bytes in the buffer in DGROUP and return a near pointer to it
+    // for use with DS.
+    static inline void near* dg_alloc(unsigned size)
+    {
+        void* result = g_dg_buf + g_dg_buf_idx;
+        g_dg_buf_idx += size;
+        return (void near*)FP_OFF(result);
+    }
+
+    // Copy a null-terminated string to the buffer in DGROUP.
     static inline char near* dg_str(const char* str)
     {
         int i = 0;
@@ -50,10 +58,7 @@
             g_dg_buf[g_dg_buf_idx + i] = str[i];
         } while (str[i++]);
 
-        char* result = g_dg_buf + g_dg_buf_idx;
-        g_dg_buf_idx += i;
-
-        return (char near*)FP_OFF(result);
+        return dg_alloc(i);
     }
 
     // Copy arbitrary bytes to the buffer in DGROUP.
@@ -64,11 +69,16 @@
             g_dg_buf[g_dg_buf_idx + i] = ((const uint8_t*)ptr)[i];
         }
 
-        void* result = g_dg_buf + g_dg_buf_idx;
-        g_dg_buf_idx += i;
-
-        return (void near*)FP_OFF(result);
+        return dg_alloc(i);
     }
+
+    #define DG_FP(ptr) MK_FP(FP_SEG(g_dg_buf), ptr)
+
+    // Allocate in DGROUP, get both a far pointer for use in the test function
+    // and near pointer to pass to the testee.
+    #define DG_VAR(type, far_name, near_name) \
+            type near* near_name = dg_alloc(sizeof(type)); \
+            type far* far_name = DG_FP(near_name);
 
     // printf() convenience that copies the formatting string to DGROUP.
     #define tprintf(fmt, ...) printf(dg_str(fmt), ##__VA_ARGS__)
@@ -88,12 +98,20 @@
     #define dg_str(str) str
     #define dg_ptr(ptr, size) ptr
 
+    // Put type on the stack, get two pointers for compatibility with near/far
+    // distinction in DOS16.
+    #define DG_VAR(type, far_name, near_name) \
+            type _##far_name; \
+            type* near_name = &_##far_name; \
+            type* far_name = &_##far_name;
+
     #define tprintf(fmt, ...) printf(fmt, ##__VA_ARGS__)
 
     #define FSTR(...) "%" _STR(__VA_ARGS__) "s"
 #endif // clang-format on
 
 // Conversion conveniences.
+#define MAT(arg) _(arg, sizeof(MATRIX))
 #define VEC(arg) _(arg, sizeof(VECTOR))
 
 // dosemu, DOSBox and Windows 10 all support ANSI colours.
@@ -117,7 +135,6 @@ extern bool g_extensive;
 
 #define TEST(name, expr)                                                \
     do {                                                                \
-        dg_reset();                                                     \
         if (g_verbose) {                                                \
             tprintf("    " FSTR(-20), #name);                           \
         }                                                               \

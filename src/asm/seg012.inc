@@ -211,7 +211,7 @@ seg012 segment byte public use16 'STUNTSC'
     public preRender_patterned_asm_
     public nopsub_328C9_asm_
     public nopsub_328DB_asm_
-    public mat_mul_vector_asm_
+    public vec_transform_asm_
     public mat_multiply_asm_
     public mat_invert_asm_
     public fliphandlers
@@ -451,7 +451,7 @@ seg012 segment byte public use16 'STUNTSC'
         preRender_patterned = preRender_patterned_asm_
         nopsub_328C9 = nopsub_328C9_asm_
         nopsub_328DB = nopsub_328DB_asm_
-        mat_mul_vector = mat_mul_vector_asm_
+        vec_transform = vec_transform_asm_
         mat_multiply = mat_multiply_asm_
         mat_invert = mat_invert_asm_
         file_unflip_shape2d = file_unflip_shape2d_asm_
@@ -676,7 +676,6 @@ seg012 segment byte public use16 'STUNTSC'
         preRender_patterned = preRender_patterned_asm_
         nopsub_328C9 = nopsub_328C9_asm_
         nopsub_328DB = nopsub_328DB_asm_
-        mat_mul_vector = mat_mul_vector_asm_
         mat_multiply = mat_multiply_asm_
         mat_invert = mat_invert_asm_
         file_unflip_shape2d = file_unflip_shape2d_asm_
@@ -760,5 +759,6 @@ seg012 segment byte public use16 'STUNTSC'
         extrn int_hypot:proc
         extrn int_sin:proc
         extrn int_cos:proc
+        extrn vec_transform:proc
     endif
 seg012 ends

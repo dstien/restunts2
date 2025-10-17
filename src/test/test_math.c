@@ -286,4 +286,73 @@ void test_math()
         #endif
         // clang-format on
     });
+
+    TEST_GROUP(vec_transform, {
+        // clang-format off
+        DG_VAR(VECTOR, s, src_near);
+        DG_VAR(MATRIX, m, mat_near);
+        DG_VAR(VECTOR, r, dst_near);
+
+        m->m11 = 0x4000; m->m21 = 0; m->m31 = 0;
+        m->m12 = 0; m->m22 = 0x4000; m->m32 = 0;
+        m->m13 = 0; m->m23 = 0; m->m33 = 0x4000;
+
+        s->x = s->y = s->z = 0;
+        vec_transform(src_near, mat_near, dst_near);
+        TEST(transform_ident0, r->x == 0 && r->y == 0 && r->z == 0);
+
+        s->x = 125; s->y = 236; s->z = 347;
+        vec_transform(src_near, mat_near, dst_near);
+        TEST(transform_ident1, r->x == 125 && r->y == 236 && r->z == 347);
+
+        m->m11 = 0; m->m21 = 0; m->m31 = 0;
+        m->m12 = 0; m->m22 = 0; m->m32 = 0;
+        m->m13 = 0; m->m23 = 0; m->m33 = 0;
+        vec_transform(src_near, mat_near, dst_near);
+        TEST(transform_zero, r->x == 0 && r->y == 0 && r->z == 0);
+
+        s->x = 200; s->y = 400; s->z = 800;
+        m->m11 = 0x2000; m->m21 = 0; m->m31 = 0;
+        m->m12 = 0; m->m22 = 0x2000; m->m32 = 0;
+        m->m13 = 0; m->m23 = 0; m->m33 = 0x2000;
+        vec_transform(src_near, mat_near, dst_near);
+        TEST(transform_scale1, r->x == 100 && r->y == 200 && r->z == 400);
+
+        m->m11 = 0x8000; m->m21 = 0; m->m31 = 0;
+        m->m12 = 0; m->m22 = -0x4000; m->m32 = 0;
+        m->m13 = 0; m->m23 = 0; m->m33 = -0x2000;
+        vec_transform(src_near, mat_near, dst_near);
+        TEST(transform_scale2, r->x == -400 && r->y == -400 && r->z == -400);
+
+        s->x = 0x4000; s->y = 0; s->z = 0;
+        m->m11 = 0; m->m21 = 0x4000; m->m31 = 0;
+        m->m12 = 0x4000; m->m22 = 0; m->m32 = 0;
+        m->m13 = 0; m->m23 = 0; m->m33 = 0x4000;
+        vec_transform(src_near, mat_near, dst_near);
+        TEST(transform_rot1, r->x == 0 && r->y == 0x4000 && r->z == 0);
+
+        s->x = 0; s->y = 0; s->z = 0x4000;
+        m->m11 = 0x4000; m->m21 = 0; m->m31 = 0;
+        m->m12 = 0; m->m22 = 0; m->m32 = -0x4000;
+        m->m13 = 0; m->m23 = 0x4000; m->m33 = 0;
+        vec_transform(src_near, mat_near, dst_near);
+        TEST(transform_rot2, r->x == 0 && r->y == 0x4000 && r->z == 0);
+
+        r->x = 1; r->y = 1; r->z = 1;
+        for (uint16_t i = 0, state = xorshift16(1991); i < 1000; i++) {
+            s->x = r->x; s->y = r->y; s->z = r->z;
+            m->m11 = xorshift16(state);
+            m->m21 = xorshift16(m->m11);
+            m->m31 = xorshift16(m->m21);
+            m->m12 = xorshift16(m->m31);
+            m->m22 = xorshift16(m->m12);
+            m->m32 = xorshift16(m->m22);
+            m->m13 = xorshift16(m->m32);
+            m->m23 = xorshift16(m->m13);
+            m->m33 = state = xorshift16(m->m23);
+            vec_transform(src_near, mat_near, dst_near);
+        }
+        TEST(transform_stress, r->x == 1247 && r->y == -27469 && r->z == -884);
+        // clang-format on
+    });
 }

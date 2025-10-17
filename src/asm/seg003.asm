@@ -477,7 +477,7 @@ LAB_19f1_032e:
     push    word ptr [bp+var_matptr]
     lea     ax, [bp+var_vec6]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     push    word ptr [bp+var_vec7+4]
     push    word ptr [bp+var_vec7]
@@ -507,7 +507,7 @@ LAB_19f1_03bc:
     push    word ptr [bp+var_matptr]
     lea     ax, [bp+var_vec6]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     ax, word ptr [bp+var_vec5]
     add     ax, word ptr [bp+var_vec7]
@@ -735,7 +735,7 @@ LAB_19f1_05d8:
     push    ax
     lea     ax, [bp+var_vec6]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     cmp     word ptr [bp+var_vec8+4], 0x0
     jle     LAB_19f1_0670
@@ -786,7 +786,7 @@ LAB_19f1_06cd:
     push    ax
     lea     ax, [bp+var_vec6]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     word ptr [bp+var_vec7+4], 0x3a98   ; 15000
     mov     ax, offset currenttransshape
@@ -795,7 +795,7 @@ LAB_19f1_06cd:
     push    ax
     lea     ax, [bp+var_vec7]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     cmp     word ptr [currenttransshape.ts_pos.vz], 0xc8
     jle     LAB_19f1_0751
@@ -1273,7 +1273,7 @@ LAB_19f1_0b7c:
     push    word ptr [bp+var_matptr]
     lea     ax, [bp+var_vec6]
     push    ax
-    call    far ptr mat_mul_vector             ; rotating car wheels, maybe?
+    call    far ptr vec_transform              ; rotating car wheels, maybe?
     add     sp, 0x6
     mov     ax, word ptr [bp+var_vec8]
     cwd
@@ -1312,7 +1312,7 @@ LAB_19f1_0c05:
     push    word ptr [bp+var_matptr]
     lea     ax, [bp+var_vec6]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     lea     ax, [bp+var_vec6]
     push    ax
@@ -1320,7 +1320,7 @@ LAB_19f1_0c05:
     push    ax
     lea     ax, [bp+var_vec8]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     cmp     word ptr [bp+var_vec6+4], 0x0
     jg      LAB_19f1_0c50
@@ -1435,7 +1435,7 @@ LAB_19f1_0d24:
     push    word ptr [bp+var_matptr]
     lea     ax, [bp+var_vec6]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     ax, word ptr [bp+var_vec8]
     cwd
@@ -1474,7 +1474,7 @@ LAB_19f1_0dad:
     push    word ptr [bp+var_matptr]
     lea     ax, [bp+var_vec6]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     lea     ax, [bp+var_vec6]
     push    ax
@@ -1482,7 +1482,7 @@ LAB_19f1_0dad:
     push    ax
     lea     ax, [bp+var_vec8]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     cmp     word ptr [bp+var_vec6+4], 0x0
     jg      LAB_19f1_0df8
@@ -3876,7 +3876,7 @@ LAB_19f1_2597:
     push    word ptr [bp+mat]
     lea     ax, [bp+var_58]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     ax, 0xb9b0
     imul    word ptr [bp+unk2]
@@ -3886,7 +3886,7 @@ LAB_19f1_2597:
     push    word ptr [bp+mat]
     lea     ax, [bp+var_58]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     cmp     word ptr [bp+var_vec+4], 0x0
     jl      LAB_19f1_25ec
@@ -4353,7 +4353,7 @@ LAB_19f1_2a48:
     push    word ptr [bp+mat]
     lea     ax, [bp+var_58]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     cmp     word ptr [bp+var_vec+4], 0x0
     jge     LAB_19f1_2ab0
@@ -4588,7 +4588,7 @@ transformed_shape_add_for_sort_asm_ proc far
     push    ax
     lea     ax, [bp+shapepos]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     mov     al, byte ptr [transformedshape_counter]
     cbw
@@ -4669,7 +4669,7 @@ draw_track_preview_asm_ proc far
     push    word ptr [bp+var_28]
     mov     ax, offset unk_3C114
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     lea     ax, [bp+var_2E]
     push    ax
@@ -6905,7 +6905,7 @@ LAB_19f1_419b:
     push    ax
     lea     ax, [bp+var_vec2]
     push    ax
-    call    far ptr mat_mul_vector
+    call    far ptr vec_transform
     add     sp, 0x6
     cmp     word ptr [bp+var_vec+4], 0xc8
     jle     LAB_19f1_4247
