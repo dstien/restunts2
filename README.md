@@ -118,11 +118,12 @@ To account for issues we can't handle properly in Ghidra, we use four *patch tag
 
 ## Porting code to C
 
-1. Implement the function in a file in `src/c`. When adding a new file, include it in `SRC` in `src/Makefile`.
+1. Implement the function in a file in `src/c`. When adding a new file, include it in `SRCS` in `src/c/Makefile`.
 2. Add the function name to `PORTED_FUNCS_BY_FILE` in `ghidra/resunts-export.py` and run the export from Ghidra.
 3. Write unit tests in `src/test` to ensure the code is portable and the behaviour is consistent across platforms.
 4. Rebuild and test.
-5. Run `make check-format` and resolve the discrepancies or apply automatic formatting with `clang-format -i FILENAME`.
+5. Run `make tidy` to see if the linter can detect bugs.
+6. Run `make format` and resolve the discrepancies or apply automatic formatting with `clang-format -i FILENAME`.
 
 ## Troubleshooting
 

@@ -30,7 +30,12 @@ clean:
 	@$(MAKE) -C test clean PLATFORM=dos32
 	@$(MAKE) -C test clean PLATFORM=linux64
 
-check-format:
+tidy:
+	@for f in `find c -iname '*.c'`; do \
+		clang-tidy $$f -- -xc -std=c99 -Ic -resource-dir "$$(clang -print-resource-dir)"; \
+	done
+
+format:
 	@for f in `find . -iname '*.h' -o -iname '*.c'`; do \
 	    diff -u --label="$$f" "$$f" --label="$$f (formatted)" <(clang-format --style=file "$$f"); \
 	done | `git config --get core.pager || echo $$PAGER`

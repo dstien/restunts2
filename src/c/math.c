@@ -91,12 +91,27 @@ static uint8_t atan_table[] = {
 // Integer atan2() for the polar angle in the range -0x1FF to 0x200 using LUT.
 int16_t cdecl int_atan2(int16_t x, int16_t y)
 {
-    // The function can return without setting a return value, so we need to
-    // track whether the initial AX value is unexpected in these cases.
 #ifdef ASSERT_UNDEFINED
+    // The original function can return without setting a return value, so we
+    // need to track whether the initial AX value is unexpected in these cases.
+    // AX != 0 is not confirmed to ever happen when called from stock code.
     #pragma warning 200 9
     int16_t ax_value;
     __asm mov ax_value, ax;
+
+    // If either parameter (but not both) are INT16_MIN, abs(INT16_MIN) will
+    // be truncated to the same value, leading to division by 0 failure.
+    // This is not confirmed to ever happen when called from stock code.
+    if ((x == INT16_MIN && y != INT16_MIN) || (x != INT16_MIN && y == INT16_MIN)) {
+        fatal_error("atan(%d/%d)\n", x, y);
+    }
+#endif
+#ifndef PLATFORM_DOS16
+    // While it shouldn't happen, we check for it on new platforms in order
+    // to satisfy clang-tidy.
+    if ((x == INT16_MIN && y != INT16_MIN) || (x != INT16_MIN && y == INT16_MIN)) {
+        return 0;
+    }
 #endif
 
     // The original code is handwritten assembly that picks the octant using a

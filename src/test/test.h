@@ -141,7 +141,7 @@ extern bool g_extensive;
         }                                                               \
     } while (0)
 
-#define TEST_GROUP(name, ...)                              \
+#define TEST_GROUP(name, ...)                               \
     do {                                                    \
         dg_reset();                                         \
         test_result_t res = { 0, 0 };                       \

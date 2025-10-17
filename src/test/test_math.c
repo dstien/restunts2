@@ -117,6 +117,11 @@ void test_math()
         TEST(atan2_west,       call_int_atan2(-1,  0) == -0x100);
         TEST(atan2_north_west, call_int_atan2(-1,  1) == -0x080);
         TEST(atan2_zero,       call_int_atan2( 0,  0) == 0);
+        // Crashes on original code.
+        #ifndef PLATFORM_DOS16
+        TEST(atan2_div0_y,     call_int_atan2(INT16_MIN, 0) == 0);
+        TEST(atan2_div0_x,     call_int_atan2(INT16_MIN + 1, INT16_MIN) == 0);
+        #endif
         TEST(atan2_big,        call_int_atan2(0x4000, 0x4000)         == 0x80);
         TEST(atan2_edge1,      call_int_atan2(0x200  - 1, 0x200)      == 0x80);
         TEST(atan2_edge2,      call_int_atan2(0x4000 - 1, 0x4000)     == 0x80);
